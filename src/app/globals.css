@@ -1,0 +1,97 @@
+/* nextjs/src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-green-900 hover:bg-green-800 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300;
+  }
+
+  .section-padding {
+    @apply py-20;
+  }
+
+  .dropdown-menu {
+    transition:
+      opacity 0.1s ease,
+      transform 0.1s ease;
+  }
+
+  .dropdown-item {
+    transition:
+      background-color 0.1s ease,
+      color 0.1s ease;
+  }
+}
+
+/* === ИСПРАВЛЕНИЕ YANDEX SMARTCAPTCHA === */
+.captcha-container {
+  width: 100%;
+  min-height: 80px;
+  position: relative;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+  overflow: visible !important;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.captcha-container > iframe[src*='backend'] {
+  position: absolute !important;
+  left: -10000px !important;
+  top: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  border: none !important;
+  pointer-events: none !important;
+}
+
+.captcha-container > div {
+  position: absolute !important;
+  left: 0 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.captcha-container > div iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 80px !important;
+  border: none !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  display: block !important;
+  transform: none !important;
+  object-fit: cover;
+  scale: 1 !important;
+}
