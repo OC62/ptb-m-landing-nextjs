@@ -32,7 +32,7 @@ export default function Home() {
           <CommunitySupport />
           <ContactForm />
         </main>
-        <Footer />
+        <Footer />   
       </div>
     </ErrorBoundary>
   );
