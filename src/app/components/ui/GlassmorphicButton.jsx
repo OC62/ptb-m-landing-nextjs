@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+'use client';
+import React, { forwardRef } from 'react';
 
 // Используем forwardRef, чтобы можно было передавать ref, как в обычную кнопку
 const GlassmorphicButton = forwardRef(

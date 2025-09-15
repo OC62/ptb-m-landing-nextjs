@@ -1,19 +1,19 @@
 // nextjs/src/app/page.js
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import ErrorBoundary from '@/components/ErrorBoundary';
+import Header from '@/app/components/layout/Header';
+import Footer from '@/app/components/layout/Footer';
+import Breadcrumbs from '@/app/components/Breadcrumbs';
+import ErrorBoundary from '@/app/components/ErrorBoundary';
 
 // Импортируем компоненты напрямую (без lazy)
-import Hero from '@/components/sections/Hero';
-import About from '@/components/sections/About';
-import ServicesGrid from '@/components/sections/ServicesGrid';
-import CasesSlider from '@/components/sections/CasesSlider';
-import Careers from '@/components/sections/Careers';
-import Licenses from '@/components/sections/Licenses';
-import Partners from '@/components/sections/Partners';
-import CommunitySupport from '@/components/sections/CommunitySupport';
-import ContactForm from '@/components/sections/ContactForm';
+import Hero from '@/app/components/sections/Hero';
+import About from '@/app/components/sections/About';
+import ServicesGrid from '@/app/components/sections/ServicesGrid';
+import CasesSlider from '@/app/components/sections/CasesSlider';
+import Careers from '@/app/components/sections/Careers';
+import Licenses from '@/app/components/sections/Licenses';
+import Partners from '@/app/components/sections/Partners';
+import CommunitySupport from '@/app/components/sections/CommunitySupport';
+import ContactForm from '@/app/components/sections/ContactForm';
 
 export default function Home() {
   return (

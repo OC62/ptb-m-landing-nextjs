@@ -1,10 +1,12 @@
+"use client";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules';
 import LazyImage from '../LazyImage';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import 'swiper/css/navigation';
 
 const About = () => {
   const advantages = [

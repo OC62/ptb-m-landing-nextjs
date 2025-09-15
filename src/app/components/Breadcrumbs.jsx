@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 
 // Определяем список секций с их ID и названиями (вынесено за пределы компонента)

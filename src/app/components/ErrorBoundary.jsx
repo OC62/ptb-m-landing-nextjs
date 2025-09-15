@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
 
-export class ErrorBoundary extends React.Component {
+import { Component } from 'react';
+
+export class ErrorBoundary extends Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null, errorInfo: null };

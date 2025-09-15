@@ -1,14 +1,13 @@
-// nextjs/src/app/api/send/route.js
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 // --- Секретный ключ капчи из .env ---
 const CAPTCHA_SECRET = process.env.CAPTCHA_SECRET;
 // --- Флаг для отключения капчи на сервере ---
-const IS_CAPTCHA_DISABLED = process.env.DISABLE_CAPTCHA_FOR_LOCAL_DEV === 'true';
+const IS_CAPTCHA_DISABLED = process.env.NEXT_PUBLIC_DISABLE_CAPTCHA_FOR_LOCAL_DEV === 'true';
 
 console.log('NEXT_PUBLIC_DISABLE_CAPTCHA_FOR_LOCAL_DEV:', process.env.NEXT_PUBLIC_DISABLE_CAPTCHA_FOR_LOCAL_DEV);
-console.log('IS_CAPTCHA_DISABLED_FOR_DEV (рассчитано):', IS_CAPTCHA_DISABLED_FOR_DEV);
+console.log('IS_CAPTCHA_DISABLED (рассчитано):', IS_CAPTCHA_DISABLED);
 
 export async function POST(request) {
   try {
