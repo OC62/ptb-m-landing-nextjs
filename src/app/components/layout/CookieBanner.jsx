@@ -1,7 +1,8 @@
-// nextjs/src/app/components/CookieBanner.jsx
+// nextjs/src/app/components/layout/CookieBanner.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
+import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -38,18 +39,22 @@ const CookieBanner = () => {
             </a>.
           </p>
           <div className="flex space-x-2">
-            <button
+            <GlassmorphicButton
               onClick={acceptCookies}
-              className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm transition-colors"
+              variant="onWhite"
+              size="large"
+              className="text-xs"
             >
               Принять
-            </button>
-            <button
+            </GlassmorphicButton>
+            <GlassmorphicButton
               onClick={declineCookies}
-              className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md text-sm transition-colors"
+              variant="onWhite"
+              size="large"
+              className="text-xs"
             >
               Отклонить
-            </button>
+            </GlassmorphicButton>
           </div>
         </div>
       </div>

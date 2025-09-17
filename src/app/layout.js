@@ -5,8 +5,8 @@ import Preloader from '@/components/ui/Preloader';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Script from 'next/script';
-import Image from 'next/image';
-import CookieBanner from '@/components/CookieBanner';
+import Image from 'next/image'; // ✅ Оставлено для Pixel-tracking
+import CookieBanner from '@/components/layout/CookieBanner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,7 +25,7 @@ export const metadata = {
     siteName: 'ООО ПТБ-М',
     images: [
       {
-        url: 'https://xn----9sb8ajp.xn--p1ai/images/og-preview.jpg',
+        url: '/images/og-preview.jpg',
         width: 1200,
         height: 630,
         alt: 'ООО ПТБ-М - Транспортная безопасность',
@@ -38,7 +38,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'ООО \'ПТБ-М\' | Профессионалы в области транспортной безопасности',
     description: 'Обеспечиваем транспортную безопасность на объектах дорожного хозяйства с 2017 года.',
-    images: ['https://xn----9sb8ajp.xn--p1ai/images/og-preview.jpg'],
+    images: ['/images/og-preview.jpg'],
   },
   verification: {
     yandex: 'f5bc48680f827787',
@@ -48,16 +48,61 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+        <link rel="icon" type="image/png" sizes="120x120" href="/images/favicon-120x120.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#9ACD32" />
+        <link rel="preconnect" href="https://smartcaptcha.yandexcloud.net" />
+        <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
+
+        {/* JSON-LD Разметка */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "name": "ООО \"ПТБ-М\"",
+              "url": "https://xn----9sb8ajp.xn--p1ai",
+              "logo": "/images/logo.png",
+              "description": "Обеспечение транспортной безопасности объектов дорожного хозяйства.",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "ул. Большая Садовая, 102, офис 15",
+                "addressLocality": "Ростов-на-Дону",
+                "postalCode": "344019",
+                "addressCountry": "RU"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+7-909-407-23-74",
+                "contactType": "customer service",
+                "email": "dtsm.rnd@gmail.com"
+              }
+            }),
+          }}
+        />
+      </head>
       <body className={inter.className}>
         <Preloader />
         <Header />
         <main>{children}</main>
         <Footer />
         <CookieBanner />
+
+        {/* Yandex SmartCaptcha */}
         <Script
           src="https://smartcaptcha.yandexcloud.net/captcha.js"
           strategy="beforeInteractive"
+          async
+          defer
         />
+
+        {/* Yandex.Metrika */}
         <Script
           id="yandex-metrika"
           strategy="afterInteractive"
@@ -75,8 +120,11 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+
+        {/* Yandex.Metrika Pixel (для отслеживания без JS) */}
         <noscript>
           <div>
+            {/* ✅ Используем прямой путь к пикселю Яндекс.Метрики */}
             <Image
               src="https://mc.yandex.ru/watch/103534344"
               width={1}
