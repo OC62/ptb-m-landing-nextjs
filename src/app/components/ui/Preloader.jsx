@@ -8,7 +8,7 @@ const Preloader = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Автоматически скрываем прелоадер через 1.5 секунды
+    // Скрываем прелоадер через 1.5 секунды
     const timer = setTimeout(() => {
       setIsVisible(false);
     }, 1500);
