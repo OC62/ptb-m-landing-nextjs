@@ -1,6 +1,6 @@
 // nextjs/src/app/components/layout/Header.jsx
 'use client';
-
+import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';

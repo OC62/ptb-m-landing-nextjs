@@ -19,14 +19,14 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          poster="/images/bg_Hero.webp" // ✅ Используем прямой путь к изображению из public/images/
+          poster="/images/bg_Hero.webp" // ✅ Исправлено: абсолютный путь
           className="w-full h-full object-cover"
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
           {/* Fallback изображение, если видео не поддерживается */}
           <img
-            src="/images/bg_Hero.webp"
+            src="/images/bg_Hero.webp" // ✅ Исправлено: абсолютный путь
             alt="Фон: дорожный объект, мост"
             className="w-full h-full object-cover"
             aria-hidden="true"

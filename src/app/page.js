@@ -1,6 +1,5 @@
 // nextjs/src/app/page.js
 import Header from '@/app/components/layout/Header';
-import Footer from '@/app/components/layout/Footer';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 
@@ -32,7 +31,7 @@ export default function Home() {
           <CommunitySupport />
           <ContactForm />
         </main>
-        <Footer />   
+        {/* ❌ Удалено: <Footer /> — он уже рендерится в layout.js */}
       </div>
     </ErrorBoundary>
   );
