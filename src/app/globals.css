@@ -1,43 +1,70 @@
+/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
 
-@layer base {
-  body {
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-  }
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary-color: 154, 205, 50; /* #9ACD32 */
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: bold;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-green-900 hover:bg-green-800 text-white font-medium py-3 px-6 rounded transition-colors duration-300;
-  }
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
 
-  .btn-secondary {
-    @apply bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded transition-colors duration-300;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
 
-  .section-padding {
-    @apply py-20;
-  }
+/* === Стили для названия организации в хедере === */
+.header-company-name {
+  @apply text-xl lg:text-base font-bold;
+  color: rgb(var(--primary-color));
+}
 
-  .dropdown-menu {
-    @apply transition-opacity duration-100 transition-transform duration-100;
-  }
+/* === Кнопки === */
+.btn-primary {
+  @apply bg-green-900 hover:bg-green-800 text-white font-medium py-3 px-6 rounded transition-colors duration-300;
+}
 
-  .dropdown-item {
-    @apply transition-colors duration-100;
-  }
+.btn-secondary {
+  @apply bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded transition-colors duration-300;
+}
+
+.section-padding {
+  @apply py-20;
+}
+
+.dropdown-menu {
+  @apply transition-opacity transition-transform duration-100;
+}
+
+.dropdown-item {
+  @apply transition-colors duration-100;
 }
 
 /* === ИСПРАВЛЕНИЕ YANDEX SMARTCAPTCHA === */
@@ -55,4 +82,57 @@
 
 .captcha-container > div iframe {
   @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
+}
+
+/* === SWIPER NAVIGATION BUTTONS FIX === */
+
+/* Убираем встроенные SVG иконки у кнопок навигации Swiper */
+.swiper-button-prev svg,
+.swiper-button-next svg {
+  display: none !important;
+}
+
+/* Создаем свои CSS-стрелки для Swiper */
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid #4B5563;
+  border-right: 2px solid #4B5563;
+  transition: all 0.2s ease;
+}
+
+.swiper-button-prev::after {
+  transform: rotate(-135deg);
+  margin-right: -2px;
+}
+
+.swiper-button-next::after {
+  transform: rotate(45deg);
+  margin-left: -2px;
+}
+
+.swiper-button-prev:hover::after,
+.swiper-button-next:hover::after {
+  border-color: #1E40AF;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* === ANIMATE SPIN === */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

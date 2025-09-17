@@ -1,16 +1,15 @@
-"use client";
+// nextjs/src/app/components/sections/Hero.jsx
+'use client';
+
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
-
-// Встроенный SVG placeholder для видео
-const videoPosterSvg =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1920' height='1080' viewBox='0 0 1920 1080' fill='%23f3f4f6'%3E%3Crect width='1920' height='1080' fill='%233a3a3a'/%3E%3Cpath d='M960 540L1160 380' stroke='%23d1d5db' stroke-width='2'/%3E%3C/svg%3E";
 
 const Hero = () => {
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
+      aria-labelledby="hero-heading"
     >
       {/* Фоновое видео */}
       <div className="absolute inset-0 z-0">
@@ -20,19 +19,25 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          poster={videoPosterSvg}
+          poster="/images/bg_Hero.webp" // ✅ Используем прямой путь к изображению из public/images/
           className="w-full h-full object-cover"
+          aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
+          {/* Fallback изображение, если видео не поддерживается */}
           <img
-            src={videoPosterSvg}
+            src="/images/bg_Hero.webp"
             alt="Фон: дорожный объект, мост"
             className="w-full h-full object-cover"
+            aria-hidden="true"
           />
         </video>
 
         {/* Полупрозрачный градиент для улучшения читаемости текста */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900 to-transparent opacity-80"></div>
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900 to-transparent opacity-80"
+          aria-hidden="true"
+        ></div>
       </div>
 
       {/* Основной контент */}
@@ -52,14 +57,15 @@ const Hero = () => {
           }}
           className="max-w-3xl"
         >
-          {/* Заголовок с градиентным текста */}
+          {/* Заголовок с градиентным текстом */}
           <motion.h1
+            id="hero-heading"
             variants={{
               hidden: { opacity: 0, y: -20 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ type: 'spring', stiffness: 100, damping: 12 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-200 text-transparent bg-clip-text leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-green-200 leading-tight"
           >
             Комплексное обеспечение транспортной безопасности для объектов
             дорожного хозяйства с 2017 года.
@@ -72,7 +78,7 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 bg-gradient-to-r from-blue-100 to-blue-200 text-transparent bg-clip-text"
+            className="text-lg md:text-xl mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-blue-200"
           >
             ООО "Подразделение транспортной безопасности -М" – профессионалы,
             которым можно доверять
@@ -91,8 +97,11 @@ const Hero = () => {
               size="large"
               onClick={() => {
                 const contactSection = document.getElementById('contact');
-                contactSection?.scrollIntoView({ behavior: 'smooth' });
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
               }}
+              aria-label="Получить консультацию по транспортной безопасности"
             >
               Получить консультацию
             </GlassmorphicButton>
@@ -106,6 +115,7 @@ const Hero = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5 }}
+        aria-hidden="true"
       >
         <div className="animate-bounce">
           <svg
@@ -113,6 +123,7 @@ const Hero = () => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"

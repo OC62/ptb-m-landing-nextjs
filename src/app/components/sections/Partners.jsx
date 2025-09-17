@@ -206,35 +206,6 @@ const Partners = () => {
           <div
             className={`swiper-button-next hidden lg:flex absolute top-[calc(50%+10px)] -translate-y-1/2 right-4 w-12 h-12 bg-white/80 backdrop-blur-md rounded-lg shadow-lg z-10 border border-white/20 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
           ></div>
-
-          {/* Кастомные стили для стрелок */}
-          <style>{`
-            .swiper-button-prev:after, 
-            .swiper-button-next:after {
-              content: '';
-              width: 10px;
-              height: 10px;
-              border-top: 2px solid #4B5563;
-              border-right: 2px solid #4B5563;
-              transition: all 0.2s ease;
-            }
-            .swiper-button-prev:after {
-              transform: rotate(-135deg);
-              margin-right: -2px;
-            }
-            .swiper-button-next:after {
-              transform: rotate(45deg);
-              margin-left: -2px;
-            }
-            .swiper-button-prev:hover:after,
-            .swiper-button-next:hover:after {
-              border-color: #1E40AF;
-            }
-            .swiper-button-prev:hover,
-            .swiper-button-next:hover {
-              background: rgba(255, 255, 255, 0.95);
-            }
-        `}</style>
         </div>
       </div>
     </section>
