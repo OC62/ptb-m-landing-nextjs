@@ -34,7 +34,6 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
-  // ✅ Исправлено: функция прокрутки к секции
   const scrollToSection = (sectionId) => {
     setIsMenuOpen(false);
     setTimeout(() => {
@@ -53,39 +52,9 @@ const Header = () => {
     }, 100);
   };
 
-  // ✅ Исправлено: функция навигации
-  const handleNavigation = (href) => {
-    setIsMenuOpen(false);
-    
-    // Если href начинается с # — прокручиваем на текущей странице
-    if (href.startsWith('#')) {
-      setTimeout(() => {
-        const id = href.slice(1);
-        const element = document.getElementById(id);
-        if (element) {
-          const headerHeight = headerRef.current?.offsetHeight || 0;
-          const elementPosition =
-            element.getBoundingClientRect().top + window.pageYOffset;
-          const offsetPosition = elementPosition - headerHeight;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-        } else {
-          // Если элемент не найден — переходим на главную с якорем
-          router.push(`/${href}`);
-        }
-      }, 100);
-      return;
-    }
-
-    // Если href — это путь — переходим на страницу
-    router.push(href);
-  };
-
-  // ✅ Новая функция: переход на главную
-  const goToHome = () => {
-    router.push('/');
+  // Функция для перехода на главную с якорем
+  const scrollToContact = () => {
+    router.push('/#contact');
   };
 
   const navItems = [
@@ -163,9 +132,10 @@ const Header = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <button
+        <Link
+          href={item.href}
           className="flex items-center text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 group"
-          onClick={() => handleNavigation(item.href)}
+          onClick={() => setIsMenuOpen(false)}
         >
           {item.name}
           <svg
@@ -175,7 +145,7 @@ const Header = () => {
           >
             <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
           </svg>
-        </button>
+        </Link>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -190,13 +160,16 @@ const Header = () => {
             onMouseLeave={handleMouseLeave}
           >
             {item.submenu.map((subItem, index) => (
-              <button
+              <Link
                 key={index}
-                onClick={() => handleNavigation(subItem.href)}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal"
+                href={subItem.href}
+                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
+                  pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''
+                }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 {subItem.name}
-              </button>
+              </Link>
             ))}
           </motion.div>
         )}
@@ -212,10 +185,10 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* ✅ Исправлено: Логотип с названием компании + переход на главную */}
+          {/* Логотип с названием компании */}
           <div
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={goToHome}
+            onClick={() => router.push('/')}
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
             <span className="header-company-name">
@@ -235,25 +208,26 @@ const Header = () => {
                     item={item}
                   />
                 ) : (
-                  <button
+                  <Link
                     key={index}
-                    onClick={() => handleNavigation(item.href)}
+                    href={item.href}
                     className={`text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 ${
                       pathname === item.href ? 'text-primary font-bold' : ''
                     }`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </button>
+                  </Link>
                 )
               )}
             </div>
           </nav>
           
-          {/* ✅ Исправлено: Кнопка CTA для десктопа */}
+          {/* Кнопка CTA для десктопа */}
           <GlassmorphicButton
             variant="onWhite"
             size="large"
-            onClick={() => scrollToSection('#contact')}
+            onClick={scrollToContact}
             className={`${isMobileView ? 'hidden' : 'block'} text-xs`}
           >
             Получить консультацию
@@ -305,9 +279,10 @@ const Header = () => {
                 <div key={index}>
                   {item.submenu ? (
                     <div>
-                      <button
+                      <Link
+                        href={item.href}
                         className="flex items-center w-full text-left px-2 py-2 text-gray-700 hover:text-primary font-medium transition-colors"
-                        onClick={() => handleNavigation(item.href)}
+                        onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
                         <svg
@@ -317,35 +292,39 @@ const Header = () => {
                         >
                           <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
                         </svg>
-                      </button>
+                      </Link>
                       <div className="pl-4 space-y-2">
                         {item.submenu.map((subItem, subIndex) => (
-                          <button
+                          <Link
                             key={subIndex}
-                            onClick={() => handleNavigation(subItem.href)}
-                            className="block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors"
+                            href={subItem.href}
+                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors ${
+                              pathname === subItem.href ? 'text-primary font-medium' : ''
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
                           >
                             {subItem.name}
-                          </button>
+                          </Link>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <button
-                      onClick={() => handleNavigation(item.href)}
+                    <Link
+                      href={item.href}
                       className={`block text-gray-700 hover:text-primary font-medium py-2 px-2 w-full text-left transition-colors ${
                         pathname === item.href ? 'text-primary font-bold' : ''
                       }`}
+                      onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
-                    </button>
+                    </Link>
                   )}
                 </div>
               ))}
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={() => scrollToSection('#contact')}
+                onClick={scrollToContact}
                 className="w-full mt-4"
               >
                 Получить консультацию

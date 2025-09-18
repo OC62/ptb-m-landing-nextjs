@@ -132,6 +132,8 @@ h6 {
 /* Новый класс для объемного вращения */
 .rotate-Y {
   animation: volumeSpin 4s infinite linear;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 /* Анимация объема и вращения */
@@ -152,54 +154,55 @@ h6 {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
   user-select: none;
-  line-height: 1; /* Улучшаем вертикальное выравнивание текста */
+  line-height: 1;
+  position: relative;
+  height: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.letters-loading {
+  position: relative;
+  display: inline-block;
+  width: 0.8em;
+  height: 1em;
+  margin: 0 0.1em;
 }
 
 .letters-loading:before {
-  animation: letters-loading 4s infinite alternate;
+  animation: letters-loading 4s infinite;
   color: #fff;
   content: attr(data-text-preloader);
   left: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  transform: perspective(1000px) rotateX(-90deg) rotateY(-90deg) scale(0.5); /* Новое начальное положение */
+  transform: rotateY(-90deg) scale(0.5);
+  transform-origin: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes letters-loading {
   0%, 75%, 100% {
     opacity: 0;
-    transform: perspective(1000px) rotateX(-90deg) rotateY(-90deg) scale(0.5);
+    transform: rotateY(-90deg) scale(0.5);
   }
   25%, 50% {
     opacity: 1;
-    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1); /* Переход к нормальному состоянию */
+    transform: rotateY(0deg) scale(1);
   }
 }
 
-.letters-loading:nth-child(2):before {
-  animation-delay: 0.2s;
-}
-
-.letters-loading:nth-child(3):before {
-  animation-delay: 0.4s;
-}
-
-.letters-loading:nth-child(4):before {
-  animation-delay: 0.6s;
-}
-
-.letters-loading:nth-child(5):before {
-  animation-delay: 0.8s;
-}
-
-.letters-loading:nth-child(6):before {
-  animation-delay: 1s;
-}
-
-.letters-loading:nth-child(7):before {
-  animation-delay: 1.2s;
-}
+.letters-loading:nth-child(1):before { animation-delay: 0s; }
+.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
+.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
+.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
+.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
 
 /* Media Queries для адаптивности */
 @media screen and (max-width: 767px) {
@@ -214,11 +217,17 @@ h6 {
   }
 }
 
-/* Обновленный градиентный бэкграунд */
-body {
+/* Градиентный бэкграунд для прелоадера */
+.preloader-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(135deg, #007BFF, #0056b3);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
+  z-index: 9998;
 }
 
 @keyframes gradientAnimation {
@@ -231,4 +240,14 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Стили для основного контента */
+.main-content {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.main-content.loaded {
+  opacity: 1;
 }
