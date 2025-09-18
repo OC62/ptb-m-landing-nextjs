@@ -22,7 +22,7 @@ const Preloader = () => {
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-tr from-[#9ACD32] via-[#F5FFFA] to-[#FFEC8B] transition-opacity duration-500">
       <div className="flex flex-col items-center gap-4">
         <Image
-          src="/images/logo.webp"
+          src="/images/preloader.png"
           alt="Logo"
           width={128}
           height={128}
