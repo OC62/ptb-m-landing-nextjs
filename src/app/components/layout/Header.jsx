@@ -206,7 +206,7 @@ const Header = () => {
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
             {/* ✅ Исправлены стили названия организации */}
-            <span className="text-xl lg:text-base font-bold text-primary">
+            <span className="text-xl lg:text-base font-bold primary-color">
               ООО "ПТБ-М"
             </span>
           </div>
