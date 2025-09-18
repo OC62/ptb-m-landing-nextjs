@@ -123,16 +123,100 @@ h6 {
   background: rgba(255, 255, 255, 0.95);
 }
 
-/* === ANIMATE SPIN === */
-.animate-spin {
-  animation: spin 1s linear infinite;
+/* global styles for the preloader */
+.animation-preloader {
+  position: absolute;
+  z-index: 100;
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
+.spinner {
+  animation: spinner 1s infinite linear;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  border-top-color: #fff;
+  height: 9em;
+  margin: 0 auto 3.5em auto;
+  width: 9em;
+}
+
+.txt-loading {
+  font: bold 5em 'Montserrat', sans-serif;
+  text-align: center;
+  user-select: none;
+}
+
+.letters-loading:before {
+  animation: letters-loading 4s infinite;
+  color: #fff;
+  content: attr(data-text-preloader);
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: rotateY(-90deg);
+}
+
+.letters-loading {
+  color: rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.letters-loading:nth-child(2):before {
+  animation-delay: 0.2s;
+}
+
+.letters-loading:nth-child(3):before {
+  animation-delay: 0.4s;
+}
+
+.letters-loading:nth-child(4):before {
+  animation-delay: 0.6s;
+}
+
+.letters-loading:nth-child(5):before {
+  animation-delay: 0.8s;
+}
+
+.letters-loading:nth-child(6):before {
+  animation-delay: 1s;
+}
+
+@keyframes spinner {
   to {
-    transform: rotate(360deg);
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes letters-loading {
+  0%, 75%, 100% {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+  25%, 50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 767px) {
+  .spinner {
+    height: 8em;
+    width: 8em;
+  }
+
+  .txt-loading {
+    font-size: 3.5em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .spinner {
+    height: 7em;
+    width: 7em;
+  }
+
+  .txt-loading {
+    font-size: 2em;
   }
 }

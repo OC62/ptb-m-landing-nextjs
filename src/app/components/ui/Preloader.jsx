@@ -2,33 +2,33 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 
 const Preloader = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Прелоадер скрывается автоматически спустя 1.5 секунды
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 1500);
+    // После трех секунд устанавливаем флажок завершения загрузки
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(loadingTimer);
   }, []);
 
-  if (!isVisible) return null;
+  if (!isLoading) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500">
-      <Image
-        src="/images/preloader-pitbm.svg" // 👈 Новый путь к нашему SVG-изображению
-        alt="Загрузка сайта..."
-        width={64}
-        height={64}
-        className="transition-all ease-in-out duration-500"
-        priority={true}
-        aria-hidden="true"
-      />
+      <div className="animation-preloader">
+        <div className="spinner"></div>
+        <div className="txt-loading">
+          <span className="letters-loading" data-text-preloader="П">П</span>
+          <span className="letters-loading" data-text-preloader="Т">Т</span>
+          <span className="letters-loading" data-text-preloader="Б">Б</span>
+          <span className="letters-loading" data-text-preloader="-">-</span>
+          <span className="letters-loading" data-text-preloader="М">М</span>
+        </div>
+      </div>
     </div>
   );
 };
