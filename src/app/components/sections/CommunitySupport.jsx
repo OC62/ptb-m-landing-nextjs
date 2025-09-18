@@ -3,14 +3,14 @@
 
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
-import { useRouter } from 'next/navigation';
 
 const CommunitySupport = () => {
-  const router = useRouter();
-
-  const scrollToContacts = () => {
-    // Переходим на главную страницу с якорем
-    router.push('/#contacts');
+  const scrollToContact = () => {
+    // Ищем форму на текущей странице
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -68,7 +68,7 @@ const CommunitySupport = () => {
             <GlassmorphicButton
               variant="onLight"
               size="large"
-              onClick={scrollToContacts}
+              onClick={scrollToContact} // ✅ Исправлено: ведёт к форме на текущей странице
               className="mt-4 text-white"
             >
               Связаться с нами

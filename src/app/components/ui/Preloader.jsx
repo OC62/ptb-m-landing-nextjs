@@ -9,18 +9,19 @@ const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // После семи секунд устанавливаем флажок завершения загрузки
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-    }, 7000); // Изменено на 7 секунд
-
-    // Воспроизводим звук
+    // Воспроизводим звук сразу
     const sound = new Howl({
       src: ['/sounds/background.mp3'], // Путь к звуковому файлу
       loop: true,
       volume: 0.5,
     });
     sound.play();
+
+    // После семи секунд устанавливаем флажок завершения загрузки
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+      sound.stop(); // Остановка звука при завершении прелоадера
+    }, 7000); // 7 секунд
 
     return () => {
       clearTimeout(loadingTimer);
@@ -38,7 +39,7 @@ const Preloader = () => {
           alt="Logo"
           width={128}
           height={128}
-          className="rotate-Z animate-volumeSpin"
+          className="rotate-Y animate-volumeSpin"
           priority={true}
           aria-hidden="true"
         />
