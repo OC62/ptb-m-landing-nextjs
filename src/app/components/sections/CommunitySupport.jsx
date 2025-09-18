@@ -3,14 +3,14 @@
 
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import { useRouter } from 'next/navigation'; // ✅ Добавлено
 
 const CommunitySupport = () => {
+  const router = useRouter(); // ✅ Добавлено
+
+  // ✅ Исправлено: используем useRouter для перехода на главную с якорем
   const scrollToContact = () => {
-    // Ищем форму на текущей странице
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    router.push('/#contact'); // ✅ Переход на главную с якорем
   };
 
   return (
@@ -26,7 +26,7 @@ const CommunitySupport = () => {
           minWidth: '100%'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900 to-green-800 opacity-60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 opacity-60"></div>
       </div>
 
       {/* Скрытый img для SEO */}
@@ -45,10 +45,10 @@ const CommunitySupport = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="max-w-4xl mx-auto text-center text-white"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-200 text-transparent bg-clip-text leading-tight">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-200 text-transparent bg-clip-text">
             Поддержка детского спорта
           </h2>
-          <p className="text-lg md:text-xl mb-8 bg-gradient-to-r from-blue-100 to-blue-200 text-transparent bg-clip-text">
+          <p className="text-lg md:text-xl mb-8 bg-gradient-to-r from-blue-100 to-green-200 text-transparent bg-clip-text leading-relaxed">
             ООО "ПТБ-М" активно участвует в развитии детского и юношеского
             спорта, поддерживая футбольные команды и спортивные школы в
             Ростовской области. Мы верим, что здоровое поколение — основа
@@ -68,7 +68,7 @@ const CommunitySupport = () => {
             <GlassmorphicButton
               variant="onLight"
               size="large"
-              onClick={scrollToContact} // ✅ Восстановлено: ведёт к форме обратной связи
+              onClick={scrollToContact} // ✅ Исправлено
               className="mt-4 text-white"
             >
               Связаться с нами
