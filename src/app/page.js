@@ -1,5 +1,4 @@
 // nextjs/src/app/page.js
-import Header from '@/app/components/layout/Header';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 
@@ -18,7 +17,6 @@ export default function Home() {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-white">
-        <Header />
         <Breadcrumbs />
         <main>
           <Hero />
@@ -31,7 +29,6 @@ export default function Home() {
           <CommunitySupport />
           <ContactForm />
         </main>
-        {/* ❌ Удалено: <Footer /> — он уже рендерится в layout.js */}
       </div>
     </ErrorBoundary>
   );

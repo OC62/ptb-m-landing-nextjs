@@ -350,3 +350,125 @@ h6 {
   display: none;
   font-size: 2rem;
 }
+
+/* === СТИЛИ ДЛЯ COOKIE BANNER === */
+
+.cookie-banner {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 50;
+  max-width: 42rem;
+  margin: 0 auto;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-banner-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.cookie-banner-text h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.cookie-banner-text p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.cookie-banner-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cookie-accept-btn {
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cookie-accept-btn:hover {
+  background: #15803d;
+}
+
+.cookie-reject-btn {
+  background: white;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cookie-reject-btn:hover {
+  background: #f9fafb;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+  .cookie-banner {
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.75rem;
+  }
+  
+  .cookie-banner-content {
+    flex-direction: column;
+  }
+  
+  .cookie-banner-actions {
+    width: 100%;
+  }
+  
+  .cookie-accept-btn,
+  .cookie-reject-btn {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+/* Ссылка в тексте */
+.cookie-link {
+  color: #2563eb;
+  text-decoration: underline;
+  font-size: 0.75rem;
+}
+
+.cookie-link:hover {
+  color: #1d4ed8;
+}

@@ -5,7 +5,7 @@ import Preloader from '@/components/ui/Preloader';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Script from 'next/script';
-import Image from 'next/image'; // ✅ Для Pixel-tracking в noscript
+import Image from 'next/image';
 import CookieBanner from '@/components/layout/CookieBanner';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -89,10 +89,12 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <Preloader />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <CookieBanner />
+        <div className="main-content">
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <CookieBanner />
+        </div>
         <Script src="https://smartcaptcha.yandexcloud.net/captcha.js" strategy="beforeInteractive" async defer />
         <Script
           id="yandex-metrika"
