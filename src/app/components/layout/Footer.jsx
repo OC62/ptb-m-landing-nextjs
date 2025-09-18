@@ -2,10 +2,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const Footer = () => {
   const [isClient, setIsClient] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setIsClient(true);
@@ -64,69 +67,69 @@ const Footer = () => {
     {
       title: 'О компании',
       links: [
-        { name: 'О нас', href: '#about' },
-        { name: 'Преимущества', href: '#about' },
-        { name: 'Лицензии', href: '#licenses' },
-        { name: 'Партнеры', href: '#partners' },
+        { name: 'О нас', href: '/about' },
+        { name: 'Преимущества', href: '/about' },
+        { name: 'Лицензии', href: '/licenses' },
+        { name: 'Партнеры', href: '/partners' },
       ],
     },
     {
       title: 'Услуги',
       links: [
-        { name: 'Все услуги', href: '#services' },
-        { name: 'Аудит безопасности', href: '#services' },
-        { name: 'Мониторинг угроз', href: '#services' },
-        { name: 'Обучение персонала', href: '#services' },
-        { name: 'Техническое оснащение', href: '#services' },
+        { name: 'Все услуги', href: '/services' },
+        { name: 'Аудит безопасности', href: '/services' },
+        { name: 'Мониторинг угроз', href: '/services' },
+        { name: 'Обучение персонала', href: '/services' },
+        { name: 'Техническое оснащение', href: '/services' },
       ],
     },
     {
       title: 'Проекты',
       links: [
-        { name: 'Наши кейсы', href: '#cases' },
-        { name: 'Реализованные проекты', href: '#cases' },
-        { name: 'Социальная ответственность', href: '#community' },
+        { name: 'Наши кейсы', href: '/cases' },
+        { name: 'Реализованные проекты', href: '/cases' },
+        { name: 'Социальная ответственность', href: '/community' },
       ],
     },
     {
       title: 'Карьера',
       links: [
-        { name: 'Текущие вакансии', href: '#careers' },
-        { name: 'Карьера в компании', href: '#careers' },
+        { name: 'Текущие вакансии', href: '/careers' },
+        { name: 'Карьера в компании', href: '/careers' },
       ],
     },
   ];
 
   const scrollToSection = (sectionId) => {
-    if (typeof window === 'undefined') return;
     const element = document.getElementById(sectionId.replace('#', ''));
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const elementPosition =
+        element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
     }
   };
 
   const handleEmailClick = (e) => {
     e.preventDefault();
-    if (typeof window !== 'undefined') {
-      window.location.href = 'mailto:dtsm.rnd@gmail.com';
-    }
+    window.location.href = 'mailto:dtsm.rnd@gmail.com';
   };
 
   const handlePhoneClick = (e) => {
     e.preventDefault();
-    if (typeof window !== 'undefined') {
-      window.location.href = 'tel:+79176197981';
-    }
+    window.location.href = 'tel:+79176197981';
   };
 
   const handleAddressClick = (e) => {
     e.preventDefault();
-    if (typeof window !== 'undefined') {
-      window.open(
-        'https://yandex.ru/maps/?text=Ростов-на-Дону, ул. Большая Садовая, 102',
-        '_blank'
-      );
-    }
+    window.open(
+      'https://yandex.ru/maps/?text=Ростов-на-Дону, ул. Большая Садовая, 102',
+      '_blank'
+    );
   };
 
   // Не рендерим часть, зависящую от window, на сервере
@@ -145,7 +148,9 @@ const Footer = () => {
                 alt="Логотип ООО ПТБ-М"
                 className="h-8"
               />
-              <span className="text-2xl font-bold">ООО "ПТБ-М"</span>
+              <span className="text-2xl lg:text-base font-bold text-primary">
+                ООО "ПТБ-М"
+              </span>
             </div>
             <p className="text-gray-400 mb-6 max-w-md">
               Комплексное обеспечение транспортной безопасности для объектов
@@ -173,15 +178,26 @@ const Footer = () => {
               <ul className="space-y-2">
                 {group.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection(link.href);
-                      }}
-                      className="text-gray-400 hover:text-white transition-colors text-left w-full"
-                    >
-                      {link.name}
-                    </button>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        href={link.href}
+                        className={`block w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors whitespace-normal ${
+                          pathname === link.href ? 'text-primary font-medium' : ''
+                        }`}
+                      >
+                        {link.name}
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection(link.href);
+                        }}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors whitespace-normal"
+                      >
+                        {link.name}
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
