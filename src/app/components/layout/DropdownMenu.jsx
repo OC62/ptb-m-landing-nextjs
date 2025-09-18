@@ -1,11 +1,11 @@
 // nextjs/src/app/components/layout/DropdownMenu.jsx
 'use client';
 
-import { motion } from 'framer-motion'; // ✅ Добавлено
+import { motion } from 'framer-motion'; // ✅ Добавили импорт motion
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
-const DropdownMenu = ({ item, scrollToSection, setIsMenuOpen }) => {
+const DropdownMenu = ({ item, scrollToSection, setIsMenuOpen, pathname }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({
     vertical: 'bottom',
