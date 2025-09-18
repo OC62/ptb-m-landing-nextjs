@@ -8,13 +8,10 @@ const Preloader = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Скрываем прелоадер через 1.5 секунды
+    // Прелоадер скрывается автоматически спустя 1.5 секунды
     const timer = setTimeout(() => {
       setIsVisible(false);
     }, 1500);
-
-    // Альтернатива: можно слушать событие window.onload
-    // window.addEventListener('load', () => setIsVisible(false));
 
     return () => clearTimeout(timer);
   }, []);
@@ -22,14 +19,14 @@ const Preloader = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-500">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500">
       <Image
-        src="/images/loader.svg" // Путь к SVG в public/images/
+        src="/images/preloader-pitbm.svg" // 👈 Новый путь к нашему SVG-изображению
         alt="Загрузка сайта..."
         width={64}
         height={64}
-        className="animate-spin" // Добавляем CSS-анимацию вращения (на всякий случай)
-        priority={true} // Приоритетная загрузка
+        className="transition-all ease-in-out duration-500"
+        priority={true}
         aria-hidden="true"
       />
     </div>
