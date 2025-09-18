@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
@@ -12,6 +12,7 @@ const Header = () => {
   const [isMobileView, setIsMobileView] = useState(false);
   const headerRef = useRef(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const checkMobileView = () => {
@@ -33,40 +34,31 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
-  const scrollToSection = (sectionId) => {
+  // ✅ Исправленная функция прокрутки/перехода
+  const handleNavigation = (href) => {
     setIsMenuOpen(false);
-    setTimeout(() => {
-      const id = sectionId.startsWith('#') ? sectionId.slice(1) : sectionId;
-      const element = document.getElementById(id);
-      if (element) {
-        const headerHeight = headerRef.current?.offsetHeight || 0;
-        const elementPosition =
-          element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerHeight;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        });
-      }
-    }, 100);
-  };
 
-  // Функция для определения href по названию раздела
-  const getHrefForSection = (sectionName) => {
-    switch (sectionName) {
-      case 'О компании':
-        return '/about';
-      case 'Услуги':
-        return '/services';
-      case 'Проекты':
-        return '/cases';
-      case 'Вакансии':
-        return '/careers';
-      case 'Контакты':
-        return '/contacts';
-      default:
-        return '/';
+    // Если href начинается с # — прокручиваем на текущей странице
+    if (href.startsWith('#')) {
+      setTimeout(() => {
+        const id = href.slice(1);
+        const element = document.getElementById(id);
+        if (element) {
+          const headerHeight = headerRef.current?.offsetHeight || 0;
+          const elementPosition =
+            element.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerHeight;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      }, 100);
+      return;
     }
+
+    // Если href — это путь (например, /about) — переходим на страницу
+    router.push(href);
   };
 
   const navItems = [
@@ -75,8 +67,8 @@ const Header = () => {
       name: 'О компании',
       href: '/about',
       submenu: [
-        { name: 'О нас', href: '/about' },
-        { name: 'Преимущества', href: '/about' },
+        { name: 'О нас', href: '#about' },
+        { name: 'Преимущества', href: '#about' },
         { name: 'Лицензии', href: '/licenses' },
         { name: 'Партнеры', href: '/partners' },
       ],
@@ -85,19 +77,19 @@ const Header = () => {
       name: 'Услуги',
       href: '/services',
       submenu: [
-        { name: 'Все услуги', href: '/services' },
-        { name: 'Аудит безопасности', href: '/services' },
-        { name: 'Мониторинг угроз', href: '/services' },
-        { name: 'Обучение персонала', href: '/services' },
-        { name: 'Техническое оснащение', href: '/services' },
+        { name: 'Все услуги', href: '#services' },
+        { name: 'Аудит безопасности', href: '#services' },
+        { name: 'Мониторинг угроз', href: '#services' },
+        { name: 'Обучение персонала', href: '#services' },
+        { name: 'Техническое оснащение', href: '#services' },
       ],
     },
     {
       name: 'Проекты',
       href: '/cases',
       submenu: [
-        { name: 'Наши кейсы', href: '/cases' },
-        { name: 'Реализованные проекты', href: '/cases' },
+        { name: 'Наши кейсы', href: '#cases' },
+        { name: 'Реализованные проекты', href: '#cases' },
         { name: 'Социальная ответственность', href: '/community' },
       ],
     },
@@ -105,11 +97,11 @@ const Header = () => {
       name: 'Вакансии',
       href: '/careers',
       submenu: [
-        { name: 'Текущие вакансии', href: '/careers' },
-        { name: 'Карьера в компании', href: '/careers' },
+        { name: 'Текущие вакансии', href: '#careers' },
+        { name: 'Карьера в компании', href: '#careers' },
       ],
     },
-    { name: 'Контакты', href: '/contacts' },
+    { name: 'Контакты', href: '#contact' },
   ];
 
   // Компонент выпадающего меню
@@ -144,11 +136,9 @@ const Header = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {/* Заголовок с возможностью перехода по клику */}
-        <Link
-          href={item.href}
+        <button
           className="flex items-center text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 group"
-          onClick={() => setIsMenuOpen(false)}
+          onClick={() => handleNavigation(item.href)}
         >
           {item.name}
           <svg
@@ -158,8 +148,7 @@ const Header = () => {
           >
             <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
           </svg>
-        </Link>
-        
+        </button>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -174,16 +163,15 @@ const Header = () => {
             onMouseLeave={handleMouseLeave}
           >
             {item.submenu.map((subItem, index) => (
-              <Link
+              <button
                 key={index}
-                href={subItem.href}
+                onClick={() => handleNavigation(subItem.href)}
                 className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
                   pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''
                 }`}
-                onClick={() => setIsMenuOpen(false)}
               >
                 {subItem.name}
-              </Link>
+              </button>
             ))}
           </motion.div>
         )}
@@ -202,10 +190,9 @@ const Header = () => {
           {/* Логотип с названием компании */}
           <div
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={() => scrollToSection('#hero')}
+            onClick={() => handleNavigation('/')}
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
-            {/* ✅ Исправлены стили названия организации */}
             <span className="header-company-name">
               ООО "ПТБ-М"
             </span>
@@ -223,16 +210,15 @@ const Header = () => {
                     item={item}
                   />
                 ) : (
-                  <Link
+                  <button
                     key={index}
-                    href={item.href}
+                    onClick={() => handleNavigation(item.href)}
                     className={`text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 ${
                       pathname === item.href ? 'text-primary font-bold' : ''
                     }`}
-                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </Link>
+                  </button>
                 )
               )}
             </div>
@@ -242,7 +228,7 @@ const Header = () => {
           <GlassmorphicButton
             variant="onWhite"
             size="large"
-            onClick={() => scrollToSection('#contact')}
+            onClick={() => handleNavigation('#contact')}
             className={`${isMobileView ? 'hidden' : 'block'} text-xs`}
           >
             Получить консультацию
@@ -294,11 +280,9 @@ const Header = () => {
                 <div key={index}>
                   {item.submenu ? (
                     <div>
-                      {/* Заголовок с возможностью перехода по клику */}
-                      <Link
-                        href={item.href}
+                      <button
                         className="flex items-center w-full text-left px-2 py-2 text-gray-700 hover:text-primary font-medium transition-colors"
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() => handleNavigation(item.href)}
                       >
                         {item.name}
                         <svg
@@ -308,39 +292,35 @@ const Header = () => {
                         >
                           <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
                         </svg>
-                      </Link>
+                      </button>
                       <div className="pl-4 space-y-2">
                         {item.submenu.map((subItem, subIndex) => (
-                          <Link
+                          <button
                             key={subIndex}
-                            href={subItem.href}
-                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors ${
-                              pathname === subItem.href ? 'text-primary font-medium' : ''
-                            }`}
-                            onClick={() => setIsMenuOpen(false)}
+                            onClick={() => handleNavigation(subItem.href)}
+                            className="block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors"
                           >
                             {subItem.name}
-                          </Link>
+                          </button>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <Link
-                      href={item.href}
+                    <button
+                      onClick={() => handleNavigation(item.href)}
                       className={`block text-gray-700 hover:text-primary font-medium py-2 px-2 w-full text-left transition-colors ${
                         pathname === item.href ? 'text-primary font-bold' : ''
                       }`}
-                      onClick={() => setIsMenuOpen(false)}
                     >
                       {item.name}
-                    </Link>
+                    </button>
                   )}
                 </div>
               ))}
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={() => scrollToSection('#contact')}
+                onClick={() => handleNavigation('#contact')}
                 className="w-full mt-4"
               >
                 Получить консультацию
