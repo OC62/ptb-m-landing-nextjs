@@ -4,14 +4,14 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion'; // ✅ Добавлено
+import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
   const headerRef = useRef(null);
-  const pathname = usePathname(); // ✅ Добавлено
+  const pathname = usePathname();
 
   useEffect(() => {
     const checkMobileView = () => {
@@ -49,6 +49,24 @@ const Header = () => {
         });
       }
     }, 100);
+  };
+
+  // Функция для определения href по названию раздела
+  const getHrefForSection = (sectionName) => {
+    switch (sectionName) {
+      case 'О компании':
+        return '/about';
+      case 'Услуги':
+        return '/services';
+      case 'Проекты':
+        return '/cases';
+      case 'Вакансии':
+        return '/careers';
+      case 'Контакты':
+        return '/contacts';
+      default:
+        return '/';
+    }
   };
 
   const navItems = [
@@ -94,15 +112,9 @@ const Header = () => {
     { name: 'Контакты', href: '/contacts' },
   ];
 
-  // ✅ Компонент выпадающего меню
+  // Компонент выпадающего меню
   const DropdownMenu = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [position, setPosition] = useState({
-      vertical: 'bottom',
-      horizontal: 'left',
-    });
-    const dropdownRef = useRef(null);
-    const buttonRef = useRef(null);
     const timeoutRef = useRef(null);
 
     const handleMouseEnter = () => {
@@ -126,38 +138,17 @@ const Header = () => {
       };
     }, []);
 
-    useEffect(() => {
-      if (isOpen && dropdownRef.current && buttonRef.current) {
-        const dropdownRect = dropdownRef.current.getBoundingClientRect();
-        const buttonRect = buttonRef.current.getBoundingClientRect();
-        const spaceBelow = window.innerHeight - buttonRect.bottom;
-        const spaceAbove = buttonRect.top;
-        const verticalPosition =
-          spaceBelow < dropdownRect.height && spaceAbove > dropdownRect.height
-            ? 'top'
-            : 'bottom';
-        const spaceRight = window.innerWidth - buttonRect.left;
-        const spaceLeft = buttonRect.right;
-        let horizontalPosition = 'left';
-        if (spaceRight < dropdownRect.width && spaceLeft > dropdownRect.width) {
-          horizontalPosition = 'right';
-        }
-        setPosition({
-          vertical: verticalPosition,
-          horizontal: horizontalPosition,
-        });
-      }
-    }, [isOpen]);
-
     return (
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <button
-          ref={buttonRef}
+        {/* Заголовок с возможностью перехода по клику */}
+        <Link
+          href={item.href}
           className="flex items-center text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 group"
+          onClick={() => setIsMenuOpen(false)}
         >
           {item.name}
           <svg
@@ -167,18 +158,14 @@ const Header = () => {
           >
             <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
           </svg>
-        </button>
+        </Link>
+        
         {isOpen && (
           <motion.div
-            ref={dropdownRef}
-            initial={{ opacity: 0, y: position.vertical === 'bottom' ? -10 : 10 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1 }}
-            className={`absolute w-56 bg-white rounded-md shadow-xl py-1 z-[9999] border border-gray-100 ${
-              position.vertical === 'bottom'
-                ? 'top-full mt-1'
-                : 'bottom-full mb-1'
-            } ${position.horizontal === 'right' ? 'right-0' : 'left-0'}`}
+            className="absolute w-56 bg-white rounded-md shadow-xl py-1 z-[9999] border border-gray-100 top-full mt-1 left-0"
             style={{
               maxHeight: 'calc(100vh - 100px)',
               overflowY: 'auto',
@@ -186,59 +173,18 @@ const Header = () => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            {item.submenu.map((subItem, index) => {
-              // Определяем путь для подменю
-              let href = '/';
-              switch (subItem.name) {
-                case 'О нас':
-                case 'Преимущества':
-                  href = '/about';
-                  break;
-                case 'Лицензии':
-                  href = '/licenses';
-                  break;
-                case 'Партнеры':
-                  href = '/partners';
-                  break;
-                case 'Все услуги':
-                case 'Аудит безопасности':
-                case 'Мониторинг угроз':
-                case 'Обучение персонала':
-                case 'Техническое оснащение':
-                  href = '/services';
-                  break;
-                case 'Наши кейсы':
-                case 'Реализованные проекты':
-                  href = '/cases';
-                  break;
-                case 'Социальная ответственность':
-                  href = '/community';
-                  break;
-                case 'Текущие вакансии':
-                case 'Карьера в компании':
-                  href = '/careers';
-                  break;
-                default:
-                  href = '/';
-              }
-
-              const isActive = pathname === href;
-
-              return (
-                <Link
-                  key={index}
-                  href={href}
-                  className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
-                    isActive
-                      ? 'bg-blue-50 text-primary font-medium'
-                      : ''
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {subItem.name}
-                </Link>
-              );
-            })}
+            {item.submenu.map((subItem, index) => (
+              <Link
+                key={index}
+                href={subItem.href}
+                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
+                  pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {subItem.name}
+              </Link>
+            ))}
           </motion.div>
         )}
       </div>
@@ -259,6 +205,7 @@ const Header = () => {
             onClick={() => scrollToSection('#hero')}
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
+            {/* ✅ Исправлены стили названия организации */}
             <span className="text-xl lg:text-base font-bold text-primary">
               ООО "ПТБ-М"
             </span>
@@ -347,12 +294,11 @@ const Header = () => {
                 <div key={index}>
                   {item.submenu ? (
                     <div>
-                      <button
+                      {/* Заголовок с возможностью перехода по клику */}
+                      <Link
+                        href={item.href}
                         className="flex items-center w-full text-left px-2 py-2 text-gray-700 hover:text-primary font-medium transition-colors"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          scrollToSection(item.href);
-                        }}
+                        onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
                         <svg
@@ -362,19 +308,19 @@ const Header = () => {
                         >
                           <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
                         </svg>
-                      </button>
+                      </Link>
                       <div className="pl-4 space-y-2">
                         {item.submenu.map((subItem, subIndex) => (
-                          <button
+                          <Link
                             key={subIndex}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              scrollToSection(subItem.href);
-                            }}
-                            className="block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors"
+                            href={subItem.href}
+                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors ${
+                              pathname === subItem.href ? 'text-primary font-medium' : ''
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
                           >
                             {subItem.name}
-                          </button>
+                          </Link>
                         ))}
                       </div>
                     </div>
