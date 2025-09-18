@@ -34,10 +34,27 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
-  // ✅ Исправленная функция прокрутки/перехода
+  const scrollToSection = (sectionId) => {
+    setIsMenuOpen(false);
+    setTimeout(() => {
+      const id = sectionId.startsWith('#') ? sectionId.slice(1) : sectionId;
+      const element = document.getElementById(id);
+      if (element) {
+        const headerHeight = headerRef.current?.offsetHeight || 0;
+        const elementPosition =
+          element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerHeight;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+    }, 100);
+  };
+
   const handleNavigation = (href) => {
     setIsMenuOpen(false);
-
+    
     // Если href начинается с # — прокручиваем на текущей странице
     if (href.startsWith('#')) {
       setTimeout(() => {
@@ -52,12 +69,15 @@ const Header = () => {
             top: offsetPosition,
             behavior: 'smooth',
           });
+        } else {
+          // Если элемент не найден — переходим на главную с якорем
+          router.push(`/${href}`);
         }
       }, 100);
       return;
     }
 
-    // Если href — это путь (например, /about) — переходим на страницу
+    // Если href — это путь — переходим на страницу
     router.push(href);
   };
 
@@ -67,8 +87,8 @@ const Header = () => {
       name: 'О компании',
       href: '/about',
       submenu: [
-        { name: 'О нас', href: '#about' },
-        { name: 'Преимущества', href: '#about' },
+        { name: 'О нас', href: '/about' },
+        { name: 'Преимущества', href: '/about' },
         { name: 'Лицензии', href: '/licenses' },
         { name: 'Партнеры', href: '/partners' },
       ],
@@ -77,19 +97,19 @@ const Header = () => {
       name: 'Услуги',
       href: '/services',
       submenu: [
-        { name: 'Все услуги', href: '#services' },
-        { name: 'Аудит безопасности', href: '#services' },
-        { name: 'Мониторинг угроз', href: '#services' },
-        { name: 'Обучение персонала', href: '#services' },
-        { name: 'Техническое оснащение', href: '#services' },
+        { name: 'Все услуги', href: '/services' },
+        { name: 'Аудит безопасности', href: '/services' },
+        { name: 'Мониторинг угроз', href: '/services' },
+        { name: 'Обучение персонала', href: '/services' },
+        { name: 'Техническое оснащение', href: '/services' },
       ],
     },
     {
       name: 'Проекты',
       href: '/cases',
       submenu: [
-        { name: 'Наши кейсы', href: '#cases' },
-        { name: 'Реализованные проекты', href: '#cases' },
+        { name: 'Наши кейсы', href: '/cases' },
+        { name: 'Реализованные проекты', href: '/cases' },
         { name: 'Социальная ответственность', href: '/community' },
       ],
     },
@@ -97,11 +117,11 @@ const Header = () => {
       name: 'Вакансии',
       href: '/careers',
       submenu: [
-        { name: 'Текущие вакансии', href: '#careers' },
-        { name: 'Карьера в компании', href: '#careers' },
+        { name: 'Текущие вакансии', href: '/careers' },
+        { name: 'Карьера в компании', href: '/careers' },
       ],
     },
-    { name: 'Контакты', href: '#contact' },
+    { name: 'Контакты', href: '/contacts' },
   ];
 
   // Компонент выпадающего меню
@@ -166,9 +186,7 @@ const Header = () => {
               <button
                 key={index}
                 onClick={() => handleNavigation(subItem.href)}
-                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
-                  pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''
-                }`}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal"
               >
                 {subItem.name}
               </button>
@@ -190,7 +208,7 @@ const Header = () => {
           {/* Логотип с названием компании */}
           <div
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={() => handleNavigation('/')}
+            onClick={() => scrollToSection('#hero')}
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
             <span className="header-company-name">
@@ -228,7 +246,7 @@ const Header = () => {
           <GlassmorphicButton
             variant="onWhite"
             size="large"
-            onClick={() => handleNavigation('#contact')}
+            onClick={() => scrollToSection('#contact')}
             className={`${isMobileView ? 'hidden' : 'block'} text-xs`}
           >
             Получить консультацию
@@ -320,7 +338,7 @@ const Header = () => {
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={() => handleNavigation('#contact')}
+                onClick={() => scrollToSection('#contact')}
                 className="w-full mt-4"
               >
                 Получить консультацию

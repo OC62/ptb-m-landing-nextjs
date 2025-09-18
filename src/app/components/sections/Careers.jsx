@@ -1,16 +1,18 @@
-"use client";
+// nextjs/src/app/components/sections/Careers.jsx
+'use client';
+
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const Careers = () => {
   const [openJobId, setOpenJobId] = useState(null);
+  const router = useRouter();
 
   const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // Переходим на главную страницу с якорем
+    router.push('/#contact');
   };
 
   const toggleJob = (id) => {
@@ -231,12 +233,12 @@ const Careers = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="text-center mt-16 p-6 md:p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl"
+          className="text-center mt-16 p-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl"
         >
-          <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+          <h3 className="text-2xl font-bold text-gray-800 mb-2">
             Не нашли подходящую вакансию?
           </h3>
-          <p className="text-gray-600 mb-6 text-sm md:text-base">
+          <p className="text-gray-600 mb-6">
             Присылайте ваше резюме, мы свяжемся с вами при появлении подходящих
             предложений
           </p>
