@@ -1,5 +1,8 @@
-"use client";
+// nextjs/src/app/components/sections/ServicesGrid.jsx
+'use client';
+
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation'; // ✅ Добавлено
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 // Массив с услугами (вынесен за пределы компонента)
@@ -79,12 +82,11 @@ const services = [
 ];
 
 const ServicesGrid = () => {
-  // Функция для плавной прокрутки к секции контактов
+  const router = useRouter(); // ✅ Добавлено
+
+  // ✅ Исправлено: используем useRouter для перехода на главную с якорем
   const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    router.push('/#contact'); // ✅ Переход на главную с якорем
   };
 
   return (
@@ -136,7 +138,7 @@ const ServicesGrid = () => {
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={scrollToContact}
+                onClick={scrollToContact} // ✅ Используем исправленную функцию
                 className="w-full mt-auto"
               >
                 Узнать больше

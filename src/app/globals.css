@@ -137,6 +137,7 @@ h6 {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
   user-select: none;
+  line-height: 1; /* Улучшаем вертикальное выравнивание текста */
 }
 
 .letters-loading:before {
