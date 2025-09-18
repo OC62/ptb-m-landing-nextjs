@@ -9,10 +9,10 @@ const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // После трех секунд устанавливаем флажок завершения загрузки
+    // После семи секунд устанавливаем флажок завершения загрузки
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 7000); // Изменено на 7 секунд
 
     // Воспроизводим звук
     const sound = new Howl({
