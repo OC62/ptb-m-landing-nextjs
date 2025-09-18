@@ -123,111 +123,23 @@ h6 {
   background: rgba(255, 255, 255, 0.95);
 }
 
+/* ... остальные ваши стили ... */
+
 /* Global styles for the preloader */
 .animation-preloader {
-  position: absolute;
-  z-index: 100;
-}
-
-/* Новый класс для объемного вращения */
-.rotate-Y {
-  animation: volumeSpin 4s infinite linear;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-/* Анимация объема и вращения */
-@keyframes volumeSpin {
-  0% {
-    transform: perspective(1000px) rotateY(0deg) scale(1);
-  }
-  50% {
-    transform: perspective(1000px) rotateY(180deg) scale(1.1);
-  }
-  100% {
-    transform: perspective(1000px) rotateY(360deg) scale(1);
-  }
-}
-
-/* Новая анимация текста */
-.txt-loading {
-  font: bold 5em 'Montserrat', sans-serif;
-  text-align: center;
-  user-select: none;
-  line-height: 1;
-  position: relative;
-  height: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.letters-loading {
-  position: relative;
-  display: inline-block;
-  width: 0.8em;
-  height: 1em;
-  margin: 0 0.1em;
-}
-
-.letters-loading:before {
-  animation: letters-loading 4s infinite;
-  color: #fff;
-  content: attr(data-text-preloader);
-  left: 0;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  transform: rotateY(-90deg) scale(0.5);
-  transform-origin: center;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-@keyframes letters-loading {
-  0%, 75%, 100% {
-    opacity: 0;
-    transform: rotateY(-90deg) scale(0.5);
-  }
-  25%, 50% {
-    opacity: 1;
-    transform: rotateY(0deg) scale(1);
-  }
-}
-
-.letters-loading:nth-child(1):before { animation-delay: 0s; }
-.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
-.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
-.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
-.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
-
-/* Media Queries для адаптивности */
-@media screen and (max-width: 767px) {
-  .txt-loading {
-    font-size: 3.5em;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .txt-loading {
-    font-size: 2em;
-  }
-}
-
-/* Градиентный бэкграунд для прелоадера */
-.preloader-background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(135deg, #007BFF, #0056b3);
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
-  z-index: 9998;
+  z-index: 9999;
 }
 
 @keyframes gradientAnimation {
@@ -242,12 +154,97 @@ h6 {
   }
 }
 
-/* Стили для основного контента */
-.main-content {
-  opacity: 0;
-  transition: opacity 0.5s ease;
+.spinner {
+  animation: spinner 1s infinite linear;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #fff;
+  height: 9em;
+  margin: 0 auto 3.5em auto;
+  width: 9em;
 }
 
-.main-content.loaded {
-  opacity: 1;
+.txt-loading {
+  font: bold 5em 'Montserrat', sans-serif;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  gap: 0.1em;
+}
+
+.letters-loading {
+  color: rgba(255, 255, 255, 0.3);
+  position: relative;
+  display: inline-block;
+  width: 0.8em;
+  height: 1em;
+}
+
+.letters-loading:before {
+  animation: letters-loading 4s infinite;
+  color: #fff;
+  content: attr(data-text-preloader);
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: rotateY(-90deg);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letters-loading:nth-child(1):before { animation-delay: 0s; }
+.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
+.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
+.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
+.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
+
+@keyframes spinner {
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+@keyframes letters-loading {
+  0%, 75%, 100% {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+  25%, 50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 767px) {
+  .spinner {
+    height: 8em;
+    width: 8em;
+  }
+
+  .txt-loading {
+    font-size: 3.5em;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .spinner {
+    height: 7em;
+    width: 7em;
+  }
+
+  .txt-loading {
+    font-size: 2em;
+  }
+}
+
+/* Стиль для скрытия прелоадера */
+.preloader-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease;
 }
