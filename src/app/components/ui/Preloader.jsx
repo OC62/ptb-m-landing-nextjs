@@ -38,7 +38,7 @@ const Preloader = () => {
         audioRef.current.currentTime = 0;
       }
       document.body.classList.add('loaded');
-    }, 5000);
+    }, 9000);
 
     // Очистка
     return () => {
