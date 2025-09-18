@@ -123,20 +123,14 @@ h6 {
   background: rgba(255, 255, 255, 0.95);
 }
 
-/* global styles for the preloader */
+/* Global styles for the preloader */
 .animation-preloader {
   position: absolute;
   z-index: 100;
 }
 
-.spinner {
-  animation: spinner 1s infinite linear;
-  border-radius: 50%;
-  border: 3px solid rgba(0, 0, 0, 0.2);
-  border-top-color: #fff;
-  height: 9em;
-  margin: 0 auto 3.5em auto;
-  width: 9em;
+.rotate-Y {
+  animation: rotateYAnimation 1s infinite linear;
 }
 
 .txt-loading {
@@ -177,13 +171,9 @@ h6 {
   animation-delay: 0.8s;
 }
 
-.letters-loading:nth-child(6):before {
-  animation-delay: 1s;
-}
-
-@keyframes spinner {
+@keyframes rotateYAnimation {
   to {
-    transform: rotateZ(360deg);
+    transform: rotateY(360deg);
   }
 }
 
@@ -200,22 +190,12 @@ h6 {
 
 /* Responsive Styles */
 @media screen and (max-width: 767px) {
-  .spinner {
-    height: 8em;
-    width: 8em;
-  }
-
   .txt-loading {
     font-size: 3.5em;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .spinner {
-    height: 7em;
-    width: 7em;
-  }
-
   .txt-loading {
     font-size: 2em;
   }

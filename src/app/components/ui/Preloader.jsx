@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,9 +19,17 @@ const Preloader = () => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-tr from-[#9ACD32] via-[#F5FFFA] to-[#FFEC8B] transition-opacity duration-500">
       <div className="animation-preloader">
-        <div className="spinner"></div>
+        <Image
+          src="/images/logo.webp"
+          alt="Logo"
+          width={128}
+          height={128}
+          className="rotate-Y animate-spinY"
+          priority={true}
+          aria-hidden="true"
+        />
         <div className="txt-loading">
           <span className="letters-loading" data-text-preloader="П">П</span>
           <span className="letters-loading" data-text-preloader="Т">Т</span>
