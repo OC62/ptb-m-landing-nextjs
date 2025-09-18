@@ -1,5 +1,8 @@
-"use client";
+// nextjs/src/app/components/sections/Licenses.jsx
+'use client';
+
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/navigation'; // ✅ Добавлено
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 // Массив с лицензиями и свидетельствами (вынесен за пределы компонента)
@@ -32,12 +35,11 @@ const licenses = [
 ];
 
 const Licenses = () => {
-  // Функция для плавной прокрутки к секции контактов
+  const router = useRouter(); // ✅ Добавлено
+
+  // ✅ Исправлено: используем useRouter для перехода на главную с якорем
   const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    router.push('/#contact'); // ✅ Переход на главную с якорем
   };
 
   return (

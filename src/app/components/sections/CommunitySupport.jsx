@@ -1,8 +1,18 @@
-"use client";
+// nextjs/src/app/components/sections/CommunitySupport.jsx
+'use client';
+
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import { useRouter } from 'next/navigation';
 
 const CommunitySupport = () => {
+  const router = useRouter();
+
+  const scrollToContacts = () => {
+    // Переходим на главную страницу с якорем
+    router.push('/#contacts');
+  };
+
   return (
     <section id="community" className="relative py-32 md:py-40 bg-gray-50">
       {/* Фон с fallback для SEO */}
@@ -35,7 +45,7 @@ const CommunitySupport = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="max-w-4xl mx-auto text-center text-white"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 text-transparent bg-clip-text">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-200 text-transparent bg-clip-text">
             Поддержка детского спорта
           </h2>
           <p className="text-lg md:text-xl mb-8 bg-gradient-to-r from-blue-100 to-green-200 text-transparent bg-clip-text leading-relaxed">
@@ -58,11 +68,7 @@ const CommunitySupport = () => {
             <GlassmorphicButton
               variant="onLight"
               size="large"
-              aria-label="Связаться с нами для поддержки детского спорта"
-              onClick={() => {
-                const contactSection = document.getElementById('contacts');
-                contactSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }}
+              onClick={scrollToContacts}
               className="mt-4 text-white"
             >
               Связаться с нами

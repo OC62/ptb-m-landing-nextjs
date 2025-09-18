@@ -8,7 +8,10 @@ const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
+    // Проверяем, есть ли consent в localStorage
     const consent = localStorage.getItem('cookie-consent');
+    
+    // Показываем баннер, только если consent ещё не дан
     if (!consent) {
       setShowBanner(true);
     }
@@ -26,6 +29,7 @@ const CookieBanner = () => {
     // Отключить все скрипты аналитики
   };
 
+  // Не показываем баннер на сервере (SSR)
   if (!showBanner) return null;
 
   return (

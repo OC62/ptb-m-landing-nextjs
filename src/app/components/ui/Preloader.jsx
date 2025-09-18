@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { Howl } from 'howler'; // Импортируем библиотеку для воспроизведения звука
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -13,20 +14,31 @@ const Preloader = () => {
       setIsLoading(false);
     }, 3000);
 
-    return () => clearTimeout(loadingTimer);
+    // Воспроизводим звук
+    const sound = new Howl({
+      src: ['/sounds/background.mp3'], // Путь к звуковому файлу
+      loop: true,
+      volume: 0.5,
+    });
+    sound.play();
+
+    return () => {
+      clearTimeout(loadingTimer);
+      sound.stop(); // Остановка звука при завершении прелоадера
+    };
   }, []);
 
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-tr from-[#9ACD32] via-[#F5FFFA] to-[#FFEC8B] transition-opacity duration-500">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-500">
       <div className="flex flex-col items-center gap-4">
         <Image
           src="/images/preloader.png"
           alt="Logo"
           width={128}
           height={128}
-          className="rotate-Y animate-spinY"
+          className="rotate-Z animate-volumeSpin"
           priority={true}
           aria-hidden="true"
         />

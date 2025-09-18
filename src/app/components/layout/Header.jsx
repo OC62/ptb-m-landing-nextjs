@@ -34,6 +34,7 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
+  // ✅ Исправлено: функция прокрутки к секции
   const scrollToSection = (sectionId) => {
     setIsMenuOpen(false);
     setTimeout(() => {
@@ -52,6 +53,7 @@ const Header = () => {
     }, 100);
   };
 
+  // ✅ Исправлено: функция навигации
   const handleNavigation = (href) => {
     setIsMenuOpen(false);
     
@@ -79,6 +81,11 @@ const Header = () => {
 
     // Если href — это путь — переходим на страницу
     router.push(href);
+  };
+
+  // ✅ Новая функция: переход на главную
+  const goToHome = () => {
+    router.push('/');
   };
 
   const navItems = [
@@ -205,10 +212,10 @@ const Header = () => {
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
-          {/* Логотип с названием компании */}
+          {/* ✅ Исправлено: Логотип с названием компании + переход на главную */}
           <div
             className="flex items-center space-x-2 cursor-pointer"
-            onClick={() => scrollToSection('#hero')}
+            onClick={goToHome}
           >
             <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
             <span className="header-company-name">
@@ -242,7 +249,7 @@ const Header = () => {
             </div>
           </nav>
           
-          {/* Кнопка CTA для десктопа */}
+          {/* ✅ Исправлено: Кнопка CTA для десктопа */}
           <GlassmorphicButton
             variant="onWhite"
             size="large"

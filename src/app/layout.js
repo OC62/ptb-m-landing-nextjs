@@ -5,7 +5,7 @@ import Preloader from '@/components/ui/Preloader';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Script from 'next/script';
-import Image from 'next/image'; // ✅ Оставлено для Pixel-tracking
+import Image from 'next/image'; // ✅ Для Pixel-tracking в noscript
 import CookieBanner from '@/components/layout/CookieBanner';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -93,16 +93,7 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <CookieBanner />
-
-        {/* Yandex SmartCaptcha */}
-        <Script
-          src="https://smartcaptcha.yandexcloud.net/captcha.js"
-          strategy="beforeInteractive"
-          async
-          defer
-        />
-
-        {/* Yandex.Metrika */}
+        <Script src="https://smartcaptcha.yandexcloud.net/captcha.js" strategy="beforeInteractive" async defer />
         <Script
           id="yandex-metrika"
           strategy="afterInteractive"
@@ -120,11 +111,8 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
-
-        {/* Yandex.Metrika Pixel (для отслеживания без JS) */}
         <noscript>
           <div>
-            {/* ✅ Используем прямой путь к пикселю Яндекс.Метрики */}
             <Image
               src="https://mc.yandex.ru/watch/103534344"
               width={1}

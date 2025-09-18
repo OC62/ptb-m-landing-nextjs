@@ -129,10 +129,25 @@ h6 {
   z-index: 100;
 }
 
-.rotate-Y {
-  animation: rotateYAnimation 1s infinite linear;
+/* Новый класс для объемного вращения */
+.rotate-Z {
+  animation: volumeSpin 4s infinite linear;
 }
 
+/* Анимация объема и вращения */
+@keyframes volumeSpin {
+  0% {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(180deg) rotateX(30deg) scale(1.1);
+  }
+  100% {
+    transform: perspective(1000px) rotateY(360deg) rotateX(0deg) scale(1);
+  }
+}
+
+/* Новая анимация текста */
 .txt-loading {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
@@ -141,19 +156,25 @@ h6 {
 }
 
 .letters-loading:before {
-  animation: letters-loading 4s infinite;
+  animation: letters-loading 4s infinite alternate;
   color: #fff;
   content: attr(data-text-preloader);
   left: 0;
   opacity: 0;
   position: absolute;
   top: 0;
-  transform: rotateY(-90deg);
+  transform: perspective(1000px) rotateX(-90deg) rotateY(-90deg) scale(0.5); /* Новое начальное положение */
 }
 
-.letters-loading {
-  color: rgba(0, 0, 0, 0.2);
-  position: relative;
+@keyframes letters-loading {
+  0%, 75%, 100% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-90deg) rotateY(-90deg) scale(0.5);
+  }
+  25%, 50% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1); /* Переход к нормальному состоянию */
+  }
 }
 
 .letters-loading:nth-child(2):before {
@@ -172,24 +193,15 @@ h6 {
   animation-delay: 0.8s;
 }
 
-@keyframes rotateYAnimation {
-  to {
-    transform: rotateY(360deg);
-  }
+.letters-loading:nth-child(6):before {
+  animation-delay: 1s;
 }
 
-@keyframes letters-loading {
-  0%, 75%, 100% {
-    opacity: 0;
-    transform: rotateY(-90deg);
-  }
-  25%, 50% {
-    opacity: 1;
-    transform: rotateY(0deg);
-  }
+.letters-loading:nth-child(7):before {
+  animation-delay: 1.2s;
 }
 
-/* Responsive Styles */
+/* Media Queries для адаптивности */
 @media screen and (max-width: 767px) {
   .txt-loading {
     font-size: 3.5em;
@@ -199,5 +211,24 @@ h6 {
 @media screen and (max-width: 500px) {
   .txt-loading {
     font-size: 2em;
+  }
+}
+
+/* Обновленный градиентный бэкграунд */
+body {
+  background: linear-gradient(135deg, #007BFF, #0056b3);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
