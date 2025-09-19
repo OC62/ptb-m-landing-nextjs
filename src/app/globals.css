@@ -140,6 +140,29 @@ h6 {
   animation: gradientAnimation 15s ease infinite;
   z-index: 9999;
   transition: all 0.5s ease;
+  overflow: hidden;
+}
+
+/* Анимация расходящегося круга для исчезновения прелоадера */
+.animation-preloader::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: all 0.8s ease-in-out;
+  opacity: 0;
+}
+
+body.loaded .animation-preloader::before {
+  width: 200vmax;
+  height: 200vmax;
+  opacity: 1;
+  backdrop-filter: blur(10px);
 }
 
 @keyframes gradientAnimation {
@@ -157,9 +180,10 @@ h6 {
 /* Контейнер для изображений прелоадера */
 .preloader-image-container {
   position: relative;
-  width: 450px; /* 180px * 2.5 */
-  height: 450px; /* 180px * 2.5 */
+  width: 450px;
+  height: 450px;
   margin-bottom: 2rem;
+  transition: opacity 0.5s ease;
 }
 
 .preloader-img {
@@ -314,6 +338,7 @@ h6 {
   height: 1em;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.5s ease;
 }
 
 .letters-loading {
@@ -381,15 +406,21 @@ body.loaded .animation-preloader {
   pointer-events: none;
 }
 
+/* Затемняем содержимое прелоадера при исчезновении */
+body.loaded .preloader-image-container,
+body.loaded .txt-loading {
+  opacity: 0;
+}
+
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
-    width: 450px; /* Сохраняем размер 450px для мобильных */
+    width: 450px;
     height: 450px;
   }
   
   .preloader-img {
-    transform: translate(-50%, -50%) scale(2.5); /* Сохраняем масштаб 2.5x для мобильных */
+    transform: translate(-50%, -50%) scale(2.5);
     width: 180px;
     height: 180px;
   }
@@ -401,13 +432,13 @@ body.loaded .animation-preloader {
 
 @media screen and (max-width: 500px) {
   .preloader-image-container {
-    width: 360px; /* Немного уменьшаем контейнер для очень маленьких экранов */
+    width: 360px;
     height: 360px;
   }
   
   .preloader-img {
-    transform: translate(-50%, -50%) scale(2.5); /* Сохраняем масштаб 2.5x */
-    width: 144px; /* 180 * 0.8 */
+    transform: translate(-50%, -50%) scale(2.5);
+    width: 144px;
     height: 144px;
   }
   
@@ -424,7 +455,7 @@ body.loaded .animation-preloader {
   
   .preloader-img {
     transform: translate(-50%, -50%) scale(2.5);
-    width: 120px; /* 180 * 0.67 */
+    width: 120px;
     height: 120px;
   }
 }
