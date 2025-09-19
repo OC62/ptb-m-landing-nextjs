@@ -11,23 +11,23 @@ const Preloader = () => {
   useEffect(() => {
     // Таймеры для различных стадий анимации
     const animationTimers = [
-      setTimeout(() => setAnimationStage(1), 300),   // Окаймление щита
-      setTimeout(() => setAnimationStage(2), 600),   // Фон щита
-      setTimeout(() => setAnimationStage(3), 900),   // "Подразделение" сверху
-      setTimeout(() => setAnimationStage(4), 1200),  // "Транспортной" слева
-      setTimeout(() => setAnimationStage(5), 1500),  // "Безопасности" справа
-      setTimeout(() => setAnimationStage(6), 1800),  // Часть сверху
-      setTimeout(() => setAnimationStage(7), 2100),  // Часть снизу
-      setTimeout(() => setAnimationStage(8), 2400),  // Часть из центра
-      setTimeout(() => setAnimationStage(9), 2700),  // Часть изнутри
-      setTimeout(() => setAnimationStage(10), 3000), // Финальная сборка
+      setTimeout(() => setAnimationStage(1), 400),   // Окаймление щита
+      setTimeout(() => setAnimationStage(2), 800),   // Фон щита
+      setTimeout(() => setAnimationStage(3), 1200),  // "Подразделение" сверху
+      setTimeout(() => setAnimationStage(4), 1600),  // "Транспортной" слева
+      setTimeout(() => setAnimationStage(5), 2000),  // "Безопасности" справа
+      setTimeout(() => setAnimationStage(6), 2400),  // Часть сверху
+      setTimeout(() => setAnimationStage(7), 2800),  // Часть снизу
+      setTimeout(() => setAnimationStage(8), 3200),  // Часть из центра
+      setTimeout(() => setAnimationStage(9), 3600),  // Часть изнутри
+      setTimeout(() => setAnimationStage(10), 4000), // Финальная сборка
     ];
 
-    // Завершение прелоадера через 5 секунд
+    // Завершение прелоадера через 9 секунд
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 5000);
+    }, 9000);
 
     return () => {
       animationTimers.forEach(timer => clearTimeout(timer));
@@ -149,8 +149,8 @@ const Preloader = () => {
                   <Image
                     src={`/images/preloadimg/preloader${num}.png`}
                     alt={`Часть логотипа ${num}`}
-                    width={360}
-                    height={360}
+                    width={540}
+                    height={540}
                     priority
                   />
                 </div>
