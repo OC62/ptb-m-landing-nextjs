@@ -19,8 +19,8 @@ const Preloader = () => {
       500,  // preloader1
       1000, // preloader2  
       1500, // preloader3
-      2000, // preloader5
-      2500, // preloader6
+      2000, // preloader4
+      2500, // preloader5
       3000, // preloader6 (повтор)
       3500, // preloader7
       4000, // preloader9
@@ -83,7 +83,7 @@ const Preloader = () => {
           </div>
         )}
 
-        {/* Preloader5 - появляется слева */}
+        {/* Preloader4 - появляется слева */}
         {currentFrame >= 4 && (
           <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame >= 4 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
             <Image
@@ -96,7 +96,7 @@ const Preloader = () => {
           </div>
         )}
 
-        {/* Preloader6 - появляется справа */}
+        {/* Preloader5 - появляется справа */}
         {currentFrame >= 5 && (
           <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame >= 5 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
             <Image
