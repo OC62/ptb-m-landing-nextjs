@@ -10,11 +10,11 @@ const Preloader = () => {
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 7000);
+    }, 9000);
 
     const backupTimer = setTimeout(() => {
       document.body.classList.add('loaded');
-    }, 8000);
+    }, 10000);
 
     return () => {
       clearTimeout(loadingTimer);
