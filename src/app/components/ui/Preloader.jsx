@@ -1,102 +1,215 @@
 // nextjs/src/app/components/ui/Preloader.jsx
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-  const audioRef = useRef(null);
+  const [currentFrame, setCurrentFrame] = useState(0);
 
   useEffect(() => {
-    // Создаем аудио элемент
-    const audio = new Audio('/sounds/background.mp3');
-    audio.loop = true;
-    audio.volume = 0.3;
-    audioRef.current = audio;
-
-    const playAudio = async () => {
-      try {
-        await audio.play();
-        setIsAudioPlaying(true);
-      } catch (error) {
-        console.warn('Автовоспроизведение заблокировано:', error);
-      }
-    };
-
-    playAudio();
-
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-      // Добавляем класс к body для показа основного контента
       document.body.classList.add('loaded');
     }, 7000);
 
-    // Резервный таймер на случай если основной не сработает
-    const backupTimer = setTimeout(() => {
-      document.body.classList.add('loaded');
-    }, 8000);
+    // Анимация кадров
+    const frameIntervals = [
+      500,  // preloader1
+      1000, // preloader2  
+      1500, // preloader3
+      2000, // preloader5
+      2500, // preloader6
+      3000, // preloader6 (повтор)
+      3500, // preloader7
+      4000, // preloader9
+      4500  // preloader8
+    ];
+
+    frameIntervals.forEach((interval, index) => {
+      setTimeout(() => {
+        setCurrentFrame(index + 1);
+      }, interval);
+    });
 
     return () => {
       clearTimeout(loadingTimer);
-      clearTimeout(backupTimer);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
     };
   }, []);
-
-  const handleUserInteraction = async () => {
-    if (!isAudioPlaying && audioRef.current) {
-      try {
-        await audioRef.current.play();
-        setIsAudioPlaying(true);
-      } catch (error) {
-        console.error('Ошибка воспроизведения:', error);
-      }
-    }
-  };
 
   if (!isLoading) return null;
 
   return (
-    <div 
-      className="animation-preloader" 
-      onClick={handleUserInteraction}
-      style={{ cursor: !isAudioPlaying ? 'pointer' : 'default' }}
-    >
-      {!isAudioPlaying && (
-        <div className="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-          🔊 Нажмите для включения звука
+    <div className="animation-preloader">
+      {/* Анимированные изображения */}
+      <div className="relative w-full h-full">
+        {/* Preloader1 - меняющаяся прозрачность */}
+        {currentFrame >= 1 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${currentFrame === 1 ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/images/preloadimg/preloader1.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader2 - меняющаяся прозрачность */}
+        {currentFrame >= 2 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${currentFrame === 2 ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/images/preloadimg/preloader2.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader3 - опускается сверху */}
+        {currentFrame >= 3 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 3 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader3.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader5 - появляется слева */}
+        {currentFrame >= 4 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 4 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader5.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader6 - появляется справа */}
+        {currentFrame >= 5 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 5 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader6.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader6 (повтор) - сверху */}
+        {currentFrame >= 6 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 6 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader6.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader7 - снизу */}
+        {currentFrame >= 7 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 7 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader7.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader9 - из центра с масштабированием */}
+        {currentFrame >= 8 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 8 ? 'opacity-100 scale-100' : 'opacity-0 scale-150'}`}>
+            <Image
+              src="/images/preloadimg/preloader9.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+
+        {/* Preloader8 - изнутри с масштабированием */}
+        {currentFrame >= 9 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 9 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+            <Image
+              src="/images/preloadimg/preloader8.png"
+              alt=""
+              width={200}
+              height={200}
+              className="object-contain"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Анимированный текст из изображений */}
+      <div className="txt-loading-images">
+        <div className="letters-loading-image" data-letter="1">
+          <Image
+            src="/images/letterpre/letter1.png"
+            alt="П"
+            width={80}
+            height={80}
+            className="letter-image"
+          />
         </div>
-      )}
-
-      <div className="mb-8">
-        <Image
-          src="/images/preloader.png"
-          alt="Логотип ПТБ-М"
-          width={120}
-          height={120}
-          className="rotate-Y"
-          priority
-        />
+        <div className="letters-loading-image" data-letter="2">
+          <Image
+            src="/images/letterpre/letter2.png"
+            alt="Т"
+            width={80}
+            height={80}
+            className="letter-image"
+          />
+        </div>
+        <div className="letters-loading-image" data-letter="3">
+          <Image
+            src="/images/letterpre/letter3.png"
+            alt="Б"
+            width={80}
+            height={80}
+            className="letter-image"
+          />
+        </div>
+        <div className="letters-loading-image" data-letter="4">
+          <Image
+            src="/images/letterpre/letter4.png"
+            alt="-"
+            width={80}
+            height={80}
+            className="letter-image"
+          />
+        </div>
+        <div className="letters-loading-image" data-letter="5">
+          <Image
+            src="/images/letterpre/letter5.png"
+            alt="М"
+            width={80}
+            height={80}
+            className="letter-image"
+          />
+        </div>
       </div>
-      
-      <div className="txt-loading">
-        <span className="letters-loading" data-text-preloader="П">П</span>
-        <span className="letters-loading" data-text-preloader="Т">Т</span>
-        <span className="letters-loading" data-text-preloader="Б">Б</span>
-        <span className="letters-loading" data-text-preloader="-">-</span>
-        <span className="letters-loading" data-text-preloader="М">М</span>
-      </div>
-
-      <audio ref={audioRef} className="hidden" />
     </div>
   );
 };

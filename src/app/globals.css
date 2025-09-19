@@ -139,7 +139,6 @@ h6 {
   background-size: 400% 400%;
   animation: gradientAnimation 15s ease infinite;
   z-index: 9999;
-  cursor: pointer;
   transition: all 0.5s ease;
 }
 
@@ -155,48 +154,25 @@ h6 {
   }
 }
 
-/* Анимация объемного вращения логотипа */
-@keyframes volumeSpin {
-  0% {
-    transform: perspective(1000px) rotateY(0deg) scale(1);
-  }
-  50% {
-    transform: perspective(1000px) rotateY(180deg) scale(1.1);
-  }
-  100% {
-    transform: perspective(1000px) rotateY(360deg) scale(1);
-  }
-}
-
-.rotate-Y {
-  animation: volumeSpin 4s infinite linear;
-  transform-style: preserve-3d;
-}
-
-/* Анимация текста */
-.txt-loading {
-  font: bold 5em 'Montserrat', sans-serif;
-  text-align: center;
-  user-select: none;
+/* Анимация для изображений букв */
+.txt-loading-images {
   display: flex;
-  gap: 0.1em;
-  height: 1em;
+  gap: 10px;
   justify-content: center;
   align-items: center;
+  margin-top: 30px;
 }
 
-.letters-loading {
-  color: rgba(255, 255, 255, 0.3);
+.letters-loading-image {
   position: relative;
-  display: inline-block;
-  width: 0.8em;
-  height: 1em;
+  width: 80px;
+  height: 80px;
+  opacity: 0.3;
 }
 
-.letters-loading:before {
-  animation: letters-loading 4s infinite;
-  color: #fff;
-  content: attr(data-text-preloader);
+.letters-loading-image:before {
+  animation: letters-image-loading 4s infinite;
+  content: '';
   left: 0;
   opacity: 0;
   position: absolute;
@@ -209,13 +185,13 @@ h6 {
   justify-content: center;
 }
 
-.letters-loading:nth-child(1):before { animation-delay: 0s; }
-.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
-.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
-.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
-.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
+.letters-loading-image:nth-child(1):before { animation-delay: 0s; }
+.letters-loading-image:nth-child(2):before { animation-delay: 0.2s; }
+.letters-loading-image:nth-child(3):before { animation-delay: 0.4s; }
+.letters-loading-image:nth-child(4):before { animation-delay: 0.6s; }
+.letters-loading-image:nth-child(5):before { animation-delay: 0.8s; }
 
-@keyframes letters-loading {
+@keyframes letters-image-loading {
   0%, 75%, 100% {
     opacity: 0;
     transform: rotateY(-90deg);
@@ -226,39 +202,55 @@ h6 {
   }
 }
 
-/* Индикатор звука */
-.sound-indicator {
+.letter-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Стили для анимированных изображений */
+.preloader-image {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  z-index: 10000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
 }
 
-.sound-indicator:hover {
-  background: rgba(0, 0, 0, 0.8);
-  transform: scale(1.05);
+/* Анимации для различных изображений */
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
-.sound-indicator.pulse {
-  animation: sound-pulse 2s infinite;
+@keyframes slideFromTop {
+  0% { opacity: 0; transform: translate(-50%, -100px); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
 }
 
-@keyframes sound-pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-  }
+@keyframes slideFromLeft {
+  0% { opacity: 0; transform: translate(-100px, -50%); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes slideFromRight {
+  0% { opacity: 0; transform: translate(100px, -50%); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes slideFromBottom {
+  0% { opacity: 0; transform: translate(-50%, 100px); }
+  100% { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes scaleFromCenter {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes scaleFromInside {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
@@ -283,26 +275,25 @@ body.loaded .animation-preloader {
 
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
-  .txt-loading {
-    font-size: 3.5em;
+  .txt-loading-images {
+    gap: 5px;
   }
   
-  .sound-indicator {
-    top: 10px;
-    right: 10px;
-    font-size: 12px;
-    padding: 6px 12px;
+  .letters-loading-image {
+    width: 50px;
+    height: 50px;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .txt-loading {
-    font-size: 2em;
+  .letters-loading-image {
+    width: 40px;
+    height: 40px;
   }
   
-  .sound-indicator {
-    font-size: 10px;
-    padding: 4px 8px;
+  .preloader-image {
+    max-width: 150px;
+    max-height: 150px;
   }
 }
 
