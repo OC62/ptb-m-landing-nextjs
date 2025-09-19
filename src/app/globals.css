@@ -140,7 +140,6 @@ h6 {
   animation: gradientAnimation 15s ease infinite;
   z-index: 9999;
   transition: all 0.5s ease;
-  overflow: hidden;
 }
 
 @keyframes gradientAnimation {
@@ -155,220 +154,72 @@ h6 {
   }
 }
 
-/* Контейнер для сборки логотипа */
-.logo-assembly-container {
-  position: relative;
-  width: 540px;
-  height: 540px;
-  margin-bottom: 40px;
-}
-
-.logo-part {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  z-index: 1;
-}
-
-.logo-part.visible {
-  opacity: 1;
-}
-
-/* Анимации для различных частей логотипа */
-.shield-frame {
-  transform: translate(-50%, -50%) scale(0.3);
-}
-.shield-frame.visible {
-  transform: translate(-50%, -50%) scale(4.5);
-  animation: pulse 1s ease-in-out;
-}
-
-.shield-background {
-  transform: translate(-50%, -50%) scale(0.3);
-}
-.shield-background.visible {
-  transform: translate(-50%, -50%) scale(4.5);
-  animation: fadeInScale 0.8s ease-out;
-}
-
-.text-top {
-  transform: translate(-50%, -450px) scale(0.3);
-}
-.text-top.visible {
-  transform: translate(-50%, -180px) scale(4.5);
-  opacity: 1;
-}
-
-.text-left {
-  transform: translate(-450px, -50%) scale(0.3);
-}
-.text-left.visible {
-  transform: translate(-180px, -50%) scale(4.5);
-  opacity: 1;
-}
-
-.text-right {
-  transform: translate(450px, -50%) scale(0.3);
-}
-.text-right.visible {
-  transform: translate(180px, -50%) scale(4.5);
-  opacity: 1;
-}
-
-/* Анимации для частей логотипа */
-.part-top {
-  transform: translate(-50%, -450px) scale(0.3);
-}
-.part-top.visible {
-  transform: translate(-50%, -50%) scale(4.5);
-  opacity: 1;
-  animation: overshootTop 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.part-bottom {
-  transform: translate(-50%, 450px) scale(0.3);
-}
-.part-bottom.visible {
-  transform: translate(-50%, -50%) scale(4.5);
-  opacity: 1;
-  animation: overshootBottom 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.part-center {
-  transform: translate(-50%, -50%) scale(9) rotate(180deg);
-}
-.part-center.visible {
-  transform: translate(-50%, -50%) scale(4.5) rotate(0deg);
-  opacity: 1;
-  animation: overshootCenter 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-.part-inside {
-  transform: translate(-50%, -50%) scale(3);
-}
-.part-inside.visible {
-  transform: translate(-50%, -50%) scale(4.5);
-  opacity: 1;
-  animation: overshootInside 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
-/* Собранный логотип */
-.final-logo-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20 !important;
-}
-
-.final-logo-stack {
-  position: relative;
-  width: 540px;
-  height: 540px;
-}
-
-.final-logo-part {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 20 !important;
-}
-
 /* Анимация для изображений букв */
 .txt-loading-images {
   display: flex;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 30px;
   z-index: 10;
   position: relative;
 }
 
 .letters-loading-image {
   position: relative;
-  width: 60px;
-  height: 60px;
-  perspective: 1000px;
-}
-
-.letter-image-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  width: 80px;
+  height: 80px;
   opacity: 0.3;
-  filter: blur(2px);
 }
 
-.letter-image-front {
+.letters-loading-image:before {
+  animation: letters-image-loading 4s infinite;
+  content: '';
+  left: 0;
+  opacity: 0;
   position: absolute;
   top: 0;
-  left: 0;
+  transform: rotateY(-90deg);
   width: 100%;
   height: 100%;
-  opacity: 0;
-  animation: letterReveal 4s infinite;
-  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.letters-loading-image:nth-child(1) .letter-image-front { animation-delay: 0s; }
-.letters-loading-image:nth-child(2) .letter-image-front { animation-delay: 0.2s; }
-.letters-loading-image:nth-child(3) .letter-image-front { animation-delay: 0.4s; }
-.letters-loading-image:nth-child(4) .letter-image-front { animation-delay: 0.6s; }
-.letters-loading-image:nth-child(5) .letter-image-front { animation-delay: 0.8s; }
+.letters-loading-image:nth-child(1):before { animation-delay: 0s; }
+.letters-loading-image:nth-child(2):before { animation-delay: 0.2s; }
+.letters-loading-image:nth-child(3):before { animation-delay: 0.4s; }
+.letters-loading-image:nth-child(4):before { animation-delay: 0.6s; }
+.letters-loading-image:nth-child(5):before { animation-delay: 0.8s; }
 
-@keyframes letterReveal {
+@keyframes letters-image-loading {
   0%, 75%, 100% {
     opacity: 0;
-    transform: rotateY(-90deg) scale(0.8);
+    transform: rotateY(-90deg);
   }
   25%, 50% {
     opacity: 1;
-    transform: rotateY(0deg) scale(1);
+    transform: rotateY(0deg);
   }
 }
 
-/* Дополнительные анимации */
-@keyframes pulse {
-  0% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
-  50% { transform: translate(-50%, -50%) scale(5); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 1; }
+.letter-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-@keyframes fadeInScale {
-  0% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 1; }
-}
-
-@keyframes overshootTop {
-  0% { transform: translate(-50%, -450px) scale(0.3); opacity: 0; }
-  70% { transform: translate(-50%, -30px) scale(4.8); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 1; }
-}
-
-@keyframes overshootBottom {
-  0% { transform: translate(-50%, 450px) scale(0.3); opacity: 0; }
-  70% { transform: translate(-50%, -70px) scale(4.8); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 1; }
-}
-
-@keyframes overshootCenter {
-  0% { transform: translate(-50%, -50%) scale(9) rotate(180deg); opacity: 0; }
-  70% { transform: translate(-50%, -50%) scale(5) rotate(-20deg); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(4.5) rotate(0deg); opacity: 1; }
-}
-
-@keyframes overshootInside {
-  0% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
-  70% { transform: translate(-50%, -50%) scale(4.8); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 1; }
+/* Стили для анимированных изображений */
+.preloader-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
 }
 
 /* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
@@ -376,14 +227,12 @@ h6 {
   opacity: 0;
   visibility: hidden;
   transition: all 0.5s ease 0.2s;
-  z-index: 1;
 }
 
 /* Когда body имеет класс loaded - показываем основной контент */
 body.loaded .main-content {
   opacity: 1;
   visibility: visible;
-  z-index: 10;
 }
 
 /* Когда body имеет класс loaded - скрываем прелоадер */
@@ -391,46 +240,24 @@ body.loaded .animation-preloader {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  z-index: -1;
 }
 
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
-  .logo-assembly-container {
-    width: 405px;
-    height: 405px;
-  }
-  
-  .final-logo-stack {
-    width: 405px;
-    height: 405px;
-  }
-  
   .txt-loading-images {
-    gap: 10px;
-    margin-top: 15px;
+    gap: 5px;
   }
   
   .letters-loading-image {
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .logo-assembly-container {
-    width: 270px;
-    height: 270px;
-  }
-  
-  .final-logo-stack {
-    width: 270px;
-    height: 270px;
-  }
-  
   .letters-loading-image {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
   }
 }
 
