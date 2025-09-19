@@ -11,23 +11,23 @@ const Preloader = () => {
   useEffect(() => {
     // Таймеры для различных стадий анимации
     const animationTimers = [
-      setTimeout(() => setAnimationStage(1), 300),   // Preloader1 - окаймление
-      setTimeout(() => setAnimationStage(2), 600),   // Preloader2 - фон
-      setTimeout(() => setAnimationStage(3), 900),   // Preloader3 - текст сверху
-      setTimeout(() => setAnimationStage(4), 1200),  // Preloader5 - текст слева
-      setTimeout(() => setAnimationStage(5), 1500),  // Preloader6 - текст справа
-      setTimeout(() => setAnimationStage(6), 1800),  // Preloader7 - часть 1
-      setTimeout(() => setAnimationStage(7), 2100),  // Preloader8 - часть 2
-      setTimeout(() => setAnimationStage(8), 2400),  // Preloader9 - часть 3
-      setTimeout(() => setAnimationStage(9), 2700),  // Preloader4 - часть 4
-      setTimeout(() => setAnimationStage(10), 3200), // Финальная сборка
+      setTimeout(() => setAnimationStage(1), 300),   // Окаймление щита
+      setTimeout(() => setAnimationStage(2), 600),   // Фон щита
+      setTimeout(() => setAnimationStage(3), 900),   // "Подразделение" сверху
+      setTimeout(() => setAnimationStage(4), 1200),  // "Транспортной" слева
+      setTimeout(() => setAnimationStage(5), 1500),  // "Безопасности" справа
+      setTimeout(() => setAnimationStage(6), 1800),  // Часть сверху
+      setTimeout(() => setAnimationStage(7), 2100),  // Часть снизу
+      setTimeout(() => setAnimationStage(8), 2400),  // Часть из центра
+      setTimeout(() => setAnimationStage(9), 2700),  // Часть изнутри
+      setTimeout(() => setAnimationStage(10), 3000), // Финальная сборка
     ];
 
-    // Завершение прелоадера через 5.5 секунд
+    // Завершение прелоадера через 5 секунд
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 5500);
+    }, 5000);
 
     return () => {
       animationTimers.forEach(timer => clearTimeout(timer));
@@ -39,188 +39,217 @@ const Preloader = () => {
 
   return (
     <div className="animation-preloader">
-      {/* Основной контейнер для сборки логотипа с параллаксом */}
-      <div className="logo-parallax-container">
-        {/* Preloader1 - окаймление щита (самый задний слой) */}
-        <div className={`parallax-layer layer-1 ${animationStage >= 1 ? 'visible' : ''}`}>
+      {/* Основной контейнер для сборки логотипа */}
+      <div className="logo-assembly-container">
+        {/* Окаймление щита */}
+        <div className={`logo-part shield-frame ${animationStage >= 1 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader1.png"
             alt="Окаймление щита"
-            width={360}
-            height={360}
-            className="parallax-image"
+            width={120}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader2 - фон щита */}
-        <div className={`parallax-layer layer-2 ${animationStage >= 2 ? 'visible' : ''}`}>
+        {/* Фон щита */}
+        <div className={`logo-part shield-background ${animationStage >= 2 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader2.png"
             alt="Фон щита"
-            width={360}
-            height={360}
-            className="parallax-image"
+            width={120}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader3 - "Подразделение" (сверху) */}
-        <div className={`parallax-layer layer-3 ${animationStage >= 3 ? 'visible' : ''}`}>
+        {/* Текст "Подразделение" (сверху) */}
+        <div className={`logo-part text-top ${animationStage >= 3 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader3.png"
             alt="Подразделение"
-            width={360}
-            height={120}
-            className="parallax-image"
+            width={120}
+            height={40}
+            priority
           />
         </div>
 
-        {/* Preloader5 - "Транспортной" (слева) */}
-        <div className={`parallax-layer layer-4 ${animationStage >= 4 ? 'visible' : ''}`}>
+        {/* Текст "Транспортной" (слева) */}
+        <div className={`logo-part text-left ${animationStage >= 4 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader5.png"
             alt="Транспортной"
-            width={120}
-            height={360}
-            className="parallax-image"
+            width={40}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader6 - "Безопасности" (справа) */}
-        <div className={`parallax-layer layer-5 ${animationStage >= 5 ? 'visible' : ''}`}>
+        {/* Текст "Безопасности" (справа) */}
+        <div className={`logo-part text-right ${animationStage >= 5 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader6.png"
             alt="Безопасности"
-            width={120}
-            height={360}
-            className="parallax-image"
+            width={40}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader7 - часть логотипа 1 */}
-        <div className={`parallax-layer layer-6 ${animationStage >= 6 ? 'visible' : ''}`}>
+        {/* Часть сверху */}
+        <div className={`logo-part part-top ${animationStage >= 6 ? 'visible' : ''}`}>
+          <Image
+            src="/images/preloadimg/preloader6.png"
+            alt="Часть сверху"
+            width={120}
+            height={120}
+            priority
+          />
+        </div>
+
+        {/* Часть снизу */}
+        <div className={`logo-part part-bottom ${animationStage >= 7 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader7.png"
-            alt="Часть логотипа 1"
-            width={180}
-            height={180}
-            className="parallax-image"
+            alt="Часть снизу"
+            width={120}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader8 - часть логотипа 2 */}
-        <div className={`parallax-layer layer-7 ${animationStage >= 7 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader8.png"
-            alt="Часть логотипа 2"
-            width={180}
-            height={180}
-            className="parallax-image"
-          />
-        </div>
-
-        {/* Preloader9 - часть логотипа 3 */}
-        <div className={`parallax-layer layer-8 ${animationStage >= 8 ? 'visible' : ''}`}>
+        {/* Часть из центра */}
+        <div className={`logo-part part-center ${animationStage >= 8 ? 'visible' : ''}`}>
           <Image
             src="/images/preloadimg/preloader9.png"
-            alt="Часть логотипа 3"
-            width={180}
-            height={180}
-            className="parallax-image"
+            alt="Часть из центра"
+            width={120}
+            height={120}
+            priority
           />
         </div>
 
-        {/* Preloader4 - часть логотипа 4 (самый передний слой) */}
-        <div className={`parallax-layer layer-9 ${animationStage >= 9 ? 'visible' : ''}`}>
+        {/* Часть изнутри */}
+        <div className={`logo-part part-inside ${animationStage >= 9 ? 'visible' : ''}`}>
           <Image
-            src="/images/preloadimg/preloader4.png"
-            alt="Часть логотипа 4"
-            width={180}
-            height={180}
-            className="parallax-image"
+            src="/images/preloadimg/preloader8.png"
+            alt="Часть изнутри"
+            width={120}
+            height={120}
+            priority
           />
         </div>
+
+        {/* Финальный собранный логотип */}
+        {animationStage >= 10 && (
+          <div className="final-logo-container">
+            <div className="final-logo-stack">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                <div key={num} className="final-logo-part">
+                  <Image
+                    src={`/images/preloadimg/preloader${num}.png`}
+                    alt={`Часть логотипа ${num}`}
+                    width={360}
+                    height={360}
+                    priority
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Анимированные буквы из изображений */}
       <div className="txt-loading-images">
-        <div className="letters-loading-image" data-letter="1">
+        <div className="letters-loading-image">
           <Image
             src="/images/letterpre/letter1.png"
             alt="П"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-back"
+            priority
           />
           <Image
             src="/images/letterpre/letter1.png"
             alt="П"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-front"
+            priority
           />
         </div>
-        <div className="letters-loading-image" data-letter="2">
+        <div className="letters-loading-image">
           <Image
             src="/images/letterpre/letter2.png"
             alt="Т"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-back"
+            priority
           />
           <Image
             src="/images/letterpre/letter2.png"
             alt="Т"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-front"
+            priority
           />
         </div>
-        <div className="letters-loading-image" data-letter="3">
+        <div className="letters-loading-image">
           <Image
             src="/images/letterpre/letter3.png"
             alt="Б"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-back"
+            priority
           />
           <Image
             src="/images/letterpre/letter3.png"
             alt="Б"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-front"
+            priority
           />
         </div>
-        <div className="letters-loading-image" data-letter="4">
+        <div className="letters-loading-image">
           <Image
             src="/images/letterpre/letter4.png"
             alt="-"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-back"
+            priority
           />
           <Image
             src="/images/letterpre/letter4.png"
             alt="-"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-front"
+            priority
           />
         </div>
-        <div className="letters-loading-image" data-letter="5">
+        <div className="letters-loading-image">
           <Image
             src="/images/letterpre/letter5.png"
             alt="М"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-back"
+            priority
           />
           <Image
             src="/images/letterpre/letter5.png"
             alt="М"
-            width={80}
-            height={80}
+            width={60}
+            height={60}
             className="letter-image-front"
+            priority
           />
         </div>
       </div>
