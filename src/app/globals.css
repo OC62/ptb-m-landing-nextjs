@@ -140,6 +140,7 @@ h6 {
   animation: gradientAnimation 15s ease infinite;
   z-index: 9999;
   cursor: pointer;
+  transition: all 0.5s ease;
 }
 
 @keyframes gradientAnimation {
@@ -260,24 +261,24 @@ h6 {
   }
 }
 
-/* Стиль для скрытия прелоадера */
-.preloader-hidden {
+/* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
+.main-content {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease 0.2s;
+}
+
+/* Когда body имеет класс loaded - показываем основной контент */
+body.loaded .main-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Когда body имеет класс loaded - скрываем прелоадер */
+body.loaded .animation-preloader {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: all 0.5s ease;
-}
-
-/* Анимация появления основного контента */
-.main-content {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease;
-}
-
-.main-content.loaded {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Responsive Styles для прелоадера */
@@ -305,54 +306,7 @@ h6 {
   }
 }
 
-/* Дополнительные утилиты */
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
-}
-
-.flex {
-  display: flex;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
-
-.inset-0 {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.object-contain {
-  object-fit: contain;
-}
-
-/* Стили для fallback иконки */
-.image-fallback {
-  display: none;
-  font-size: 2rem;
-}
-
 /* === СТИЛИ ДЛЯ COOKIE BANNER === */
-
 .cookie-banner {
   position: fixed;
   bottom: 1rem;
@@ -471,4 +425,50 @@ h6 {
 
 .cookie-link:hover {
   color: #1d4ed8;
+}
+
+/* Дополнительные утилиты */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.object-contain {
+  object-fit: contain;
+}
+
+/* Стили для fallback иконки */
+.image-fallback {
+  display: none;
+  font-size: 2rem;
 }
