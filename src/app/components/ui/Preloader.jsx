@@ -6,31 +6,34 @@ import Image from 'next/image';
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [animationStage, setAnimationStage] = useState(0);
+  const [currentFrame, setCurrentFrame] = useState(0);
 
   useEffect(() => {
-    // Таймеры для различных стадий анимации
-    const animationTimers = [
-      setTimeout(() => setAnimationStage(1), 400),   // Окаймление щита
-      setTimeout(() => setAnimationStage(2), 800),   // Фон щита
-      setTimeout(() => setAnimationStage(3), 1200),  // "Подразделение" сверху
-      setTimeout(() => setAnimationStage(4), 1600),  // "Транспортной" слева
-      setTimeout(() => setAnimationStage(5), 2000),  // "Безопасности" справа
-      setTimeout(() => setAnimationStage(6), 2400),  // Часть сверху
-      setTimeout(() => setAnimationStage(7), 2800),  // Часть снизу
-      setTimeout(() => setAnimationStage(8), 3200),  // Часть из центра
-      setTimeout(() => setAnimationStage(9), 3600),  // Часть изнутри
-      setTimeout(() => setAnimationStage(10), 4000), // Финальная сборка
-    ];
-
-    // Завершение прелоадера через 9 секунд
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 9000);
+    }, 7000);
+
+    // Анимация кадров
+    const frameIntervals = [
+      500,  // preloader1
+      1000, // preloader2  
+      1500, // preloader3
+      2000, // preloader5
+      2500, // preloader6
+      3000, // preloader7
+      3500, // preloader8
+      4000, // preloader9
+      4500  // preloader4
+    ];
+
+    frameIntervals.forEach((interval, index) => {
+      setTimeout(() => {
+        setCurrentFrame(index + 1);
+      }, interval);
+    });
 
     return () => {
-      animationTimers.forEach(timer => clearTimeout(timer));
       clearTimeout(loadingTimer);
     };
   }, []);
@@ -39,217 +42,206 @@ const Preloader = () => {
 
   return (
     <div className="animation-preloader">
-      {/* Основной контейнер для сборки логотипа */}
-      <div className="logo-assembly-container">
-        {/* Окаймление щита */}
-        <div className={`logo-part shield-frame ${animationStage >= 1 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader1.png"
-            alt="Окаймление щита"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
+      {/* Анимированные изображения */}
+      <div className="relative w-full h-full">
+        {/* Preloader1 - меняющаяся прозрачность */}
+        {currentFrame >= 1 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${currentFrame === 1 ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/images/preloadimg/preloader1.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Фон щита */}
-        <div className={`logo-part shield-background ${animationStage >= 2 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader2.png"
-            alt="Фон щита"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader2 - меняющаяся прозрачность */}
+        {currentFrame >= 2 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${currentFrame === 2 ? 'opacity-100' : 'opacity-0'}`}>
+            <Image
+              src="/images/preloadimg/preloader2.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Текст "Подразделение" (сверху) */}
-        <div className={`logo-part text-top ${animationStage >= 3 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader3.png"
-            alt="Подразделение"
-            width={120}
-            height={40}
-            priority
-          />
-        </div>
+        {/* Preloader3 - опускается сверху */}
+        {currentFrame >= 3 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 3 ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader3.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Текст "Транспортной" (слева) */}
-        <div className={`logo-part text-left ${animationStage >= 4 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader5.png"
-            alt="Транспортной"
-            width={40}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader5 - появляется слева */}
+        {currentFrame >= 4 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 4 ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader5.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Текст "Безопасности" (справа) */}
-        <div className={`logo-part text-right ${animationStage >= 5 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader6.png"
-            alt="Безопасности"
-            width={40}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader6 - появляется справа */}
+        {currentFrame >= 5 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 5 ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader6.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Часть сверху */}
-        <div className={`logo-part part-top ${animationStage >= 6 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader6.png"
-            alt="Часть сверху"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader7 - снизу */}
+        {currentFrame >= 6 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 6 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+            <Image
+              src="/images/preloadimg/preloader7.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Часть снизу */}
-        <div className={`logo-part part-bottom ${animationStage >= 7 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader7.png"
-            alt="Часть снизу"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader8 - из центра с масштабированием */}
+        {currentFrame >= 7 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 7 ? 'opacity-100 scale-100' : 'opacity-0 scale-150'}`}>
+            <Image
+              src="/images/preloadimg/preloader8.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Часть из центра */}
-        <div className={`logo-part part-center ${animationStage >= 8 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader9.png"
-            alt="Часть из центра"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
+        {/* Preloader9 - изнутри с масштабированием */}
+        {currentFrame >= 8 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 8 ? 'opacity-100 scale-100' : 'opacity-0 scale-75'}`}>
+            <Image
+              src="/images/preloadimg/preloader9.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
+          </div>
+        )}
 
-        {/* Часть изнутри */}
-        <div className={`logo-part part-inside ${animationStage >= 9 ? 'visible' : ''}`}>
-          <Image
-            src="/images/preloadimg/preloader8.png"
-            alt="Часть изнутри"
-            width={120}
-            height={120}
-            priority
-          />
-        </div>
-
-        {/* Финальный собранный логотип */}
-        {animationStage >= 10 && (
-          <div className="final-logo-container">
-            <div className="final-logo-stack">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                <div key={num} className="final-logo-part">
-                  <Image
-                    src={`/images/preloadimg/preloader${num}.png`}
-                    alt={`Часть логотипа ${num}`}
-                    width={540}
-                    height={540}
-                    priority
-                  />
-                </div>
-              ))}
-            </div>
+        {/* Preloader4 - финальное изображение */}
+        {currentFrame >= 9 && (
+          <div className={`absolute inset-0 flex items-center justify-center transition-all duration-1000 ${currentFrame === 9 ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+            <Image
+              src="/images/preloadimg/preloader4.png"
+              alt=""
+              width={700}
+              height={700}
+              className="object-contain scale-350"
+            />
           </div>
         )}
       </div>
 
-      {/* Анимированные буквы из изображений */}
+      {/* Анимированный текст из изображений с раздвоением */}
       <div className="txt-loading-images">
-        <div className="letters-loading-image">
+        <div className="letters-loading-image" data-letter="1">
           <Image
             src="/images/letterpre/letter1.png"
             alt="П"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-back"
-            priority
           />
           <Image
             src="/images/letterpre/letter1.png"
             alt="П"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-front"
-            priority
           />
         </div>
-        <div className="letters-loading-image">
+        <div className="letters-loading-image" data-letter="2">
           <Image
             src="/images/letterpre/letter2.png"
             alt="Т"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-back"
-            priority
           />
           <Image
             src="/images/letterpre/letter2.png"
             alt="Т"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-front"
-            priority
           />
         </div>
-        <div className="letters-loading-image">
+        <div className="letters-loading-image" data-letter="3">
           <Image
             src="/images/letterpre/letter3.png"
             alt="Б"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-back"
-            priority
           />
           <Image
             src="/images/letterpre/letter3.png"
             alt="Б"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-front"
-            priority
           />
         </div>
-        <div className="letters-loading-image">
+        <div className="letters-loading-image" data-letter="4">
           <Image
             src="/images/letterpre/letter4.png"
             alt="-"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-back"
-            priority
           />
           <Image
             src="/images/letterpre/letter4.png"
             alt="-"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-front"
-            priority
           />
         </div>
-        <div className="letters-loading-image">
+        <div className="letters-loading-image" data-letter="5">
           <Image
             src="/images/letterpre/letter5.png"
             alt="М"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-back"
-            priority
           />
           <Image
             src="/images/letterpre/letter5.png"
             alt="М"
-            width={60}
-            height={60}
+            width={80}
+            height={80}
             className="letter-image-front"
-            priority
           />
         </div>
       </div>
