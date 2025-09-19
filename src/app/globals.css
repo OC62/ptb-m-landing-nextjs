@@ -154,109 +154,211 @@ h6 {
   }
 }
 
-/* Увеличение изображений в 3.5 раза */
-.scale-350 {
-  transform: scale(3.5);
-}
-
-/* Анимация для изображений букв с раздвоением */
-.txt-loading-images {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.letters-loading-image {
+/* Контейнер для изображений прелоадера */
+.preloader-image-container {
   position: relative;
-  width: 80px;
-  height: 80px;
-  perspective: 1000px;
+  width: 270px; /* 180px * 1.5 */
+  height: 270px; /* 180px * 1.5 */
+  margin-bottom: 2rem;
 }
 
-.letter-image-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.3;
-  filter: blur(2px);
-  transform: translateZ(-10px);
-}
-
-.letter-image-front {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  animation: letterReveal 4s infinite;
-  transform-style: preserve-3d;
-}
-
-.letters-loading-image:nth-child(1) .letter-image-front { animation-delay: 0s; }
-.letters-loading-image:nth-child(2) .letter-image-front { animation-delay: 0.2s; }
-.letters-loading-image:nth-child(3) .letter-image-front { animation-delay: 0.4s; }
-.letters-loading-image:nth-child(4) .letter-image-front { animation-delay: 0.6s; }
-.letters-loading-image:nth-child(5) .letter-image-front { animation-delay: 0.8s; }
-
-@keyframes letterReveal {
-  0%, 75%, 100% {
-    opacity: 0;
-    transform: rotateY(-90deg) scale(0.8) translateZ(-20px);
-  }
-  25%, 50% {
-    opacity: 1;
-    transform: rotateY(0deg) scale(1) translateZ(0px);
-  }
-}
-
-/* Стили для анимированных изображений */
-.preloader-image {
+.preloader-img {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  object-fit: contain;
+  transform: translate(-50%, -50%) scale(1.5);
+  opacity: 0;
+  transition: all 0.5s ease;
 }
 
-/* Анимации для различных изображений */
+/* Анимации для каждого изображения */
+.preloader-1 {
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+.preloader-2 {
+  animation: fadeInOut 2s ease-in-out 0.5s infinite;
+}
+
+.preloader-3 {
+  animation: moveFromTop 3s ease-in-out 1s forwards;
+}
+
+.preloader-4 {
+  animation: moveFromLeft 3s ease-in-out 2s forwards;
+}
+
+.preloader-5 {
+  animation: moveFromRight 3s ease-in-out 2s forwards;
+}
+
+.preloader-6 {
+  animation: moveFromTop 3s ease-in-out 3s forwards;
+}
+
+.preloader-7 {
+  animation: moveFromBottom 3s ease-in-out 3s forwards;
+}
+
+.preloader-8 {
+  animation: scaleFromInside 3s ease-in-out 4s forwards;
+}
+
+.preloader-9 {
+  animation: scaleFromLarge 3s ease-in-out 4s forwards;
+}
+
+/* Ключевые кадры анимаций */
 @keyframes fadeInOut {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
 }
 
-@keyframes slideFromTop {
-  0% { opacity: 0; transform: translate(-50%, -100px); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
+@keyframes moveFromTop {
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(1.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1.5);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
-@keyframes slideFromLeft {
-  0% { opacity: 0; transform: translate(-100px, -50%); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
+@keyframes moveFromLeft {
+  0% { 
+    opacity: 0;
+    transform: translate(-100%, -50%) scale(1.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-30%, -50%) scale(1.5);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
-@keyframes slideFromRight {
-  0% { opacity: 0; transform: translate(100px, -50%); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
+@keyframes moveFromRight {
+  0% { 
+    opacity: 0;
+    transform: translate(0%, -50%) scale(1.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-70%, -50%) scale(1.5);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
-@keyframes slideFromBottom {
-  0% { opacity: 0; transform: translate(-50%, 100px); }
-  100% { opacity: 1; transform: translate(-50%, -50%); }
-}
-
-@keyframes scaleFromCenter {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+@keyframes moveFromBottom {
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, 0%) scale(1.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -60%) scale(1.5);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
 @keyframes scaleFromInside {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+@keyframes scaleFromLarge {
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+  50% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+  100% { 
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+/* Анимация текста (букв) */
+.txt-loading {
+  font: bold 5em 'Montserrat', sans-serif;
+  text-align: center;
+  user-select: none;
+  display: flex;
+  gap: 0.1em;
+  height: 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.letters-loading {
+  opacity: 0.3;
+  position: relative;
+  display: inline-block;
+  width: 0.8em;
+  height: 1em;
+  transition: all 0.3s ease;
+}
+
+.letters-loading:before {
+  animation: letters-loading 4s infinite;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letters-loading:nth-child(1):before { animation-delay: 0s; }
+.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
+.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
+.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
+.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
+
+@keyframes letters-loading {
+  0%, 75%, 100% {
+    opacity: 0;
+    transform: rotateY(-90deg);
+  }
+  25%, 50% {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+}
+
+.letter-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 /* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
@@ -281,33 +383,36 @@ body.loaded .animation-preloader {
 
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
-  .scale-350 {
-    transform: scale(2);
+  .preloader-image-container {
+    width: 180px;
+    height: 180px;
   }
   
-  .txt-loading-images {
-    gap: 10px;
+  .preloader-img {
+    transform: translate(-50%, -50%) scale(1.2);
+    width: 80px;
+    height: 80px;
   }
   
-  .letters-loading-image {
-    width: 60px;
-    height: 60px;
+  .txt-loading {
+    font-size: 3.5em;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .scale-350 {
-    transform: scale(1.5);
+  .preloader-image-container {
+    width: 135px;
+    height: 135px;
   }
   
-  .letters-loading-image {
-    width: 40px;
-    height: 40px;
+  .preloader-img {
+    transform: translate(-50%, -50%) scale(1);
+    width: 60px;
+    height: 60px;
   }
   
-  .preloader-image {
-    max-width: 150px;
-    max-height: 150px;
+  .txt-loading {
+    font-size: 2em;
   }
 }
 
