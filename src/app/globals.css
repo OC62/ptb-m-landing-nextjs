@@ -181,7 +181,7 @@ h6 {
 }
 
 .preloader-2 {
-  animation: fadeInOut 2s ease-in-out 1s infinite;
+  animation: fadeInOut 2s ease-in-out 1s forwards;
 }
 
 .preloader-3 {
@@ -235,8 +235,21 @@ h6 {
 }
 
 @keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+  0% { 
+    opacity: 0; 
+  }
+  25% { 
+    opacity: 1; 
+  }
+  50% { 
+    opacity: 0.5; 
+  }
+  75% { 
+    opacity: 1; 
+  }
+  100% { 
+    opacity: 1; 
+  }
 }
 
 @keyframes moveFromTop {
