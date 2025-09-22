@@ -135,46 +135,23 @@ h6 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, #007BFF, #0056b3);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
   z-index: 9999;
   transition: all 0.5s ease;
   overflow: hidden;
 }
 
-/* Анимация расходящегося круга для исчезновения прелоадера */
-.animation-preloader::before {
-  content: '';
+/* Видео-бэкграунд */
+.preloader-video-bg {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
   transform: translate(-50%, -50%);
-  transition: all 0.8s ease-in-out;
-  opacity: 0;
-}
-
-body.loaded .animation-preloader::before {
-  width: 200vmax;
-  height: 200vmax;
-  opacity: 1;
-  backdrop-filter: blur(10px);
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  object-fit: cover;
+  z-index: -1;
 }
 
 /* Контейнер для изображений прелоадера */
@@ -190,142 +167,76 @@ body.loaded .animation-preloader::before {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(2.5);
+  transform: translate(-50%, -50%);
   opacity: 0;
   transition: all 0.5s ease;
+  width: 180px;
+  height: 180px;
 }
 
-/* Анимации для каждого изображения */
+/* Анимация preloader1 - увеличение на весь экран и уменьшение */
 .preloader-1 {
-  animation: fadeInOut 2s ease-in-out infinite;
+  animation: fullScreenToNormal 3s ease-in-out forwards;
 }
 
+@keyframes fullScreenToNormal {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(10);
+    width: 100vmin;
+    height: 100vmin;
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(5);
+    width: 50vmin;
+    height: 50vmin;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    width: 180px;
+    height: 180px;
+  }
+}
+
+/* Анимации для остальных изображений */
 .preloader-2 {
-  animation: fadeInOut 2s ease-in-out 0.5s infinite;
+  animation: fadeInOut 2s ease-in-out 3s infinite;
 }
 
 .preloader-3 {
-  animation: moveFromTop 3s ease-in-out 1s forwards;
+  animation: fadeInOut 2s ease-in-out 3.5s infinite;
 }
 
 .preloader-4 {
-  animation: moveFromLeft 3s ease-in-out 2s forwards;
+  animation: fadeInOut 2s ease-in-out 4s infinite;
 }
 
 .preloader-5 {
-  animation: moveFromRight 3s ease-in-out 2s forwards;
+  animation: fadeInOut 2s ease-in-out 4.5s infinite;
 }
 
 .preloader-6 {
-  animation: moveFromTop 3s ease-in-out 3s forwards;
+  animation: fadeInOut 2s ease-in-out 5s infinite;
 }
 
 .preloader-7 {
-  animation: moveFromBottom 3s ease-in-out 3s forwards;
+  animation: fadeInOut 2s ease-in-out 5.5s infinite;
 }
 
 .preloader-8 {
-  animation: scaleFromInside 3s ease-in-out 4s forwards;
+  animation: fadeInOut 2s ease-in-out 6s infinite;
 }
 
 .preloader-9 {
-  animation: scaleFromLarge 3s ease-in-out 4s forwards;
+  animation: fadeInOut 2s ease-in-out 6.5s infinite;
 }
 
 /* Ключевые кадры анимаций */
 @keyframes fadeInOut {
   0%, 100% { opacity: 0; }
   50% { opacity: 1; }
-}
-
-@keyframes moveFromTop {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -100%) scale(2.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -40%) scale(2.5);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-@keyframes moveFromLeft {
-  0% { 
-    opacity: 0;
-    transform: translate(-100%, -50%) scale(2.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-30%, -50%) scale(2.5);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-@keyframes moveFromRight {
-  0% { 
-    opacity: 0;
-    transform: translate(0%, -50%) scale(2.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-70%, -50%) scale(2.5);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-@keyframes moveFromBottom {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, 0%) scale(2.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -60%) scale(2.5);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-@keyframes scaleFromInside {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.8);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-@keyframes scaleFromLarge {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(3.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.8);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
 }
 
 /* Анимация текста (букв) */
@@ -342,7 +253,7 @@ body.loaded .animation-preloader::before {
 }
 
 .letters-loading {
-  opacity: 0.3;
+  opacity: 0;
   position: relative;
   display: inline-block;
   width: 0.8em;
@@ -350,33 +261,39 @@ body.loaded .animation-preloader::before {
   transition: all 0.3s ease;
 }
 
-.letters-loading:before {
-  animation: letters-loading 4s infinite;
-  opacity: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Анимация появления букв с увеличением */
+.letter-1 {
+  animation: letterAnimation 1s ease 3s forwards;
 }
 
-.letters-loading:nth-child(1):before { animation-delay: 0s; }
-.letters-loading:nth-child(2):before { animation-delay: 0.2s; }
-.letters-loading:nth-child(3):before { animation-delay: 0.4s; }
-.letters-loading:nth-child(4):before { animation-delay: 0.6s; }
-.letters-loading:nth-child(5):before { animation-delay: 0.8s; }
+.letter-2 {
+  animation: letterAnimation 1s ease 3.5s forwards;
+}
 
-@keyframes letters-loading {
-  0%, 75%, 100% {
+.letter-3 {
+  animation: letterAnimation 1s ease 4s forwards;
+}
+
+.letter-4 {
+  animation: letterAnimation 1s ease 4.5s forwards;
+}
+
+.letter-5 {
+  animation: letterAnimation 1s ease 5s forwards;
+}
+
+@keyframes letterAnimation {
+  0% {
     opacity: 0;
-    transform: rotateY(-90deg);
+    transform: scale(2);
   }
-  25%, 50% {
+  50% {
     opacity: 1;
-    transform: rotateY(0deg);
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -384,6 +301,59 @@ body.loaded .animation-preloader::before {
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+/* Стили для надписи Vecteezy.com */
+.vecteezy-credit {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 7s forwards;
+}
+
+.vecteezy-credit a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.vecteezy-credit a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Анимация серого расходящегося экрана */
+.final-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: gray;
+  z-index: 10000;
+  animation: splitAnimation 1.5s ease 10s forwards;
+  transform-origin: center;
+  opacity: 0;
+}
+
+@keyframes splitAnimation {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 50% 0 50%);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 /* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
@@ -406,12 +376,6 @@ body.loaded .animation-preloader {
   pointer-events: none;
 }
 
-/* Затемняем содержимое прелоадера при исчезновении */
-body.loaded .preloader-image-container,
-body.loaded .txt-loading {
-  opacity: 0;
-}
-
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
@@ -420,7 +384,6 @@ body.loaded .txt-loading {
   }
   
   .preloader-img {
-    transform: translate(-50%, -50%) scale(2.5);
     width: 180px;
     height: 180px;
   }
@@ -437,7 +400,6 @@ body.loaded .txt-loading {
   }
   
   .preloader-img {
-    transform: translate(-50%, -50%) scale(2.5);
     width: 144px;
     height: 144px;
   }
@@ -454,7 +416,6 @@ body.loaded .txt-loading {
   }
   
   .preloader-img {
-    transform: translate(-50%, -50%) scale(2.5);
     width: 120px;
     height: 120px;
   }

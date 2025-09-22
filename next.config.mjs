@@ -18,6 +18,21 @@ const nextConfig = {
       'mc.yandex.ru', // <-- Добавлено: разрешаем загрузку изображений с этого домена
     ],
   },
+  // Включаем поддержку видеофайлов
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.(mov|mp4|webm)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/_next',
+          name: 'static/media/[name].[hash].[ext]',
+        },
+      },
+    });
+
+    return config;
+  },
   // Другие настройки, если есть...
 };
 
