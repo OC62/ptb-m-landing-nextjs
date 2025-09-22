@@ -168,7 +168,7 @@ h6 {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(2.5);
   opacity: 0;
   transition: all 0.5s ease;
   width: 180px;
@@ -177,7 +177,7 @@ h6 {
 
 /* Анимация preloader1 - увеличение на весь экран и уменьшение */
 .preloader-1 {
-  animation: fullScreenToNormal 3s ease-in-out 0.5s forwards;
+  animation: fullScreenToNormal 2s ease-in-out 0.5s forwards;
 }
 
 @keyframes fullScreenToNormal {
@@ -195,142 +195,176 @@ h6 {
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(2.5);
     width: 180px;
     height: 180px;
   }
 }
 
-/* Анимации для остальных изображений (как в оригинальном CSS) */
+/* Анимация preloader2 - появление с изменяющейся прозрачностью */
 .preloader-2 {
-  animation: fadeInOut 2s ease-in-out 1s infinite;
+  animation: fadeInOutMove 2.5s ease-in-out 1s forwards;
 }
 
-.preloader-3 {
-  animation: moveFromTop 3s ease-in-out 2s forwards;
-}
-
-.preloader-4 {
-  animation: moveFromLeft 3s ease-in-out 3s forwards;
-}
-
-.preloader-5 {
-  animation: moveFromRight 3s ease-in-out 3s forwards;
-}
-
-.preloader-6 {
-  animation: moveFromTop 3s ease-in-out 4s forwards;
-}
-
-.preloader-7 {
-  animation: moveFromBottom 3s ease-in-out 4s forwards;
-}
-
-.preloader-8 {
-  animation: scaleFromInside 3s ease-in-out 5s forwards;
-}
-
-.preloader-9 {
-  animation: scaleFromLarge 3s ease-in-out 5s forwards;
-}
-
-/* Ключевые кадры анимаций */
-@keyframes fadeInOut {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
-}
-
-@keyframes moveFromTop {
-  0% { 
+@keyframes fadeInOutMove {
+  0% {
     opacity: 0;
-    transform: translate(-50%, -100%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.5);
   }
-  50% { 
+  25% {
     opacity: 1;
-    transform: translate(-50%, -40%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.5);
   }
-  100% { 
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
 
-@keyframes moveFromLeft {
-  0% { 
+/* Анимация preloader3 - сверху вниз и обратно */
+.preloader-3 {
+  animation: moveFromTopReturn 3s ease-in-out 2s forwards;
+}
+
+@keyframes moveFromTopReturn {
+  0% {
     opacity: 0;
-    transform: translate(-100%, -50%) scale(2.5);
+    transform: translate(-50%, -150%) scale(2.5);
   }
-  50% { 
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -70%) scale(2.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+}
+
+/* Анимация preloader4 - слева направо и обратно */
+.preloader-4 {
+  animation: moveFromLeftReturn 3s ease-in-out 3s forwards;
+}
+
+@keyframes moveFromLeftReturn {
+  0% {
+    opacity: 0;
+    transform: translate(-150%, -50%) scale(2.5);
+  }
+  50% {
     opacity: 1;
     transform: translate(-30%, -50%) scale(2.5);
   }
-  100% { 
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
 
-@keyframes moveFromRight {
-  0% { 
+/* Анимация preloader5 - справа налево и обратно */
+.preloader-5 {
+  animation: moveFromRightReturn 3s ease-in-out 3s forwards;
+}
+
+@keyframes moveFromRightReturn {
+  0% {
     opacity: 0;
-    transform: translate(0%, -50%) scale(2.5);
+    transform: translate(50%, -50%) scale(2.5);
   }
-  50% { 
+  50% {
     opacity: 1;
     transform: translate(-70%, -50%) scale(2.5);
   }
-  100% { 
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
 
-@keyframes moveFromBottom {
-  0% { 
+/* Анимация preloader6 и preloader7 - одновременно сверху и снизу */
+.preloader-6 {
+  animation: moveFromTopSimultaneous 3s ease-in-out 4s forwards;
+}
+
+.preloader-7 {
+  animation: moveFromBottomSimultaneous 3s ease-in-out 4s forwards;
+}
+
+@keyframes moveFromTopSimultaneous {
+  0% {
     opacity: 0;
-    transform: translate(-50%, 0%) scale(2.5);
+    transform: translate(-50%, -150%) scale(2.5);
   }
-  50% { 
+  50% {
     opacity: 1;
-    transform: translate(-50%, -60%) scale(2.5);
+    transform: translate(-50%, -70%) scale(2.5);
   }
-  100% { 
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.5);
   }
+}
+
+@keyframes moveFromBottomSimultaneous {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 50%) scale(2.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -30%) scale(2.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+}
+
+/* Анимация preloader9 - увеличение и уменьшение */
+.preloader-9 {
+  animation: scaleFromLargeToNormal 2.5s ease-in-out 5s forwards;
+}
+
+@keyframes scaleFromLargeToNormal {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(5);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(3);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+}
+
+/* Анимация preloader8 - изнутри наружу */
+.preloader-8 {
+  animation: scaleFromInside 2.5s ease-in-out 6s forwards;
 }
 
 @keyframes scaleFromInside {
-  0% { 
+  0% {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.5);
   }
-  50% { 
+  50% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1.8);
   }
-  100% { 
+  100% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.5);
   }
 }
 
-@keyframes scaleFromLarge {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(3.5);
-  }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.8);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-}
-
-/* Анимация текста (букв) - начинается после завершения анимаций preloader */
+/* Анимация текста (букв) */
 .txt-loading {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
@@ -350,27 +384,28 @@ h6 {
   width: 0.8em;
   height: 1em;
   transition: all 0.3s ease;
+  transform: scale(2.5);
 }
 
 /* Анимация появления букв с увеличением в 3 раза */
 .letter-1 {
-  animation: letterAnimation 1s ease 6s forwards;
+  animation: letterAnimation 1s ease 7s forwards;
 }
 
 .letter-2 {
-  animation: letterAnimation 1s ease 6.2s forwards;
+  animation: letterAnimation 1s ease 7.2s forwards;
 }
 
 .letter-3 {
-  animation: letterAnimation 1s ease 6.4s forwards;
+  animation: letterAnimation 1s ease 7.4s forwards;
 }
 
 .letter-4 {
-  animation: letterAnimation 1s ease 6.6s forwards;
+  animation: letterAnimation 1s ease 7.6s forwards;
 }
 
 .letter-5 {
-  animation: letterAnimation 1s ease 6.8s forwards;
+  animation: letterAnimation 1s ease 7.8s forwards;
 }
 
 @keyframes letterAnimation {
@@ -380,11 +415,11 @@ h6 {
   }
   50% {
     opacity: 1;
-    transform: scale(1.2);
+    transform: scale(2.7);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(2.5);
   }
 }
 
@@ -402,7 +437,7 @@ h6 {
   color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   opacity: 0;
-  animation: fadeIn 0.5s ease 7.5s forwards;
+  animation: fadeIn 0.5s ease 8.5s forwards;
 }
 
 .vecteezy-credit a {
@@ -440,6 +475,10 @@ h6 {
   0% {
     opacity: 1;
     clip-path: inset(0 50% 0 50%);
+  }
+  50% {
+    opacity: 1;
+    clip-path: inset(0 25% 0 25%);
   }
   100% {
     opacity: 1;
