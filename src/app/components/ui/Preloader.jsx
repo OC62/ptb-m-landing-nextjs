@@ -6,24 +6,32 @@ import Image from 'next/image';
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFinalAnimation, setShowFinalAnimation] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    // Таймер для основной анимации прелоадера (общее время 10.5 секунд)
-    const loadingTimer = setTimeout(() => {
-      setIsLoading(false);
-      document.body.classList.add('loaded');
-    }, 10500);
+    // Ждем загрузки видео перед началом анимации
+    if (videoLoaded) {
+      // Таймер для основной анимации прелоадера (общее время 10.5 секунд)
+      const loadingTimer = setTimeout(() => {
+        setIsLoading(false);
+        document.body.classList.add('loaded');
+      }, 10500);
 
-    // Таймер для финальной анимации (расхождение серого экрана) через 9 секунд
-    const finalAnimationTimer = setTimeout(() => {
-      setShowFinalAnimation(true);
-    }, 9000);
+      // Таймер для финальной анимации (расхождение серого экрана) через 8 секунд
+      const finalAnimationTimer = setTimeout(() => {
+        setShowFinalAnimation(true);
+      }, 8000);
 
-    return () => {
-      clearTimeout(loadingTimer);
-      clearTimeout(finalAnimationTimer);
-    };
-  }, []);
+      return () => {
+        clearTimeout(loadingTimer);
+        clearTimeout(finalAnimationTimer);
+      };
+    }
+  }, [videoLoaded]);
+
+  const handleVideoLoad = () => {
+    setVideoLoaded(true);
+  };
 
   if (!isLoading) return null;
 
@@ -37,6 +45,8 @@ const Preloader = () => {
           muted 
           className="preloader-video-bg"
           playsInline
+          onLoadedData={handleVideoLoad}
+          onCanPlayThrough={handleVideoLoad}
         >
           <source src="/videos/backgroundanime.mp4" type="video/mp4" />
           Ваш браузер не поддерживает видео.
