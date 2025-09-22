@@ -6,53 +6,48 @@ import Image from 'next/image';
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFinalAnimation, setShowFinalAnimation] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {
-    // Ждем загрузки видео перед началом анимации
-    if (videoLoaded) {
-      // Таймер для основной анимации прелоадера (общее время 10.5 секунд)
-      const loadingTimer = setTimeout(() => {
-        setIsLoading(false);
-        document.body.classList.add('loaded');
-      }, 10500);
+    // Видео запускается сразу при загрузке компонента
+    // Анимации preloader начинаются через 1 секунду (задержки в CSS)
+    // Анимации letter начинаются после preloader (через 4 секунды)
+    
+    // Таймер для финальной анимации (расхождение серого экрана) через 9 секунд
+    const finalAnimationTimer = setTimeout(() => {
+      setShowFinalAnimation(true);
+    }, 9000);
 
-      // Таймер для финальной анимации (расхождение серого экрана) через 8 секунд
-      const finalAnimationTimer = setTimeout(() => {
-        setShowFinalAnimation(true);
-      }, 8000);
+    // Таймер для завершения прелоадера через 10 секунд
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+      document.body.classList.add('loaded');
+    }, 10000);
 
-      return () => {
-        clearTimeout(loadingTimer);
-        clearTimeout(finalAnimationTimer);
-      };
-    }
-  }, [videoLoaded]);
-
-  const handleVideoLoad = () => {
-    setVideoLoaded(true);
-  };
+    return () => {
+      clearTimeout(finalAnimationTimer);
+      clearTimeout(loadingTimer);
+    };
+  }, []);
 
   if (!isLoading) return null;
 
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд */}
+        {/* Видео-бэкграунд - запускается сразу */}
         <video 
           autoPlay 
           loop 
           muted 
           className="preloader-video-bg"
           playsInline
-          onLoadedData={handleVideoLoad}
-          onCanPlayThrough={handleVideoLoad}
+          preload="auto"
         >
           <source src="/videos/backgroundanime.mp4" type="video/mp4" />
           Ваш браузер не поддерживает видео.
         </video>
         
-        {/* Preloader Images */}
+        {/* Preloader Images - начинаются через 1 секунду */}
         <div className="preloader-image-container">
           <Image
             src="/images/preloadimg/preloader1.png"
@@ -128,7 +123,7 @@ const Preloader = () => {
           />
         </div>
         
-        {/* Letters Animation - начинается после анимаций preloader */}
+        {/* Letters Animation - начинается после анимаций preloader (через 4 секунды) */}
         <div className="txt-loading">
           <span className="letters-loading letter-1" data-text-preloader="П">
             <Image
@@ -185,7 +180,7 @@ const Preloader = () => {
         </div>
       </div>
       
-      {/* Финальная анимация - серый экран */}
+      {/* Финальная анимация - серый экран появляется на 9 секунде */}
       {showFinalAnimation && (
         <div className="final-animation"></div>
       )}

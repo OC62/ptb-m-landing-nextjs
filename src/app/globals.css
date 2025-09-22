@@ -175,41 +175,41 @@ h6 {
   height: 180px;
 }
 
-/* Анимации для каждого изображения - как в предоставленном файле */
+/* Анимации для каждого изображения */
 .preloader-1 {
-  animation: fullScreenToNormal 2s ease-in-out 0.5s forwards;
+  animation: fullScreenToNormal 2s ease-in-out 1s forwards;
 }
 
 .preloader-2 {
-  animation: fadeInOut 2s ease-in-out 1s forwards;
+  animation: fadeInOut 2s ease-in-out 1.5s forwards;
 }
 
 .preloader-3 {
-  animation: moveFromTop 3s ease-in-out 2s forwards;
+  animation: moveFromTop 2s ease-in-out 2s forwards;
 }
 
 .preloader-4 {
-  animation: moveFromLeft 3s ease-in-out 3s forwards;
+  animation: moveFromLeft 2s ease-in-out 2.5s forwards;
 }
 
 .preloader-5 {
-  animation: moveFromRight 3s ease-in-out 3s forwards;
+  animation: moveFromRight 2s ease-in-out 2.5s forwards;
 }
 
 .preloader-6 {
-  animation: moveFromTop 3s ease-in-out 4s forwards;
+  animation: moveFromTop 2s ease-in-out 3s forwards;
 }
 
 .preloader-7 {
-  animation: moveFromBottom 3s ease-in-out 4s forwards;
+  animation: moveFromBottom 2s ease-in-out 3s forwards;
 }
 
 .preloader-8 {
-  animation: scaleFromInside 3s ease-in-out 5s forwards;
+  animation: scaleFromInside 2s ease-in-out 3.5s forwards;
 }
 
 .preloader-9 {
-  animation: scaleFromLarge 3s ease-in-out 5s forwards;
+  animation: scaleFromLarge 2s ease-in-out 3.5s forwards;
 }
 
 /* Ключевые кадры анимаций */
@@ -342,7 +342,7 @@ h6 {
   }
 }
 
-/* Анимация текста (букв) - как в последнем варианте */
+/* Анимация текста (букв) */
 .txt-loading {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
@@ -367,23 +367,23 @@ h6 {
 
 /* Анимация появления букв с увеличением в 3 раза */
 .letter-1 {
-  animation: letterAnimation 1s ease 6s forwards;
+  animation: letterAnimation 1s ease 4s forwards;
 }
 
 .letter-2 {
-  animation: letterAnimation 1s ease 6.2s forwards;
+  animation: letterAnimation 1s ease 4.2s forwards;
 }
 
 .letter-3 {
-  animation: letterAnimation 1s ease 6.4s forwards;
+  animation: letterAnimation 1s ease 4.4s forwards;
 }
 
 .letter-4 {
-  animation: letterAnimation 1s ease 6.6s forwards;
+  animation: letterAnimation 1s ease 4.6s forwards;
 }
 
 .letter-5 {
-  animation: letterAnimation 1s ease 6.8s forwards;
+  animation: letterAnimation 1s ease 4.8s forwards;
 }
 
 @keyframes letterAnimation {
@@ -415,7 +415,7 @@ h6 {
   color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   opacity: 0;
-  animation: fadeIn 0.5s ease 7.5s forwards;
+  animation: fadeIn 0.5s ease 5.5s forwards;
 }
 
 .vecteezy-credit a {
@@ -442,10 +442,9 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: gray;
+  background: lightgray;
   z-index: 10000;
-  animation: splitAnimation 1.5s ease 8s forwards;
-  transform-origin: center;
+  animation: splitAnimation 0.5s ease 9s forwards;
   opacity: 0;
 }
 
@@ -453,14 +452,17 @@ h6 {
   0% {
     opacity: 1;
     clip-path: inset(0 50% 0 50%);
+    filter: brightness(1);
   }
   50% {
     opacity: 1;
     clip-path: inset(0 25% 0 25%);
+    filter: brightness(1.25);
   }
   100% {
     opacity: 1;
     clip-path: inset(0 0 0 0);
+    filter: brightness(1.5);
   }
 }
 
