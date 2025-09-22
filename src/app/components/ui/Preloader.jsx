@@ -8,16 +8,16 @@ const Preloader = () => {
   const [showFinalAnimation, setShowFinalAnimation] = useState(false);
 
   useEffect(() => {
-    // Таймер для основной анимации прелоадера
+    // Таймер для основной анимации прелоадера (общее время 10.5 секунд)
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 11500); // 11.5 секунд - общее время анимации
+    }, 10500);
 
-    // Таймер для финальной анимации (расхождение серого экрана)
+    // Таймер для финальной анимации (расхождение серого экрана) через 9 секунд
     const finalAnimationTimer = setTimeout(() => {
       setShowFinalAnimation(true);
-    }, 10000); // Запускаем через 10 секунд
+    }, 9000);
 
     return () => {
       clearTimeout(loadingTimer);
@@ -36,10 +36,9 @@ const Preloader = () => {
           loop 
           muted 
           className="preloader-video-bg"
-          poster="/videos/backgroundanime-poster.jpg" // Замените на путь к постеру, если нужно
+          playsInline
         >
           <source src="/videos/backgroundanime.mp4" type="video/mp4" />
-          <source src="/videos/backgroundanime.webm" type="video/webm" />
           Ваш браузер не поддерживает видео.
         </video>
         
@@ -119,7 +118,7 @@ const Preloader = () => {
           />
         </div>
         
-        {/* Letters Animation */}
+        {/* Letters Animation - начинается после анимаций preloader */}
         <div className="txt-loading">
           <span className="letters-loading letter-1" data-text-preloader="П">
             <Image

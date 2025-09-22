@@ -15,13 +15,13 @@ const nextConfig = {
   // Настройка изображений: разрешаем загрузку с mc.yandex.ru
   images: {
     domains: [
-      'mc.yandex.ru', // <-- Добавлено: разрешаем загрузку изображений с этого домена
+      'mc.yandex.ru',
     ],
   },
   // Включаем поддержку видеофайлов
   webpack(config) {
     config.module.rules.push({
-      test: /\.(mov|mp4|webm)$/,
+      test: /\.(mp4|webm)$/,
       use: {
         loader: 'file-loader',
         options: {
@@ -33,7 +33,6 @@ const nextConfig = {
 
     return config;
   },
-  // Другие настройки, если есть...
 };
 
 export default nextConfig;
