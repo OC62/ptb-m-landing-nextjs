@@ -133,7 +133,7 @@ h6 {
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: all 0.5s ease;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
 }
 
@@ -152,13 +152,13 @@ h6 {
   opacity: 1;
 }
 
-/* Контейнер для изображений прелоадера */
+/* Контейнер для изображений прелоадера - уменьшено до 210% */
 .preloader-image-container {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  height: 60vw;
-  max-height: 600px;
+  max-width: 520px;
+  height: 52vw;
+  max-height: 520px;
   margin-bottom: 2rem;
   transition: opacity 0.5s ease;
 }
@@ -170,172 +170,331 @@ h6 {
   transform: translate(-50%, -50%);
   opacity: 0;
   transition: all 0.5s ease;
-  width: 60%;
+  width: 52%;
   height: auto;
-  max-width: 270px;
-  max-height: 270px;
+  max-width: 220px;
+  max-height: 220px;
   object-fit: contain;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
-/* Анимации для каждого изображения с новой последовательностью */
+/* Анимации для каждого изображения с новой последовательностью и увеличенным временем */
 .preloader-1 {
-  animation: fullScreenToNormal 1s ease-in-out 0s forwards;
+  animation: fullScreenToNormal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
 }
 
 .preloader-2 {
-  animation: fadeInOut 1s ease-in-out 1s forwards;
+  animation: fadeInOut 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
 }
 
 .preloader-3 {
-  animation: moveFromTop 1s ease-in-out 2s forwards;
+  animation: moveFromTop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
 }
 
 .preloader-4 {
-  animation: moveFromLeft 1s ease-in-out 2s forwards;
+  animation: moveFromLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
 }
 
 .preloader-5 {
-  animation: moveFromRight 1s ease-in-out 2s forwards;
+  animation: moveFromRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
 }
 
 .preloader-6 {
-  animation: moveFromTop 1s ease-in-out 3s forwards;
+  animation: moveFromTop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3.6s forwards;
 }
 
 .preloader-7 {
-  animation: moveFromBottom 1s ease-in-out 3s forwards;
+  animation: moveFromBottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3.6s forwards;
 }
 
 .preloader-8 {
-  animation: scaleFromInside 1s ease-in-out 4s forwards;
+  animation: scaleFromInside 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.8s forwards;
 }
 
 .preloader-9 {
-  animation: scaleFromLarge 1s ease-in-out 5s forwards;
+  animation: scaleFromLarge 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.3s forwards;
 }
 
-/* Ключевые кадры анимаций */
+/* Ключевые кадры анимаций с шагом 15% и увеличенной плавностью */
 @keyframes fullScreenToNormal {
   0% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(10);
+    transform: translate(-50%, -50%) scale(8);
   }
-  50% {
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(7);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(6);
+  }
+  45% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(5);
   }
+  60% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(4);
+  }
+  75% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(3);
+  }
+  90% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.3);
+  }
   100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes fadeInOut {
   0% { 
-    opacity: 0; 
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
   }
-  25% { 
-    opacity: 1; 
+  15% { 
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.3);
   }
-  50% { 
-    opacity: 0.5; 
+  30% { 
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.6);
+  }
+  45% { 
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1.8);
+  }
+  60% { 
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(2.0);
   }
   75% { 
-    opacity: 1; 
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(2.05);
+  }
+  90% { 
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(2.08);
   }
   100% { 
-    opacity: 1; 
-    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes moveFromTop {
   0% { 
     opacity: 0;
-    transform: translate(-50%, -100%) scale(2.5);
+    transform: translate(-50%, -100%) scale(2.1);
   }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -40%) scale(2.5);
+  15% { 
+    opacity: 0.2;
+    transform: translate(-50%, -85%) scale(2.1);
+  }
+  30% { 
+    opacity: 0.5;
+    transform: translate(-50%, -70%) scale(2.1);
+  }
+  45% { 
+    opacity: 0.7;
+    transform: translate(-50%, -55%) scale(2.1);
+  }
+  60% { 
+    opacity: 0.8;
+    transform: translate(-50%, -45%) scale(2.1);
+  }
+  75% { 
+    opacity: 0.9;
+    transform: translate(-50%, -35%) scale(2.1);
+  }
+  90% { 
+    opacity: 0.95;
+    transform: translate(-50%, -52%) scale(2.1);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes moveFromLeft {
   0% { 
     opacity: 0;
-    transform: translate(-100%, -50%) scale(2.5);
+    transform: translate(-100%, -50%) scale(2.1);
   }
-  50% { 
-    opacity: 1;
-    transform: translate(-30%, -50%) scale(2.5);
+  15% { 
+    opacity: 0.2;
+    transform: translate(-85%, -50%) scale(2.1);
+  }
+  30% { 
+    opacity: 0.5;
+    transform: translate(-70%, -50%) scale(2.1);
+  }
+  45% { 
+    opacity: 0.7;
+    transform: translate(-55%, -50%) scale(2.1);
+  }
+  60% { 
+    opacity: 0.8;
+    transform: translate(-45%, -50%) scale(2.1);
+  }
+  75% { 
+    opacity: 0.9;
+    transform: translate(-35%, -50%) scale(2.1);
+  }
+  90% { 
+    opacity: 0.95;
+    transform: translate(-48%, -50%) scale(2.1);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes moveFromRight {
   0% { 
     opacity: 0;
-    transform: translate(0%, -50%) scale(2.5);
+    transform: translate(0%, -50%) scale(2.1);
   }
-  50% { 
-    opacity: 1;
-    transform: translate(-70%, -50%) scale(2.5);
+  15% { 
+    opacity: 0.2;
+    transform: translate(-15%, -50%) scale(2.1);
+  }
+  30% { 
+    opacity: 0.5;
+    transform: translate(-30%, -50%) scale(2.1);
+  }
+  45% { 
+    opacity: 0.7;
+    transform: translate(-45%, -50%) scale(2.1);
+  }
+  60% { 
+    opacity: 0.8;
+    transform: translate(-55%, -50%) scale(2.1);
+  }
+  75% { 
+    opacity: 0.9;
+    transform: translate(-65%, -50%) scale(2.1);
+  }
+  90% { 
+    opacity: 0.95;
+    transform: translate(-52%, -50%) scale(2.1);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes moveFromBottom {
   0% { 
     opacity: 0;
-    transform: translate(-50%, 0%) scale(2.5);
+    transform: translate(-50%, 0%) scale(2.1);
   }
-  50% { 
-    opacity: 1;
-    transform: translate(-50%, -60%) scale(2.5);
+  15% { 
+    opacity: 0.2;
+    transform: translate(-50%, -15%) scale(2.1);
+  }
+  30% { 
+    opacity: 0.5;
+    transform: translate(-50%, -30%) scale(2.1);
+  }
+  45% { 
+    opacity: 0.7;
+    transform: translate(-50%, -45%) scale(2.1);
+  }
+  60% { 
+    opacity: 0.8;
+    transform: translate(-50%, -55%) scale(2.1);
+  }
+  75% { 
+    opacity: 0.9;
+    transform: translate(-50%, -65%) scale(2.1);
+  }
+  90% { 
+    opacity: 0.95;
+    transform: translate(-50%, -52%) scale(2.1);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes scaleFromInside {
   0% { 
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.5);
+    transform: translate(-50%, -50%) scale(0.3);
   }
-  50% { 
+  15% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(0.6);
+  }
+  30% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+  45% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1.4);
+  }
+  60% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+  75% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(1.9);
+  }
+  90% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.8);
+    transform: translate(-50%, -50%) scale(2.0);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
 @keyframes scaleFromLarge {
   0% { 
     opacity: 0;
-    transform: translate(-50%, -50%) scale(3.5);
+    transform: translate(-50%, -50%) scale(3.0);
   }
-  50% { 
+  15% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(2.7);
+  }
+  30% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(2.5);
+  }
+  45% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(2.3);
+  }
+  60% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(2.2);
+  }
+  75% {
+    opacity: 0.95;
+    transform: translate(-50%, -50%) scale(2.15);
+  }
+  90% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.8);
+    transform: translate(-50%, -50%) scale(2.12);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
@@ -356,31 +515,33 @@ h6 {
   opacity: 0;
   position: relative;
   display: inline-block;
-  width: 1.2em; /* Увеличено на 150% */
-  height: 1.5em; /* Увеличено на 150% */
+  width: 1.2em;
+  height: 1.5em;
   transition: all 0.3s ease;
-  transform: scale(1.5); /* Увеличено на 150% */
+  transform: scale(1.5);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* Анимация появления букв после всех preloader изображений */
 .letter-1 {
-  animation: letterAnimation 0.5s ease 6s forwards;
+  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.8s forwards;
 }
 
 .letter-2 {
-  animation: letterAnimation 0.5s ease 6.1s forwards;
+  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.9s forwards;
 }
 
 .letter-3 {
-  animation: letterAnimation 0.5s ease 6.2s forwards;
+  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.0s forwards;
 }
 
 .letter-4 {
-  animation: letterAnimation 0.5s ease 6.3s forwards;
+  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.1s forwards;
 }
 
 .letter-5 {
-  animation: letterAnimation 0.5s ease 6.4s forwards;
+  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.2s forwards;
 }
 
 @keyframes letterAnimation {
@@ -388,9 +549,29 @@ h6 {
     opacity: 0;
     transform: scale(2.2);
   }
-  50% {
-    opacity: 1;
+  15% {
+    opacity: 0.3;
+    transform: scale(2.0);
+  }
+  30% {
+    opacity: 0.6;
     transform: scale(1.8);
+  }
+  45% {
+    opacity: 0.8;
+    transform: scale(1.7);
+  }
+  60% {
+    opacity: 0.9;
+    transform: scale(1.6);
+  }
+  75% {
+    opacity: 0.95;
+    transform: scale(1.55);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1.52);
   }
   100% {
     opacity: 1;
@@ -412,7 +593,7 @@ h6 {
   color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   opacity: 0;
-  animation: fadeIn 0.5s ease 6.5s forwards;
+  animation: fadeIn 0.5s ease 7.4s forwards;
 }
 
 .vecteezy-credit a {
@@ -439,52 +620,98 @@ h6 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: lightgray;
   z-index: 10000;
-  animation: splitAnimation 1s ease 7s forwards;
+  pointer-events: none;
   opacity: 0;
 }
 
-@keyframes splitAnimation {
-  0% {
-    opacity: 1;
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    transform: translateX(0);
-  }
-  50% {
-    opacity: 1;
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    transform: translateX(-25%);
-  }
-  100% {
-    opacity: 1;
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-    transform: translateX(-100%);
-  }
-}
-
+.final-animation::before,
 .final-animation::after {
   content: '';
   position: absolute;
   top: 0;
-  right: 0;
   width: 50%;
   height: 100%;
   background: lightgray;
+  opacity: 0;
+}
+
+.final-animation::before {
+  left: 0;
+  animation: splitLeft 1s ease 7s forwards;
+}
+
+.final-animation::after {
+  right: 0;
   animation: splitRight 1s ease 7s forwards;
+}
+
+@keyframes splitLeft {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  15% {
+    opacity: 1;
+    transform: translateX(-10%);
+  }
+  30% {
+    opacity: 1;
+    transform: translateX(-25%);
+  }
+  45% {
+    opacity: 1;
+    transform: translateX(-45%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-65%);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(-85%);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(-95%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes splitRight {
   0% {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    opacity: 1;
     transform: translateX(0);
   }
-  50% {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  15% {
+    opacity: 1;
+    transform: translateX(10%);
+  }
+  30% {
+    opacity: 1;
     transform: translateX(25%);
   }
+  45% {
+    opacity: 1;
+    transform: translateX(45%);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(65%);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(85%);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(95%);
+  }
   100% {
-    clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+    opacity: 1;
     transform: translateX(100%);
   }
 }
@@ -493,7 +720,8 @@ h6 {
 .main-content {
   opacity: 0;
   visibility: hidden;
-  transition: all 0.5s ease 0.2s;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  z-index: 1;
 }
 
 /* Когда body имеет класс loaded - показываем основной контент */
@@ -512,12 +740,12 @@ body.loaded .animation-preloader {
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
-    height: 60vw;
+    height: 52vw;
     max-height: 450px;
   }
   
   .preloader-img {
-    width: 55%;
+    width: 50%;
     max-width: 200px;
     max-height: 200px;
   }
@@ -529,12 +757,12 @@ body.loaded .animation-preloader {
 
 @media screen and (max-width: 500px) {
   .preloader-image-container {
-    height: 55vw;
+    height: 48vw;
     max-height: 350px;
   }
   
   .preloader-img {
-    width: 50%;
+    width: 45%;
     max-width: 180px;
     max-height: 180px;
   }
@@ -546,12 +774,12 @@ body.loaded .animation-preloader {
 
 @media screen and (max-width: 400px) {
   .preloader-image-container {
-    height: 50vw;
+    height: 45vw;
     max-height: 300px;
   }
   
   .preloader-img {
-    width: 45%;
+    width: 40%;
     max-width: 160px;
     max-height: 160px;
   }

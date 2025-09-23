@@ -35,7 +35,7 @@ const Preloader = () => {
     // Таймеры для анимаций - общее время 8 секунд
     const finalAnimationTimer = setTimeout(() => {
       setShowFinalAnimation(true);
-    }, 7500); // Финальная анимация начинается на 7.5 секунде
+    }, 7000); // Финальная анимация начинается на 7 секунде
 
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
@@ -59,7 +59,7 @@ const Preloader = () => {
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд */}
+        {/* Видео-бэкграунд в формате WebM */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -71,6 +71,7 @@ const Preloader = () => {
           onError={handleVideoError}
         >
           <source src="/videos/backgroundanime.webm" type="video/webm" />
+          
           Ваш браузер не поддерживает видеоформаты.
         </video>
 
