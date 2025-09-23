@@ -10,7 +10,6 @@ const Preloader = () => {
   const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
-    // Принудительно запускаем видео
     const startVideo = () => {
       if (videoRef.current) {
         videoRef.current.play().catch(error => {
@@ -27,20 +26,18 @@ const Preloader = () => {
       }
     };
 
-    // Запускаем видео сразу после монтирования компонента
     const timer = setTimeout(() => {
       startVideo();
     }, 100);
 
-    // Таймеры для анимаций - общее время 8 секунд
     const finalAnimationTimer = setTimeout(() => {
       setShowFinalAnimation(true);
-    }, 7000); // Финальная анимация начинается на 7 секунде
+    }, 7000);
 
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 8000); // Прелоадер завершается на 8 секунде
+    }, 8000);
 
     return () => {
       clearTimeout(timer);
@@ -59,7 +56,6 @@ const Preloader = () => {
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд в формате WebM */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -79,7 +75,6 @@ const Preloader = () => {
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900 z-0"></div>
         )}
         
-        {/* Preloader Images */}
         <div className="preloader-image-container">
           <Image
             src="/images/preloadimg/preloader1.png"
@@ -155,7 +150,6 @@ const Preloader = () => {
           />
         </div>
         
-        {/* Letters Animation */}
         <div className="txt-loading">
           <span className="letters-loading letter-1" data-text-preloader="П">
             <Image

@@ -298,7 +298,7 @@ const ContactForm = () => {
                       type="text"
                       {...register('name')}
                       autoComplete="name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
                       placeholder="Введите ваше имя"
                     />
                     {errors.name && (
@@ -321,7 +321,7 @@ const ContactForm = () => {
                       type="email"
                       {...register('email')}
                       autoComplete="email"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
                       placeholder="your@email.com"
                     />
                     {errors.email && (
@@ -345,7 +345,7 @@ const ContactForm = () => {
                     type="tel"
                     {...register('phone')}
                     autoComplete="tel"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
                     placeholder="+7 (___) ___-__-__"
                   />
                   {errors.phone && (

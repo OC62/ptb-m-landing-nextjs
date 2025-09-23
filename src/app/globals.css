@@ -8,7 +8,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  --primary-color: 154, 205, 50; /* #9ACD32 */
+  --primary-color: 154, 205, 50;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -40,13 +40,11 @@ h6 {
   font-weight: bold;
 }
 
-/* === Стили для названия организации в хедере === */
 .header-company-name {
   @apply text-xl lg:text-base font-bold;
   color: rgb(var(--primary-color));
 }
 
-/* === Кнопки === */
 .btn-primary {
   @apply bg-green-900 hover:bg-green-800 text-white font-medium py-3 px-6 rounded transition-colors duration-300;
 }
@@ -67,7 +65,6 @@ h6 {
   @apply transition-colors duration-100;
 }
 
-/* === ИСПРАВЛЕНИЕ YANDEX SMARTCAPTCHA === */
 .captcha-container {
   @apply w-full min-h-[80px] relative border border-gray-300 rounded bg-gray-50 overflow-visible p-0 box-border;
 }
@@ -84,7 +81,6 @@ h6 {
   @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
 }
 
-/* === SWIPER NAVIGATION BUTTONS FIX === */
 .swiper-button-prev svg,
 .swiper-button-next svg {
   display: none !important;
@@ -121,7 +117,6 @@ h6 {
 }
 
 /* === СТИЛИ ДЛЯ ПРЕЛОАДЕРА === */
-
 .animation-preloader {
   position: fixed;
   top: 0;
@@ -137,7 +132,6 @@ h6 {
   overflow: hidden;
 }
 
-/* Видео-бэкграунд */
 .preloader-video-bg {
   position: absolute;
   top: 50%;
@@ -152,7 +146,6 @@ h6 {
   opacity: 1;
 }
 
-/* Контейнер для изображений прелоадера - уменьшено до 210% */
 .preloader-image-container {
   position: relative;
   width: 100%;
@@ -180,7 +173,7 @@ h6 {
   transform-style: preserve-3d;
 }
 
-/* Анимации для каждого изображения с новой последовательностью и увеличенным временем */
+/* Анимации с упрощенными ключевыми кадрами 0% → 100% */
 .preloader-1 {
   animation: fullScreenToNormal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
 }
@@ -217,35 +210,11 @@ h6 {
   animation: scaleFromLarge 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.3s forwards;
 }
 
-/* Ключевые кадры анимаций с шагом 15% и увеличенной плавностью */
+/* Упрощенные ключевые кадры только 0% и 100% */
 @keyframes fullScreenToNormal {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(8);
-  }
-  15% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(7);
-  }
-  30% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(6);
-  }
-  45% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(5);
-  }
-  60% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(4);
-  }
-  75% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(3);
-  }
-  90% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.3);
   }
   100% {
     opacity: 1;
@@ -258,30 +227,6 @@ h6 {
     opacity: 0;
     transform: translate(-50%, -50%) scale(1);
   }
-  15% { 
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1.3);
-  }
-  30% { 
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1.6);
-  }
-  45% { 
-    opacity: 0.4;
-    transform: translate(-50%, -50%) scale(1.8);
-  }
-  60% { 
-    opacity: 0.8;
-    transform: translate(-50%, -50%) scale(2.0);
-  }
-  75% { 
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(2.05);
-  }
-  90% { 
-    opacity: 0.9;
-    transform: translate(-50%, -50%) scale(2.08);
-  }
   100% { 
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.1);
@@ -292,30 +237,6 @@ h6 {
   0% { 
     opacity: 0;
     transform: translate(-50%, -100%) scale(2.1);
-  }
-  15% { 
-    opacity: 0.2;
-    transform: translate(-50%, -85%) scale(2.1);
-  }
-  30% { 
-    opacity: 0.5;
-    transform: translate(-50%, -70%) scale(2.1);
-  }
-  45% { 
-    opacity: 0.7;
-    transform: translate(-50%, -55%) scale(2.1);
-  }
-  60% { 
-    opacity: 0.8;
-    transform: translate(-50%, -45%) scale(2.1);
-  }
-  75% { 
-    opacity: 0.9;
-    transform: translate(-50%, -35%) scale(2.1);
-  }
-  90% { 
-    opacity: 0.95;
-    transform: translate(-50%, -52%) scale(2.1);
   }
   100% { 
     opacity: 1;
@@ -328,30 +249,6 @@ h6 {
     opacity: 0;
     transform: translate(-100%, -50%) scale(2.1);
   }
-  15% { 
-    opacity: 0.2;
-    transform: translate(-85%, -50%) scale(2.1);
-  }
-  30% { 
-    opacity: 0.5;
-    transform: translate(-70%, -50%) scale(2.1);
-  }
-  45% { 
-    opacity: 0.7;
-    transform: translate(-55%, -50%) scale(2.1);
-  }
-  60% { 
-    opacity: 0.8;
-    transform: translate(-45%, -50%) scale(2.1);
-  }
-  75% { 
-    opacity: 0.9;
-    transform: translate(-35%, -50%) scale(2.1);
-  }
-  90% { 
-    opacity: 0.95;
-    transform: translate(-48%, -50%) scale(2.1);
-  }
   100% { 
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.1);
@@ -362,30 +259,6 @@ h6 {
   0% { 
     opacity: 0;
     transform: translate(0%, -50%) scale(2.1);
-  }
-  15% { 
-    opacity: 0.2;
-    transform: translate(-15%, -50%) scale(2.1);
-  }
-  30% { 
-    opacity: 0.5;
-    transform: translate(-30%, -50%) scale(2.1);
-  }
-  45% { 
-    opacity: 0.7;
-    transform: translate(-45%, -50%) scale(2.1);
-  }
-  60% { 
-    opacity: 0.8;
-    transform: translate(-55%, -50%) scale(2.1);
-  }
-  75% { 
-    opacity: 0.9;
-    transform: translate(-65%, -50%) scale(2.1);
-  }
-  90% { 
-    opacity: 0.95;
-    transform: translate(-52%, -50%) scale(2.1);
   }
   100% { 
     opacity: 1;
@@ -398,30 +271,6 @@ h6 {
     opacity: 0;
     transform: translate(-50%, 0%) scale(2.1);
   }
-  15% { 
-    opacity: 0.2;
-    transform: translate(-50%, -15%) scale(2.1);
-  }
-  30% { 
-    opacity: 0.5;
-    transform: translate(-50%, -30%) scale(2.1);
-  }
-  45% { 
-    opacity: 0.7;
-    transform: translate(-50%, -45%) scale(2.1);
-  }
-  60% { 
-    opacity: 0.8;
-    transform: translate(-50%, -55%) scale(2.1);
-  }
-  75% { 
-    opacity: 0.9;
-    transform: translate(-50%, -65%) scale(2.1);
-  }
-  90% { 
-    opacity: 0.95;
-    transform: translate(-50%, -52%) scale(2.1);
-  }
   100% { 
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.1);
@@ -432,30 +281,6 @@ h6 {
   0% { 
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.3);
-  }
-  15% {
-    opacity: 0.2;
-    transform: translate(-50%, -50%) scale(0.6);
-  }
-  30% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.0);
-  }
-  45% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(1.4);
-  }
-  60% {
-    opacity: 0.85;
-    transform: translate(-50%, -50%) scale(1.7);
-  }
-  75% {
-    opacity: 0.95;
-    transform: translate(-50%, -50%) scale(1.9);
-  }
-  90% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.0);
   }
   100% { 
     opacity: 1;
@@ -468,37 +293,12 @@ h6 {
     opacity: 0;
     transform: translate(-50%, -50%) scale(3.0);
   }
-  15% {
-    opacity: 0.2;
-    transform: translate(-50%, -50%) scale(2.7);
-  }
-  30% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(2.5);
-  }
-  45% {
-    opacity: 0.7;
-    transform: translate(-50%, -50%) scale(2.3);
-  }
-  60% {
-    opacity: 0.85;
-    transform: translate(-50%, -50%) scale(2.2);
-  }
-  75% {
-    opacity: 0.95;
-    transform: translate(-50%, -50%) scale(2.15);
-  }
-  90% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.12);
-  }
   100% { 
     opacity: 1;
     transform: translate(-50%, -50%) scale(2.1);
   }
 }
 
-/* Анимация текста (букв) - увеличены на 150% */
 .txt-loading {
   font: bold 5em 'Montserrat', sans-serif;
   text-align: center;
@@ -523,7 +323,6 @@ h6 {
   backface-visibility: hidden;
 }
 
-/* Анимация появления букв после всех preloader изображений */
 .letter-1 {
   animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.8s forwards;
 }
@@ -549,30 +348,6 @@ h6 {
     opacity: 0;
     transform: scale(2.2);
   }
-  15% {
-    opacity: 0.3;
-    transform: scale(2.0);
-  }
-  30% {
-    opacity: 0.6;
-    transform: scale(1.8);
-  }
-  45% {
-    opacity: 0.8;
-    transform: scale(1.7);
-  }
-  60% {
-    opacity: 0.9;
-    transform: scale(1.6);
-  }
-  75% {
-    opacity: 0.95;
-    transform: scale(1.55);
-  }
-  90% {
-    opacity: 1;
-    transform: scale(1.52);
-  }
   100% {
     opacity: 1;
     transform: scale(1.5);
@@ -585,7 +360,6 @@ h6 {
   object-fit: contain;
 }
 
-/* Стили для надписи Vecteezy.com */
 .vecteezy-credit {
   position: absolute;
   bottom: 20px;
@@ -613,7 +387,6 @@ h6 {
   }
 }
 
-/* Анимация разделения страницы по вертикали */
 .final-animation {
   position: fixed;
   top: 0;
@@ -651,30 +424,6 @@ h6 {
     opacity: 1;
     transform: translateX(0);
   }
-  15% {
-    opacity: 1;
-    transform: translateX(-10%);
-  }
-  30% {
-    opacity: 1;
-    transform: translateX(-25%);
-  }
-  45% {
-    opacity: 1;
-    transform: translateX(-45%);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(-65%);
-  }
-  75% {
-    opacity: 1;
-    transform: translateX(-85%);
-  }
-  90% {
-    opacity: 1;
-    transform: translateX(-95%);
-  }
   100% {
     opacity: 1;
     transform: translateX(-100%);
@@ -686,37 +435,12 @@ h6 {
     opacity: 1;
     transform: translateX(0);
   }
-  15% {
-    opacity: 1;
-    transform: translateX(10%);
-  }
-  30% {
-    opacity: 1;
-    transform: translateX(25%);
-  }
-  45% {
-    opacity: 1;
-    transform: translateX(45%);
-  }
-  60% {
-    opacity: 1;
-    transform: translateX(65%);
-  }
-  75% {
-    opacity: 1;
-    transform: translateX(85%);
-  }
-  90% {
-    opacity: 1;
-    transform: translateX(95%);
-  }
   100% {
     opacity: 1;
     transform: translateX(100%);
   }
 }
 
-/* === ВАЖНО: СТИЛИ ДЛЯ ОСНОВНОГО КОНТЕНТА === */
 .main-content {
   opacity: 0;
   visibility: hidden;
@@ -724,20 +448,17 @@ h6 {
   z-index: 1;
 }
 
-/* Когда body имеет класс loaded - показываем основной контент */
 body.loaded .main-content {
   opacity: 1;
   visibility: visible;
 }
 
-/* Когда body имеет класс loaded - скрываем прелоадер */
 body.loaded .animation-preloader {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-/* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
     height: 52vw;
@@ -789,7 +510,7 @@ body.loaded .animation-preloader {
   }
 }
 
-/* === Остальные стили остаются без изменений === */
+/* Остальные стили без изменений */
 .cookie-banner {
   position: fixed;
   bottom: 1rem;
@@ -875,7 +596,6 @@ body.loaded .animation-preloader {
   background: #f9fafb;
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
   .cookie-banner {
     left: 0.5rem;
@@ -899,7 +619,6 @@ body.loaded .animation-preloader {
   }
 }
 
-/* Ссылка в тексте */
 .cookie-link {
   color: #2563eb;
   text-decoration: underline;
@@ -910,7 +629,6 @@ body.loaded .animation-preloader {
   color: #1d4ed8;
 }
 
-/* Дополнительные утилиты */
 .cursor-pointer {
   cursor: pointer;
 }
