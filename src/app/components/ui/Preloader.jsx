@@ -7,24 +7,31 @@ const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFinalAnimation, setShowFinalAnimation] = useState(false);
   const videoRef = useRef(null);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     // Принудительно запускаем видео
     const startVideo = () => {
       if (videoRef.current) {
         videoRef.current.play().catch(error => {
-          console.log('Автовоспроизведение заблокировано, пробуем включить звук:', error);
-          // Если автовоспроизведение заблокировано, пробуем с звуком
-          videoRef.current.muted = false;
-          videoRef.current.play().catch(e => {
-            console.log('Не удалось запустить видео:', e);
-          });
+          console.log('Автовоспроизведение заблокировано:', error);
+          // Пробуем запустить с задержкой
+          setTimeout(() => {
+            if (videoRef.current) {
+              videoRef.current.play().catch(e => {
+                console.log('Не удалось запустить видео:', e);
+                setVideoError(true);
+              });
+            }
+          }, 1000);
         });
       }
     };
 
-    // Запускаем видео сразу
-    startVideo();
+    // Запускаем видео сразу после монтирования компонента
+    const timer = setTimeout(() => {
+      startVideo();
+    }, 100);
 
     // Таймеры для анимаций
     const finalAnimationTimer = setTimeout(() => {
@@ -37,17 +44,23 @@ const Preloader = () => {
     }, 10000);
 
     return () => {
+      clearTimeout(timer);
       clearTimeout(finalAnimationTimer);
       clearTimeout(loadingTimer);
     };
   }, []);
+
+  const handleVideoError = () => {
+    console.error('Ошибка загрузки видео');
+    setVideoError(true);
+  };
 
   if (!isLoading) return null;
 
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд - исправленная версия */}
+        {/* Видео-бэкграунд в формате WebM */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -56,12 +69,14 @@ const Preloader = () => {
           playsInline
           preload="auto"
           className="preloader-video-bg"
-          poster="/images/bg_Hero.webp" // Добавляем постер как в Hero
+          onError={handleVideoError}
+          onCanPlayThrough={() => console.log('Видео готово к воспроизведению')}
+          onPlay={() => console.log('Видео запущено')}
         >
+          {/* Первым источником идет WebM - приоритетный формат */}
           <source src="/videos/backgroundanime.webm" type="video/webm" />
         </video>
-        
-        {/* Остальной код прелоадера остается без изменений */}
+        {/* Preloader Images */}
         <div className="preloader-image-container">
           <Image
             src="/images/preloadimg/preloader1.png"
@@ -137,6 +152,7 @@ const Preloader = () => {
           />
         </div>
         
+        {/* Letters Animation */}
         <div className="txt-loading">
           <span className="letters-loading letter-1" data-text-preloader="П">
             <Image
