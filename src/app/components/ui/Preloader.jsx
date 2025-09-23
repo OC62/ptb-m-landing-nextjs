@@ -75,7 +75,14 @@ const Preloader = () => {
         >
           {/* Первым источником идет WebM - приоритетный формат */}
           <source src="/videos/backgroundanime.webm" type="video/webm" />
+         
+          Ваш браузер не поддерживает видеоформаты.
         </video>
+
+        {/* Показываем сообщение если видео не загрузилось */}
+        {videoError && (
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900 z-0"></div>
+        )}
         
         {/* Preloader Images */}
         <div className="preloader-image-container">

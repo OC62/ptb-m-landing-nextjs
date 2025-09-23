@@ -158,8 +158,10 @@ h6 {
 /* Контейнер для изображений прелоадера */
 .preloader-image-container {
   position: relative;
-  width: 450px;
-  height: 450px;
+  width: 100%;
+  max-width: 450px;
+  height: 45vw;
+  max-height: 450px;
   margin-bottom: 2rem;
   transition: opacity 0.5s ease;
 }
@@ -168,14 +170,17 @@ h6 {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(2.5);
+  transform: translate(-50%, -50%);
   opacity: 0;
   transition: all 0.5s ease;
-  width: 180px;
-  height: 180px;
+  width: 40%;
+  height: auto;
+  max-width: 180px;
+  max-height: 180px;
+  object-fit: contain;
 }
 
-/* Анимации для каждого изображения */
+/* Анимации для каждого изображения - одинаковые для всех устройств */
 .preloader-1 {
   animation: fullScreenToNormal 2s ease-in-out 1s forwards;
 }
@@ -212,25 +217,19 @@ h6 {
   animation: scaleFromLarge 2s ease-in-out 3.5s forwards;
 }
 
-/* Ключевые кадры анимаций */
+/* Ключевые кадры анимаций - одинаковые для всех устройств */
 @keyframes fullScreenToNormal {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(10);
-    width: 100vmin;
-    height: 100vmin;
   }
   50% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(5);
-    width: 50vmin;
-    height: 50vmin;
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
-    width: 180px;
-    height: 180px;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -255,60 +254,60 @@ h6 {
 @keyframes moveFromTop {
   0% { 
     opacity: 0;
-    transform: translate(-50%, -100%) scale(2.5);
+    transform: translate(-50%, -100%);
   }
   50% { 
     opacity: 1;
-    transform: translate(-50%, -40%) scale(2.5);
+    transform: translate(-50%, -40%);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%);
   }
 }
 
 @keyframes moveFromLeft {
   0% { 
     opacity: 0;
-    transform: translate(-100%, -50%) scale(2.5);
+    transform: translate(-100%, -50%);
   }
   50% { 
     opacity: 1;
-    transform: translate(-30%, -50%) scale(2.5);
+    transform: translate(-30%, -50%);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%);
   }
 }
 
 @keyframes moveFromRight {
   0% { 
     opacity: 0;
-    transform: translate(0%, -50%) scale(2.5);
+    transform: translate(0%, -50%);
   }
   50% { 
     opacity: 1;
-    transform: translate(-70%, -50%) scale(2.5);
+    transform: translate(-70%, -50%);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%);
   }
 }
 
 @keyframes moveFromBottom {
   0% { 
     opacity: 0;
-    transform: translate(-50%, 0%) scale(2.5);
+    transform: translate(-50%, 0%);
   }
   50% { 
     opacity: 1;
-    transform: translate(-50%, -60%) scale(2.5);
+    transform: translate(-50%, -60%);
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -323,7 +322,7 @@ h6 {
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -338,7 +337,7 @@ h6 {
   }
   100% { 
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.5);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
@@ -362,10 +361,10 @@ h6 {
   width: 0.8em;
   height: 1em;
   transition: all 0.3s ease;
-  transform: scale(2.5);
+  transform: scale(1);
 }
 
-/* Анимация появления букв с увеличением в 3 раза */
+/* Анимация появления букв */
 .letter-1 {
   animation: letterAnimation 1s ease 4s forwards;
 }
@@ -397,7 +396,7 @@ h6 {
   }
   100% {
     opacity: 1;
-    transform: scale(2.5);
+    transform: scale(1);
   }
 }
 
@@ -489,13 +488,14 @@ body.loaded .animation-preloader {
 /* Responsive Styles для прелоадера */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
-    width: 450px;
-    height: 450px;
+    height: 45vw;
+    max-height: 350px;
   }
   
   .preloader-img {
-    width: 180px;
-    height: 180px;
+    width: 35%;
+    max-width: 140px;
+    max-height: 140px;
   }
   
   .txt-loading {
@@ -505,29 +505,35 @@ body.loaded .animation-preloader {
 
 @media screen and (max-width: 500px) {
   .preloader-image-container {
-    width: 360px;
-    height: 360px;
+    height: 40vw;
+    max-height: 280px;
   }
   
   .preloader-img {
-    width: 144px;
-    height: 144px;
+    width: 30%;
+    max-width: 120px;
+    max-height: 120px;
   }
   
   .txt-loading {
-    font-size: 2em;
+    font-size: 2.5em;
   }
 }
 
 @media screen and (max-width: 400px) {
   .preloader-image-container {
-    width: 300px;
-    height: 300px;
+    height: 35vw;
+    max-height: 240px;
   }
   
   .preloader-img {
-    width: 120px;
-    height: 120px;
+    width: 28%;
+    max-width: 100px;
+    max-height: 100px;
+  }
+  
+  .txt-loading {
+    font-size: 2em;
   }
 }
 
