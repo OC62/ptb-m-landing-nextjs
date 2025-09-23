@@ -69,7 +69,6 @@ const Preloader = () => {
           playsInline
           preload="auto"
           className="preloader-video-bg"
-          poster="/images/bg_Hero.webp"
           onError={handleVideoError}
           onCanPlayThrough={() => console.log('Видео готово к воспроизведению')}
           onPlay={() => console.log('Видео запущено')}
