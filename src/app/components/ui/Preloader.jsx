@@ -59,12 +59,6 @@ const Preloader = () => {
           poster="/images/bg_Hero.webp" // Добавляем постер как в Hero
         >
           <source src="/videos/backgroundanime.webm" type="video/webm" />
-          {/* Fallback как в Hero */}
-          <img
-            src="/images/bg_Hero.webp"
-            alt="Фон прелоадера"
-            className="w-full h-full object-cover"
-          />
         </video>
         
         {/* Остальной код прелоадера остается без изменений */}
