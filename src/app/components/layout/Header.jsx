@@ -18,6 +18,7 @@ const Header = () => {
     const checkMobileView = () => {
       setIsMobileView(window.innerWidth < 1024);
     };
+    
     checkMobileView();
     window.addEventListener('resize', checkMobileView);
     return () => window.removeEventListener('resize', checkMobileView);
@@ -41,8 +42,7 @@ const Header = () => {
       const element = document.getElementById(id);
       if (element) {
         const headerHeight = headerRef.current?.offsetHeight || 0;
-        const elementPosition =
-          element.getBoundingClientRect().top + window.pageYOffset;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - headerHeight;
         window.scrollTo({
           top: offsetPosition,
@@ -52,55 +52,57 @@ const Header = () => {
     }, 100);
   };
 
-  // Функция для перехода на главную с якорем
   const scrollToContact = () => {
     router.push('/#contact');
   };
 
   const navItems = [
-    { name: 'Главная', href: '/' },
+    { name: 'Главная', href: '/', aria: 'Перейти на главную страницу' },
     {
       name: 'О компании',
       href: '/about',
+      aria: 'Открыть меню о компании',
       submenu: [
-        { name: 'О нас', href: '/about' },
-        { name: 'Преимущества', href: '/about' },
-        { name: 'Лицензии', href: '/licenses' },
-        { name: 'Партнеры', href: '/partners' },
+        { name: 'О нас', href: '/about', aria: 'Перейти к информации о компании' },
+        { name: 'Преимущества', href: '/about', aria: 'Перейти к преимуществам' },
+        { name: 'Лицензии', href: '/licenses', aria: 'Перейти к лицензиям' },
+        { name: 'Партнеры', href: '/partners', aria: 'Перейти к партнерам' },
       ],
     },
     {
       name: 'Услуги',
       href: '/services',
+      aria: 'Открыть меню услуг',
       submenu: [
-        { name: 'Все услуги', href: '/services' },
-        { name: 'Аудит безопасности', href: '/services' },
-        { name: 'Мониторинг угроз', href: '/services' },
-        { name: 'Обучение персонала', href: '/services' },
-        { name: 'Техническое оснащение', href: '/services' },
+        { name: 'Все услуги', href: '/services', aria: 'Перейти ко всем услугам' },
+        { name: 'Аудит безопасности', href: '/services', aria: 'Перейти к аудиту безопасности' },
+        { name: 'Мониторинг угроз', href: '/services', aria: 'Перейти к мониторингу угроз' },
+        { name: 'Обучение персонала', href: '/services', aria: 'Перейти к обучению персонала' },
+        { name: 'Техническое оснащение', href: '/services', aria: 'Перейти к техническому оснащению' },
       ],
     },
     {
       name: 'Проекты',
       href: '/cases',
+      aria: 'Открыть меню проектов',
       submenu: [
-        { name: 'Наши кейсы', href: '/cases' },
-        { name: 'Реализованные проекты', href: '/cases' },
-        { name: 'Социальная ответственность', href: '/community' },
+        { name: 'Наши кейсы', href: '/cases', aria: 'Перейти к нашим кейсам' },
+        { name: 'Реализованные проекты', href: '/cases', aria: 'Перейти к реализованным проектам' },
+        { name: 'Социальная ответственность', href: '/community', aria: 'Перейти к социальной ответственности' },
       ],
     },
     {
       name: 'Вакансии',
       href: '/careers',
+      aria: 'Открыть меню вакансий',
       submenu: [
-        { name: 'Текущие вакансии', href: '/careers' },
-        { name: 'Карьера в компании', href: '/careers' },
+        { name: 'Текущие вакансии', href: '/careers', aria: 'Перейти к текущим вакансиям' },
+        { name: 'Карьера в компании', href: '/careers', aria: 'Перейти к карьере в компании' },
       ],
     },
-    { name: 'Контакты', href: '/contacts' },
+    { name: 'Контакты', href: '/contacts', aria: 'Перейти к контактам' },
   ];
 
-  // Компонент выпадающего меню
   const DropdownMenu = ({ item }) => {
     const [isOpen, setIsOpen] = useState(false);
     const timeoutRef = useRef(null);
@@ -134,14 +136,18 @@ const Header = () => {
       >
         <Link
           href={item.href}
-          className="flex items-center text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 group"
+          className="flex items-center text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 group focus-visible"
           onClick={() => setIsMenuOpen(false)}
+          aria-haspopup="true"
+          aria-expanded={isOpen}
+          aria-label={item.aria}
         >
           {item.name}
           <svg
             className="ml-1 w-3 h-3 transition-transform duration-200 group-hover:rotate-180"
             viewBox="0 0 12 12"
             fill="currentColor"
+            aria-hidden="true"
           >
             <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
           </svg>
@@ -158,15 +164,16 @@ const Header = () => {
             }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
+            role="menu"
           >
             {item.submenu.map((subItem, index) => (
               <Link
                 key={index}
                 href={subItem.href}
-                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal ${
-                  pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''
-                }`}
+                className={`block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors whitespace-normal focus-visible ${pathname === subItem.href ? 'bg-blue-50 text-primary font-medium' : ''}`}
                 onClick={() => setIsMenuOpen(false)}
+                role="menuitem"
+                aria-label={subItem.aria}
               >
                 {subItem.name}
               </Link>
@@ -182,15 +189,26 @@ const Header = () => {
       ref={headerRef}
       className="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50"
       style={{ overflow: 'visible' }}
+      role="banner"
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Логотип с названием компании */}
           <div
-            className="flex items-center space-x-2 cursor-pointer"
+            className="flex items-center space-x-2 cursor-pointer focus-visible"
             onClick={() => router.push('/')}
+            onKeyPress={(e) => e.key === 'Enter' && router.push('/')}
+            tabIndex={0}
+            role="button"
+            aria-label="Перейти на главную страницу"
           >
-            <img src="/images/logo.webp" alt="Логотип ООО ПТБ-М" className="h-8" />
+            <img
+              src="/images/logo.webp"
+              alt="Логотип ООО ПТБ-М"
+              className="h-8"
+              width={32}
+              height={32}
+            />
             <span className="header-company-name">
               ООО "ПТБ-М"
             </span>
@@ -199,6 +217,8 @@ const Header = () => {
           {/* Навигация для десктопа */}
           <nav
             className={`${isMobileView ? 'hidden' : 'flex'} items-center space-x-2`}
+            role="navigation"
+            aria-label="Основное меню"
           >
             <div className="flex space-x-2">
               {navItems.map((item, index) =>
@@ -211,10 +231,9 @@ const Header = () => {
                   <Link
                     key={index}
                     href={item.href}
-                    className={`text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 ${
-                      pathname === item.href ? 'text-primary font-bold' : ''
-                    }`}
+                    className={`text-gray-700 hover:text-primary font-medium transition-colors text-xs lg:text-sm whitespace-nowrap py-2 px-2 focus-visible ${pathname === item.href ? 'text-primary font-bold' : ''}`}
                     onClick={() => setIsMenuOpen(false)}
+                    aria-label={item.aria}
                   >
                     {item.name}
                   </Link>
@@ -228,22 +247,26 @@ const Header = () => {
             variant="onWhite"
             size="large"
             onClick={scrollToContact}
-            className={`${isMobileView ? 'hidden' : 'block'} text-xs`}
+            className={`${isMobileView ? 'hidden' : 'block'} text-xs focus-visible`}
+            aria-label="Получить консультацию"
           >
             Получить консультацию
           </GlassmorphicButton>
           
           {/* Кнопка мобильного меню */}
           <button
-            className={`${isMobileView ? 'block' : 'hidden'} text-gray-700 hover:text-primary transition-colors`}
+            className={`${isMobileView ? 'block' : 'hidden'} text-gray-700 hover:text-primary transition-colors focus-visible p-2 rounded`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
             <svg
               className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               {isMenuOpen ? (
                 <path
@@ -267,12 +290,14 @@ const Header = () => {
         {/* Мобильное меню */}
         {isMenuOpen && isMobileView && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
             className="py-4 border-t border-gray-200"
             style={{ maxHeight: 'calc(100vh - 80px)', overflowY: 'auto' }}
+            role="menu"
           >
             <div className="space-y-3">
               {navItems.map((item, index) => (
@@ -281,27 +306,29 @@ const Header = () => {
                     <div>
                       <Link
                         href={item.href}
-                        className="flex items-center w-full text-left px-2 py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+                        className="flex items-center w-full text-left px-2 py-2 text-gray-700 hover:text-primary font-medium transition-colors focus-visible"
                         onClick={() => setIsMenuOpen(false)}
+                        aria-expanded="false"
                       >
                         {item.name}
                         <svg
                           className="ml-1 w-3 h-3"
                           viewBox="0 0 12 12"
                           fill="currentColor"
+                          aria-hidden="true"
                         >
                           <path d="M6 8.5L2.5 5l.7-.7L6 7.1l2.8-2.8.7.7L6 8.5z" />
                         </svg>
                       </Link>
-                      <div className="pl-4 space-y-2">
+                      <div className="pl-4 space-y-2" role="menu">
                         {item.submenu.map((subItem, subIndex) => (
                           <Link
                             key={subIndex}
                             href={subItem.href}
-                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors ${
-                              pathname === subItem.href ? 'text-primary font-medium' : ''
-                            }`}
+                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors focus-visible ${pathname === subItem.href ? 'text-primary font-medium' : ''}`}
                             onClick={() => setIsMenuOpen(false)}
+                            role="menuitem"
+                            aria-label={subItem.aria}
                           >
                             {subItem.name}
                           </Link>
@@ -311,10 +338,10 @@ const Header = () => {
                   ) : (
                     <Link
                       href={item.href}
-                      className={`block text-gray-700 hover:text-primary font-medium py-2 px-2 w-full text-left transition-colors ${
-                        pathname === item.href ? 'text-primary font-bold' : ''
-                      }`}
+                      className={`block text-gray-700 hover:text-primary font-medium py-2 px-2 w-full text-left transition-colors focus-visible ${pathname === item.href ? 'text-primary font-bold' : ''}`}
                       onClick={() => setIsMenuOpen(false)}
+                      role="menuitem"
+                      aria-label={item.aria}
                     >
                       {item.name}
                     </Link>
@@ -325,7 +352,8 @@ const Header = () => {
                 variant="onWhite"
                 size="large"
                 onClick={scrollToContact}
-                className="w-full mt-4"
+                className="w-full mt-4 focus-visible"
+                aria-label="Получить консультацию"
               >
                 Получить консультацию
               </GlassmorphicButton>
