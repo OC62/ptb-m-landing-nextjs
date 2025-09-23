@@ -5,12 +5,30 @@ import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const Hero = () => {
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
+      const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - headerHeight;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden pt-16"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
       aria-labelledby="hero-heading"
     >
+      {/* Скрытый семантический заголовок */}
+      <h1 className="sr-only">
+        ООО ПТБ-М - Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года
+      </h1>
+
       {/* Фоновое видео */}
       <div className="absolute inset-0 z-0">
         <video
@@ -19,23 +37,22 @@ const Hero = () => {
           muted
           playsInline
           preload="auto"
-          poster="/images/bg_Hero.webp" // ✅ Исправлено: абсолютный путь
+          poster="/images/bg_Hero.webp"
           className="w-full h-full object-cover"
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
-          {/* Fallback изображение, если видео не поддерживается */}
           <img
-            src="/images/bg_Hero.webp" // ✅ Исправлено: абсолютный путь
+            src="/images/bg_Hero.webp"
             alt="Фон: дорожный объект, мост"
             className="w-full h-full object-cover"
             aria-hidden="true"
           />
         </video>
 
-        {/* Полупрозрачный градиент для улучшения читаемости текста */}
+        {/* Улучшенный контрастный оверлей */}
         <div
-          className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-900 to-transparent opacity-80"
+          className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/85 to-transparent"
           aria-hidden="true"
         ></div>
       </div>
@@ -55,36 +72,34 @@ const Hero = () => {
               },
             },
           }}
-          className="max-w-3xl"
+          className="max-w-3xl text-center"
         >
-          {/* Заголовок с градиентным текстом */}
-          <motion.h1
+          {/* Заголовок с улучшенным контрастом */}
+          <motion.h2
             id="hero-heading"
             variants={{
               hidden: { opacity: 0, y: -20 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ type: 'spring', stiffness: 100, damping: 12 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-green-200 leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight"
           >
-            Комплексное обеспечение транспортной безопасности для объектов
-            дорожного хозяйства с 2017 года.
-          </motion.h1>
+            Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года
+          </motion.h2>
 
-          {/* Подзаголовок */}
+          {/* Подзаголовок с улучшенным контрастом */}
           <motion.p
             variants={{
               hidden: { opacity: 0, y: -15 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-100 to-blue-200"
+            className="text-lg md:text-xl mb-8 text-blue-100"
           >
-            ООО "Подразделение транспортной безопасности -М" – профессионалы,
-            которым можно доверять
+            ООО "Подразделение транспортной безопасности -М" – профессионалы, которым можно доверять
           </motion.p>
 
-          {/* Кнопка */}
+          {/* Кнопка CTA */}
           <motion.div
             variants={{
               hidden: { opacity: 0, y: 20 },
@@ -95,13 +110,9 @@ const Hero = () => {
             <GlassmorphicButton
               variant="primary"
               size="large"
-              onClick={() => {
-                const contactSection = document.getElementById('contact');
-                if (contactSection) {
-                  contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
+              onClick={scrollToContact}
               aria-label="Получить консультацию по транспортной безопасности"
+              className="focus-visible"
             >
               Получить консультацию
             </GlassmorphicButton>

@@ -3,19 +3,23 @@
 
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
-import { useRouter } from 'next/navigation'; // ✅ Добавлено
+import { useRouter } from 'next/navigation';
 
 const CommunitySupport = () => {
-  const router = useRouter(); // ✅ Добавлено
+  const router = useRouter();
 
-  // ✅ Исправлено: используем useRouter для перехода на главную с якорем
   const scrollToContact = () => {
-    router.push('/#contact'); // ✅ Переход на главную с якорем
+    router.push('/#contact');
   };
 
   return (
-    <section id="community" className="relative py-32 md:py-40 bg-gray-50">
-      {/* Фон с fallback для SEO */}
+    <section id="community" className="relative py-32 md:py-40 bg-gray-50" aria-labelledby="community-heading">
+      {/* Скрытый семантический заголовок */}
+      <h2 className="sr-only" id="community-heading">
+        Поддержка детского спорта ООО ПТБ-М
+      </h2>
+
+      {/* Фон с улучшенным контрастом */}
       <div 
         className="absolute inset-0 z-0"
         style={{
@@ -26,7 +30,7 @@ const CommunitySupport = () => {
           minWidth: '100%'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 opacity-60"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 via-blue-800/75 to-green-800/80"></div>
       </div>
 
       {/* Скрытый img для SEO */}
@@ -37,7 +41,7 @@ const CommunitySupport = () => {
         />
       </div>
 
-      {/* Контент */}
+      {/* Контент с улучшенным контрастом */}
       <div className="container mx-auto px-4 relative z-10 pt-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -45,16 +49,16 @@ const CommunitySupport = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="max-w-4xl mx-auto text-center text-white"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-blue-100 to-green-200 text-transparent bg-clip-text">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white">
             Поддержка детского спорта
-          </h2>
-          <p className="text-lg md:text-xl mb-8 bg-gradient-to-r from-blue-100 to-green-200 text-transparent bg-clip-text leading-relaxed">
+          </h3>
+          <p className="text-lg md:text-xl mb-8 text-blue-50 leading-relaxed">
             ООО "ПТБ-М" активно участвует в развитии детского и юношеского
             спорта, поддерживая футбольные команды и спортивные школы в
             Ростовской области. Мы верим, что здоровое поколение — основа
             сильной страны.
           </p>
-          <p className="text-md md:text-lg mb-10 bg-gradient-to-r from-blue-50 to-green-100 text-transparent bg-clip-text">
+          <p className="text-md md:text-lg mb-10 text-blue-100">
             Наша команда помогает юным спортсменам в приобретении формы,
             инвентаря и организации турниров, внося вклад в будущее региона.
           </p>
@@ -68,8 +72,9 @@ const CommunitySupport = () => {
             <GlassmorphicButton
               variant="onLight"
               size="large"
-              onClick={scrollToContact} // ✅ Исправлено
-              className="mt-4 text-white"
+              onClick={scrollToContact}
+              className="mt-4 text-white focus-visible"
+              aria-label="Связаться с нами для поддержки детского спорта"
             >
               Связаться с нами
             </GlassmorphicButton>
