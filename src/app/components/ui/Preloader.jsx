@@ -15,7 +15,6 @@ const Preloader = () => {
       if (videoRef.current) {
         videoRef.current.play().catch(error => {
           console.log('Автовоспроизведение заблокировано:', error);
-          // Пробуем запустить с задержкой
           setTimeout(() => {
             if (videoRef.current) {
               videoRef.current.play().catch(e => {
@@ -33,15 +32,15 @@ const Preloader = () => {
       startVideo();
     }, 100);
 
-    // Таймеры для анимаций
+    // Таймеры для анимаций - общее время 8 секунд
     const finalAnimationTimer = setTimeout(() => {
       setShowFinalAnimation(true);
-    }, 9000);
+    }, 7500); // Финальная анимация начинается на 7.5 секунде
 
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
-    }, 10000);
+    }, 8000); // Прелоадер завершается на 8 секунде
 
     return () => {
       clearTimeout(timer);
@@ -60,7 +59,7 @@ const Preloader = () => {
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд в формате WebM */}
+        {/* Видео-бэкграунд */}
         <video 
           ref={videoRef}
           autoPlay 
@@ -70,16 +69,11 @@ const Preloader = () => {
           preload="auto"
           className="preloader-video-bg"
           onError={handleVideoError}
-          onCanPlayThrough={() => console.log('Видео готово к воспроизведению')}
-          onPlay={() => console.log('Видео запущено')}
         >
-          {/* Первым источником идет WebM - приоритетный формат */}
-          <source src="/videos/backgroundanime.webm" type="video/webm" />
-         
+          <source src="/videos/backgroundanime.mp4" type="video/mp4" />
           Ваш браузер не поддерживает видеоформаты.
         </video>
 
-        {/* Показываем сообщение если видео не загрузилось */}
         {videoError && (
           <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900 z-0"></div>
         )}
