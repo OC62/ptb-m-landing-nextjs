@@ -1,23 +1,36 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 const Preloader = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showFinalAnimation, setShowFinalAnimation] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    // Видео запускается сразу при загрузке компонента
-    // Анимации preloader начинаются через 1 секунду (задержки в CSS)
-    // Анимации letter начинаются после preloader (через 4 секунды)
-    
-    // Таймер для финальной анимации (расхождение серого экрана) через 9 секунд
+    // Принудительно запускаем видео
+    const startVideo = () => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(error => {
+          console.log('Автовоспроизведение заблокировано, пробуем включить звук:', error);
+          // Если автовоспроизведение заблокировано, пробуем с звуком
+          videoRef.current.muted = false;
+          videoRef.current.play().catch(e => {
+            console.log('Не удалось запустить видео:', e);
+          });
+        });
+      }
+    };
+
+    // Запускаем видео сразу
+    startVideo();
+
+    // Таймеры для анимаций
     const finalAnimationTimer = setTimeout(() => {
       setShowFinalAnimation(true);
     }, 9000);
 
-    // Таймер для завершения прелоадера через 10 секунд
     const loadingTimer = setTimeout(() => {
       setIsLoading(false);
       document.body.classList.add('loaded');
@@ -34,20 +47,27 @@ const Preloader = () => {
   return (
     <>
       <div className="animation-preloader">
-        {/* Видео-бэкграунд - запускается сразу */}
+        {/* Видео-бэкграунд - исправленная версия */}
         <video 
+          ref={videoRef}
           autoPlay 
           loop 
           muted 
-          className="preloader-video-bg"
           playsInline
           preload="auto"
+          className="preloader-video-bg"
+          poster="/images/bg_Hero.webp" // Добавляем постер как в Hero
         >
           <source src="/videos/backgroundanime.mp4" type="video/mp4" />
-          Ваш браузер не поддерживает видео.
+          {/* Fallback как в Hero */}
+          <img
+            src="/images/bg_Hero.webp"
+            alt="Фон прелоадера"
+            className="w-full h-full object-cover"
+          />
         </video>
         
-        {/* Preloader Images - начинаются через 1 секунду */}
+        {/* Остальной код прелоадера остается без изменений */}
         <div className="preloader-image-container">
           <Image
             src="/images/preloadimg/preloader1.png"
@@ -123,7 +143,6 @@ const Preloader = () => {
           />
         </div>
         
-        {/* Letters Animation - начинается после анимаций preloader (через 4 секунды) */}
         <div className="txt-loading">
           <span className="letters-loading letter-1" data-text-preloader="П">
             <Image
@@ -172,7 +191,6 @@ const Preloader = () => {
           </span>
         </div>
         
-        {/* Надпись Vecteezy.com с ссылкой */}
         <div className="vecteezy-credit">
           <a href="https://www.vecteezy.com/free-videos/cyclone" target="_blank" rel="noopener noreferrer">
             Cyclone Stock Videos by Vecteezy
@@ -180,7 +198,6 @@ const Preloader = () => {
         </div>
       </div>
       
-      {/* Финальная анимация - серый экран появляется на 9 секунде */}
       {showFinalAnimation && (
         <div className="final-animation"></div>
       )}
