@@ -70,7 +70,7 @@ const Preloader = () => {
           className="preloader-video-bg"
           onError={handleVideoError}
         >
-          <source src="/videos/backgroundanime.mp4" type="video/mp4" />
+          <source src="/videos/backgroundanime.webm" type="video/webm" />
           Ваш браузер не поддерживает видеоформаты.
         </video>
 
