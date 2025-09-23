@@ -12,20 +12,17 @@ const About = () => {
   const advantages = [
     {
       title: 'Более 8 лет на рынке',
-      description:
-        'Опыт в защите от актов незаконного вмешательства на объектах транспортной инфраструктуры',
+      description: 'Опыт в защите от актов незаконного вмешательства на объектах транспортной инфраструктуры',
       icon: '🏆',
     },
     {
       title: 'Аттестованные специалисты',
-      description:
-        'Команда аттестованных специалистов, прошедших подготовку по требованиям ФЗ-16',
+      description: 'Команда аттестованных специалистов, прошедших подготовку по требованиям ФЗ-16',
       icon: '👨‍💼',
     },
     {
       title: 'Работа с госзаказчиками',
-      description:
-        'Имеем успешный опыт многолетнего сотрудничества с государственными структурами и администрациями различных регионов.',
+      description: 'Имеем успешный опыт многолетнего сотрудничества с государственными структурами и администрациями различных регионов.',
       icon: '🏛️',
     },
     {
@@ -79,7 +76,9 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gray-50">
+    <section id="about" className="py-20 bg-gray-50" aria-labelledby="about-heading">
+      <h2 id="about-heading" className="sr-only">О нашей компании</h2>
+      
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -87,9 +86,9 @@ const About = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             О нашей компании
-          </h2>
+          </h3>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Мы специализируемся на реализации комплекса мер по обеспечению
             транспортной безопасности, защищая интересы государственных и
@@ -103,7 +102,7 @@ const About = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="max-w-3xl mb-16"
         >
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Наша задача</h3>
+          <h4 className="text-2xl font-bold text-gray-800 mb-4">Наша задача</h4>
           <p className="text-gray-600 mb-6">
             Обеспечение транспортой безопасности объектов дорожного хозяйства.
             Для этого мы сочетаем строгое соблюдение закона № 16-ФЗ с
@@ -111,7 +110,7 @@ const About = () => {
             ваше спокойствие и защита от рисков.
           </p>
 
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">Наш опыт</h3>
+          <h4 className="text-2xl font-bold text-gray-800 mb-4">Наш опыт</h4>
           <p className="text-gray-600">
             Более 8 лет успешной работы в сфере транспортной безопасности. Мы
             являемся надежным партнером для государственных структур и частных
@@ -120,7 +119,7 @@ const About = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" role="list" aria-label="Преимущества компании">
           {advantages.map((advantage, index) => (
             <motion.div
               key={index}
@@ -129,11 +128,12 @@ const About = () => {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ delay: index * 0.1 }}
               className="bg-white p-6 rounded-xl shadow-md text-center hover:shadow-lg transition-shadow"
+              role="listitem"
             >
-              <div className="text-4xl mb-4">{advantage.icon}</div>
-              <h4 className="text-xl font-semibold text-gray-800 mb-2">
+              <div className="text-4xl mb-4" aria-hidden="true">{advantage.icon}</div>
+              <h5 className="text-xl font-semibold text-gray-800 mb-2">
                 {advantage.title}
-              </h4>
+              </h5>
               <p className="text-gray-600">{advantage.description}</p>
             </motion.div>
           ))}
@@ -145,16 +145,16 @@ const About = () => {
           viewport={{ once: true, margin: '-100px' }}
           className="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto"
         >
-          <h3 className="text-2xl font-bold text-gray-800 text-center mb-6">
+          <h4 className="text-2xl font-bold text-gray-800 text-center mb-6">
             Наша команда в действии
-          </h3>
+          </h4>
           <p className="text-center text-gray-600 mb-6 text-sm">
             Фото из архива ООО "ПТБ-М"
           </p>
 
           <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden">
             <Swiper
-              modules={[Autoplay]}
+              modules={[Autoplay, Navigation]}
               spaceBetween={0}
               slidesPerView={1}
               loop={true}
@@ -162,10 +162,15 @@ const About = () => {
                 delay: 4000,
                 disableOnInteraction: false,
               }}
+              navigation={{
+                nextEl: '.about-swiper-next',
+                prevEl: '.about-swiper-prev',
+              }}
               className="w-full"
               style={{
                 minHeight: '300px',
               }}
+              aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
                 <SwiperSlide
@@ -177,28 +182,30 @@ const About = () => {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <LazyImage
                           src={member.src}
-                          alt={`Фото: ${member.position}`}
+                          alt={`${member.name} - ${member.position}`}
                           className="max-h-full max-w-full object-contain rounded-t-xl"
+                          width={600}
+                          height={400}
                         />
                       </div>
                     </div>
 
                     <div
-                      className="absolute bottom-0 left-0 right-0 bg-black/50 text-white rounded-b-xl"
+                      className="absolute bottom-0 left-0 right-0 bg-black/70 text-white rounded-b-xl"
                       style={{
                         minHeight: '75px',
                         height: '25%',
                       }}
                     >
-                      <div className="p-2 h-full flex flex-col justify-center">
+                      <div className="p-4 h-full flex flex-col justify-center">
                         <p
-                          className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5"
+                          className="font-semibold text-base sm:text-sm md:text-base mb-1"
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.name}
                         </p>
                         <p
-                          className="text-sm sm:text-xs md:text-sm xs:text-[0.75rem] xxs:text-[0.65rem] xxxs:text-[0.55rem] xxxxs:text-[0.45rem]"
+                          className="text-sm sm:text-xs md:text-sm"
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.position}
@@ -209,6 +216,24 @@ const About = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            
+            {/* Кнопки навигации */}
+            <button 
+              className="about-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Предыдущее фото"
+            >
+              <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button 
+              className="about-swiper-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Следующее фото"
+            >
+              <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </motion.div>
       </div>
