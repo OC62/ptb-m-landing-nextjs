@@ -69,6 +69,7 @@ const Preloader = () => {
           playsInline
           preload="auto"
           className="preloader-video-bg"
+          poster="/images/bg_Hero.webp"
           onError={handleVideoError}
           onCanPlayThrough={() => console.log('Видео готово к воспроизведению')}
           onPlay={() => console.log('Видео запущено')}
@@ -76,6 +77,7 @@ const Preloader = () => {
           {/* Первым источником идет WebM - приоритетный формат */}
           <source src="/videos/backgroundanime.webm" type="video/webm" />
         </video>
+        
         {/* Preloader Images */}
         <div className="preloader-image-container">
           <Image
