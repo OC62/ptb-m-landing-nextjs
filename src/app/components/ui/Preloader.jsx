@@ -58,7 +58,7 @@ const Preloader = () => {
           className="preloader-video-bg"
           poster="/images/bg_Hero.webp" // Добавляем постер как в Hero
         >
-          <source src="/videos/backgroundanime.mp4" type="video/mp4" />
+          <source src="/videos/Bridge.mp4" type="video/mp4" />
           {/* Fallback как в Hero */}
           <img
             src="/images/bg_Hero.webp"
