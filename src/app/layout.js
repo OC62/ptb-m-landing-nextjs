@@ -8,6 +8,9 @@ import Script from 'next/script';
 import Image from 'next/image';
 import CookieBanner from '@/components/layout/CookieBanner';
 
+// ✅ Импортируем SpeedInsights
+import { SpeedInsights } from '@vercel/speed-insights/next';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -125,6 +128,9 @@ export default function RootLayout({ children }) {
             />
           </div>
         </noscript>
+
+        {/* ✅ Добавляем SpeedInsights */}
+        <SpeedInsights />
       </body>
     </html>
   );
