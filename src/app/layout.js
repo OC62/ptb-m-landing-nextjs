@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
     <html lang="ru">
       <head>
         <meta name="google" content="notranslate" />
-        <link rel="icon" type="image/svg+xml" href="/images/logo.svg" />
+        <link rel="icon" type="image/svg+xml" href="/images/logo.webp" />
         <link rel="icon" type="image/png" sizes="120x120" href="/images/favicon-120x120.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
