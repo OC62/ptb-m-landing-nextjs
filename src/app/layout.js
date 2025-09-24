@@ -8,8 +8,9 @@ import Script from 'next/script';
 import Image from 'next/image';
 import CookieBanner from '@/components/layout/CookieBanner';
 
-// ✅ Импортируем SpeedInsights
+// ✅ Импортируем SpeedInsights и Analytics
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -129,8 +130,9 @@ export default function RootLayout({ children }) {
           </div>
         </noscript>
 
-        {/* ✅ Добавляем SpeedInsights */}
+        {/* ✅ Добавляем SpeedInsights и Analytics */}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
