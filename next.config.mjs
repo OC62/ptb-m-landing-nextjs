@@ -57,10 +57,10 @@ const nextConfig = {
   poweredByHeader: false,
   // Включите компрессию
   compress: true,
-  // Оптимизация для production
-  swcMinify: true,
+  // УБРАНО: swcMinify больше не поддерживается в Next.js 15
+  // swcMinify: true,
   experimental: {
-    optimizeCss: true,
+    optimizeCss: true, // можно оставить, если используется
   },
 }
 
