@@ -54,7 +54,7 @@ export default function RootLayout({ children }) {
     <html lang="ru">
       <head>
         <meta name="google" content="notranslate" />
-        <link rel="icon" type="image/svg+xml" href="/images/logo.webp" />
+        <link rel="icon" type="image/webp" href="/images/logo.webp" />
         <link rel="icon" type="image/png" sizes="120x120" href="/images/favicon-120x120.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
@@ -70,6 +70,21 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
         <link rel="dns-prefetch" href="https://yastatic.net" />
+         {/* Предзагрузка критических изображений */}
+        <link 
+          rel="preload" 
+          href="/images/bg_Hero.webp" 
+          as="image"
+          type="image/webp"
+        />
+        {/* Предзагрузка шрифтов */}
+        <link
+          rel="preload"
+          href="/fonts/custom-font.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
 
         {/* ✅ JSON-LD Разметка с улучшенной структурой */}
         <script
@@ -80,7 +95,7 @@ export default function RootLayout({ children }) {
               "@type": "Organization",
               "name": "ООО \"ПТБ-М\"",
               "url": "https://xn----9sb8ajp.xn--p1ai",
-              "logo": "https://xn----9sb8ajp.xn--p1ai/images/logo.png",
+              "logo": "https://xn----9sb8ajp.xn--p1ai/images/logo.webp",
               "description": "Обеспечение транспортной безопасности объектов дорожного хозяйства.",
               "address": {
                 "@type": "PostalAddress",

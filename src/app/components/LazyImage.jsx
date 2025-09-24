@@ -1,15 +1,28 @@
-// nextjs/src/components/LazyImage.jsx
+'use client';
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
-const LazyImage = ({ src, alt, className, width, height, priority = false, ...props }) => {
+const LazyImage = ({ 
+  src, 
+  alt, 
+  className = '',
+  width, 
+  height, 
+  priority = false,
+  quality = 80,
+  sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
+  ...props 
+}) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef(null);
 
   useEffect(() => {
-    if (!imgRef.current) return;
+    if (!imgRef.current || priority) {
+      setIsInView(true);
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -20,7 +33,7 @@ const LazyImage = ({ src, alt, className, width, height, priority = false, ...pr
       },
       {
         root: null,
-        rootMargin: '50px', // Увеличиваем зону предзагрузки
+        rootMargin: '100px',
         threshold: 0.1,
       }
     );
@@ -30,85 +43,77 @@ const LazyImage = ({ src, alt, className, width, height, priority = false, ...pr
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [priority]);
 
   const handleLoad = () => {
     setIsLoaded(true);
   };
 
-  const handleError = (e) => {
-    console.error(`Ошибка загрузки изображения: ${src}`);
+  const handleError = () => {
     setHasError(true);
-    setIsLoaded(true); // Показываем placeholder даже при ошибке
+    setIsLoaded(true);
+  };
+
+  // Генерация простого placeholder
+  const generatePlaceholder = () => {
+    return 'data:image/svg+xml;base64,' + btoa(`
+      <svg width="${width || 100}" height="${height || 100}" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#f3f4f6"/>
+      </svg>
+    `);
   };
 
   if (hasError) {
     return (
       <div 
         ref={imgRef}
-        className={`lazy-image-container ${className || ''} flex items-center justify-center bg-gray-100 rounded-lg`}
+        className={`flex items-center justify-center bg-gray-100 rounded-lg ${className}`}
+        style={{ width, height }}
         role="img"
         aria-label={alt || 'Изображение не загружено'}
       >
-        <div className="text-center p-4">
-          <svg className="w-12 h-12 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          <p className="text-sm text-gray-500">Изображение не загружено</p>
-        </div>
+        <span className="text-gray-400 text-sm">⚠️ Не удалось загрузить</span>
       </div>
     );
   }
 
   return (
     <div 
-      ref={imgRef}
-      className={`lazy-image-container ${className || ''} relative`}
+      ref={priority ? null : imgRef}
+      className={`relative overflow-hidden ${className}`}
+      style={{ width, height }}
     >
-      {isInView ? (
+      {isInView && (
         <>
-          {/* Плейсхолдер с тем же соотношением сторон */}
-          {!isLoaded && (
-            <div 
-              className="absolute inset-0 bg-gray-200 animate-pulse rounded-lg flex items-center justify-center"
-              aria-hidden="true"
-            >
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-          )}
-          
           <Image
             src={src}
             alt={alt || ''}
-            width={width || 600}
-            height={height || 400}
-            className={`transition-opacity duration-500 ${
-              isLoaded ? 'opacity-100' : 'opacity-0'
-            } ${className || ''}`}
+            width={width}
+            height={height}
+            priority={priority}
+            quality={quality}
+            sizes={sizes}
+            placeholder="blur"
+            blurDataURL={generatePlaceholder()}
+            className={`
+              transition-opacity duration-300
+              ${isLoaded ? 'opacity-100' : 'opacity-0'}
+              object-cover
+            `}
             onLoad={handleLoad}
             onError={handleError}
-            loading="lazy"
-            priority={priority}
             {...props}
           />
+          
+          {/* Skeleton loader */}
+          {!isLoaded && (
+            <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+          )}
         </>
-      ) : (
-        // Плейсхолдер до появления в зоне видимости
-        <div 
-          className="lazy-image-placeholder bg-gray-100 rounded-lg w-full h-full flex items-center justify-center"
-          style={{ 
-            minHeight: height ? `${height}px` : '200px',
-            aspectRatio: width && height ? `${width}/${height}` : '16/9'
-          }}
-          aria-hidden="true"
-        >
-          <svg className="animate-spin h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
+      )}
+      
+      {!isInView && !priority && (
+        <div className="absolute inset-0 bg-gray-100 animate-pulse" />
       )}
     </div>
   );

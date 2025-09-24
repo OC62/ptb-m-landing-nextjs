@@ -183,9 +183,11 @@ const About = () => {
                         <LazyImage
                           src={member.src}
                           alt={`${member.name} - ${member.position}`}
-                          className="max-h-full max-w-full object-contain rounded-t-xl"
                           width={600}
                           height={400}
+                          quality={70}
+                          placeholder="blur"
+                          className="max-h-full max-w-full object-contain rounded-t-xl"
                         />
                       </div>
                     </div>

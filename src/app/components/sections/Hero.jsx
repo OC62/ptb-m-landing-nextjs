@@ -3,6 +3,7 @@
 
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import Image from 'next/image';
 
 const Hero = () => {
   const scrollToContact = () => {
@@ -31,23 +32,26 @@ const Hero = () => {
 
       {/* Фоновое видео */}
       <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/bg_Hero.webp"
+          alt="Фон: дорожный объект, мост"
+          fill
+          priority
+          quality={80}
+          className="object-cover"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
+        />
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
-          poster="/images/bg_Hero.webp"
+          preload="metadata"
           className="w-full h-full object-cover"
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
-          <img
-            src="/images/bg_Hero.webp"
-            alt="Фон: дорожный объект, мост"
-            className="w-full h-full object-cover"
-            aria-hidden="true"
-          />
         </video>
 
         {/* Улучшенный контрастный оверлей */}
