@@ -1,20 +1,21 @@
 // nextjs/src/app/components/sections/Hero.jsx
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import GlassmorphicButton from '../ui/GlassmorphicButton';
-import Image from 'next/image';
+import { motion } from "framer-motion";
+import GlassmorphicButton from "../ui/GlassmorphicButton";
+import Image from "next/image";
 
 const Hero = () => {
   const scrollToContact = () => {
-    const contactSection = document.getElementById('contact');
+    const contactSection = document.getElementById("contact");
     if (contactSection) {
-      const headerHeight = document.querySelector('header')?.offsetHeight || 0;
-      const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset;
+      const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+      const elementPosition =
+        contactSection.getBoundingClientRect().top + window.pageYOffset;
       const offsetPosition = elementPosition - headerHeight;
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
   };
@@ -22,16 +23,18 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden pt-16" // Убран justify-center
+      className="relative min-h-screen flex items-center overflow-hidden pt-16"
       aria-labelledby="hero-heading"
     >
       {/* Скрытый семантический заголовок */}
       <h1 className="sr-only">
-        ООО ПТБ-М - Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года
+        ООО ПТБ-М - Комплексное обеспечение транспортной безопасности для
+        объектов дорожного хозяйства с 2017 года
       </h1>
 
-      {/* Фоновое видео */}
-      <div className="absolute inset-0 z-0">
+      {/* Фоновое изображение и видео */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Фоновое изображение */}
         <Image
           src="/images/bg_Hero.webp"
           alt="Фон: дорожный объект, мост"
@@ -42,16 +45,19 @@ const Hero = () => {
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
         />
+        {/* Фоновое видео */}
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
+          {/* Резервный вариант: если видео не поддерживается или не загрузилось */}
+          {/* Важно: этот div не должен перекрывать контент сверху, если он не нужен */}
         </video>
 
         {/* Улучшенный контрастный оверлей */}
@@ -76,7 +82,7 @@ const Hero = () => {
               },
             },
           }}
-          className="max-w-3xl items-start" // Убран text-center, добавлен items-start если нужно левое выравнивание внутри flex-контейнера (необязательно, если не flex)
+          className="max-w-3xl" // Убран items-start, text-center не было
         >
           {/* Заголовок с улучшенным контрастом */}
           <motion.h2
@@ -85,10 +91,11 @@ const Hero = () => {
               hidden: { opacity: 0, y: -20 },
               visible: { opacity: 1, y: 0 },
             }}
-            transition={{ type: 'spring', stiffness: 100, damping: 12 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left" // Добавлен text-left
+            transition={{ type: "spring", stiffness: 100, damping: 12 }}
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left" // text-left добавлен
           >
-            Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года
+            Комплексное обеспечение транспортной безопасности для объектов
+            дорожного хозяйства с 2017 года
           </motion.h2>
 
           {/* Подзаголовок с улучшенным контрастом */}
@@ -98,9 +105,10 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 text-blue-100 text-left" // Добавлен text-left
+            className="text-lg md:text-xl mb-8 text-blue-100 text-left" // text-left добавлен
           >
-            ООО "Подразделение транспортной безопасности -М" – профессионалы, которым можно доверять
+            ООО "Подразделение транспортной безопасности -М" – профессионалы,
+            которым можно доверять
           </motion.p>
 
           {/* Кнопка CTA */}
@@ -110,7 +118,6 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="text-left" // Добавлен text-left
           >
             <GlassmorphicButton
               variant="primary"
