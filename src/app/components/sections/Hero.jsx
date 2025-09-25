@@ -22,7 +22,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative min-h-screen flex items-center overflow-hidden pt-16" // Убран justify-center
       aria-labelledby="hero-heading"
     >
       {/* Скрытый семантический заголовок */}
@@ -76,7 +76,7 @@ const Hero = () => {
               },
             },
           }}
-          className="max-w-3xl text-center"
+          className="max-w-3xl items-start" // Убран text-center, добавлен items-start если нужно левое выравнивание внутри flex-контейнера (необязательно, если не flex)
         >
           {/* Заголовок с улучшенным контрастом */}
           <motion.h2
@@ -86,7 +86,7 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ type: 'spring', stiffness: 100, damping: 12 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left" // Добавлен text-left
           >
             Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года
           </motion.h2>
@@ -98,7 +98,7 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 text-blue-100"
+            className="text-lg md:text-xl mb-8 text-blue-100 text-left" // Добавлен text-left
           >
             ООО "Подразделение транспортной безопасности -М" – профессионалы, которым можно доверять
           </motion.p>
@@ -110,6 +110,7 @@ const Hero = () => {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.5, delay: 0.7 }}
+            className="text-left" // Добавлен text-left
           >
             <GlassmorphicButton
               variant="primary"

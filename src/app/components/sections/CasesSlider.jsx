@@ -72,8 +72,9 @@ const CasesSlider = () => {
           </p>
         </div>
 
+        {/* Контейнер для слайдера с навигацией и индикаторами */}
         <div 
-          className="max-w-6xl mx-auto bg-gray-800 rounded-xl overflow-hidden"
+          className="max-w-6xl mx-auto bg-gray-800 rounded-xl overflow-hidden relative group" // Добавлен класс group и relative
           onMouseEnter={handleAutoplayPause}
           onMouseLeave={handleAutoplayResume}
           onFocus={handleAutoplayPause}
@@ -91,7 +92,7 @@ const CasesSlider = () => {
               pauseOnMouseEnter: true,
             }}
             navigation={{
-              nextEl: '.cases-swiper-next',
+              nextEl: '.cases-swiper-next', // Указываем селекторы кнопок
               prevEl: '.cases-swiper-prev',
             }}
             keyboard={{
@@ -146,8 +147,10 @@ const CasesSlider = () => {
           </Swiper>
 
           {/* Навигационные кнопки */}
+          {/* Скрытые по умолчанию, появляются при наведении на .group (контейнер слайдера) */}
+          {/* Позиционирование: absolute, отцентрованы по вертикали, с отступом от краев */}
           <button 
-            className="cases-swiper-prev absolute left-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity"
+            className="cases-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
             aria-label="Предыдущий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +158,7 @@ const CasesSlider = () => {
             </svg>
           </button>
           <button 
-            className="cases-swiper-next absolute right-4 top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity"
+            className="cases-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
             aria-label="Следующий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

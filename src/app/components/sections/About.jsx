@@ -152,7 +152,8 @@ const About = () => {
             Фото из архива ООО "ПТБ-М"
           </p>
 
-          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden">
+          {/* Контейнер для слайдера с навигацией */}
+          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group"> {/* Добавлен класс group */}
             <Swiper
               modules={[Autoplay, Navigation]}
               spaceBetween={0}
@@ -163,7 +164,7 @@ const About = () => {
                 disableOnInteraction: false,
               }}
               navigation={{
-                nextEl: '.about-swiper-next',
+                nextEl: '.about-swiper-next', // Указываем селекторы кнопок
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
@@ -178,36 +179,38 @@ const About = () => {
                   className="flex items-center justify-center"
                 >
                   <div className="relative w-full rounded-xl overflow-hidden">
+                    {/* Контейнер с фиксированным соотношением сторон */}
                     <div className="w-full" style={{ paddingBottom: '66.67%' }}>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <LazyImage
                           src={member.src}
                           alt={`${member.name} - ${member.position}`}
-                          width={600}
-                          height={400}
+                          width={600} // Убедитесь, что LazyImage поддерживает width/height для next/image
+                          height={400} // Убедитесь, что LazyImage поддерживает width/height для next/image
                           quality={70}
                           placeholder="blur"
-                          className="max-h-full max-w-full object-contain rounded-t-xl"
+                          className="max-h-full max-w-full object-contain rounded-t-xl" // Применены стили из второго примера
                         />
                       </div>
                     </div>
 
+                    {/* Текстовая панель поверх изображения */}
                     <div
-                      className="absolute bottom-0 left-0 right-0 bg-black/70 text-white rounded-b-xl"
+                      className="absolute bottom-0 left-0 right-0 bg-black/50 text-white rounded-b-xl" // Изменена прозрачность фона
                       style={{
                         minHeight: '75px',
                         height: '25%',
                       }}
                     >
-                      <div className="p-4 h-full flex flex-col justify-center">
+                      <div className="p-2 h-full flex flex-col justify-center"> {/* Уменьшен отступ p-4 -> p-2 */}
                         <p
-                          className="font-semibold text-base sm:text-sm md:text-base mb-1"
+                          className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5" // Применены стили шрифта из второго примера
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.name}
                         </p>
                         <p
-                          className="text-sm sm:text-xs md:text-sm"
+                          className="text-sm sm:text-xs md:text-sm xs:text-[0.75rem] xxs:text-[0.65rem] xxxs:text-[0.55rem] xxxxs:text-[0.45rem]" // Применены стили шрифта из второго примера
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.position}
@@ -220,8 +223,9 @@ const About = () => {
             </Swiper>
             
             {/* Кнопки навигации */}
+            {/* Скрытые по умолчанию, появляются при наведении на .group (контейнер слайдера) */}
             <button 
-              className="about-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="about-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               aria-label="Предыдущее фото"
             >
               <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,7 +233,7 @@ const About = () => {
               </svg>
             </button>
             <button 
-              className="about-swiper-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="about-swiper-next absolute right-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               aria-label="Следующее фото"
             >
               <svg className="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
+import Image from 'next/image'; // Импортируем next/image
 
 // Импорт стилей Swiper
 import 'swiper/css';
@@ -88,9 +89,9 @@ const Partners = () => {
           </p>
         </motion.div>
 
-        {/* Контейнер с уменьшенной на 20% высотой */}
+        {/* Контейнер с уменьшенной на 20% высотой, добавлен класс group и relative */}
         <div
-          className="relative h-[256px] md:h-[288px]"
+          className="relative h-[256px] md:h-[288px] group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -107,8 +108,8 @@ const Partners = () => {
                 pauseOnMouseEnter: true,
               }}
               navigation={{
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: '.cases-swiper-next', // Обновлен селектор
+                prevEl: '.cases-swiper-prev', // Обновлен селектор
               }}
               breakpoints={{
                 320: {
@@ -178,9 +179,11 @@ const Partners = () => {
                         }}
                       >
                         <div className="flex items-center justify-center w-full h-16 sm:h-20 mb-2">
-                          <img
+                          <Image // Используем next/image
                             src={partner.logo}
                             alt={`${partner.name} логотип`}
+                            width={partner.logo.endsWith('.svg') ? 100 : 192} // Примерная ширина для SVG, или 192 для webp
+                            height={48} // Примерная высота
                             className="max-h-12 sm:max-h-16 w-auto object-contain"
                             onError={(e) => {
                               e.target.style.display = 'none';
@@ -199,13 +202,23 @@ const Partners = () => {
             </Swiper>
           </div>
 
-          {/* Кнопки-стрелки с glass-эффектом - опущены на 10px ниже */}
-          <div
-            className={`swiper-button-prev hidden lg:flex absolute top-[calc(50%+10px)] -translate-y-1/2 left-4 w-12 h-12 bg-white/80 backdrop-blur-md rounded-lg shadow-lg z-10 border border-white/20 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-          ></div>
-          <div
-            className={`swiper-button-next hidden lg:flex absolute top-[calc(50%+10px)] -translate-y-1/2 right-4 w-12 h-12 bg-white/80 backdrop-blur-md rounded-lg shadow-lg z-10 border border-white/20 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-          ></div>
+          {/* Кнопки навигации с обновленным стилем */}
+          <button
+            className="cases-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            aria-label="Предыдущий слайд"
+          >
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            className="cases-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            aria-label="Следующий слайд"
+          >
+            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
     </section>
