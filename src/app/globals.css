@@ -1,3 +1,4 @@
+/* nextjs/src/app/globals.css */
 /* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
@@ -943,3 +944,17 @@ body.content-loaded .main-content {
     text-align: center;
   }
 }
+
+/* === НОВЫЕ СТИЛИ ДЛЯ ОТКЛЮЧЕНИЯ ВИДЕО НА МОБИЛЬНЫХ УСТРОЙСТВАХ === */
+/* Отключаем видео на мобильных устройствах, оставляем только изображение */
+@media (max-width: 767px) {
+  .animation-preloader video.preloader-video-bg {
+    display: none; /* Скрываем видео */
+  }
+  /* Если в прелоадере используется видео как фон, убедитесь, что изображение остается видимым */
+  .animation-preloader .preloader-image-container {
+    /* Убедитесь, что контейнер изображения не зависит от видео */
+    z-index: 1; /* Увеличиваем z-index, если нужно */
+  }
+}
+/* === КОНЕЦ НОВЫХ СТИЛЕЙ === */

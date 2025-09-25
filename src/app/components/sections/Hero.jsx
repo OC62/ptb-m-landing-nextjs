@@ -45,19 +45,18 @@ const Hero = () => {
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
         />
-        {/* Фоновое видео */}
+        {/* Фоновое видео - скрывается на мобильных */}
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover hidden md:block" // Добавлен класс hidden md:block
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
           {/* Резервный вариант: если видео не поддерживается или не загрузилось */}
-          {/* Важно: этот div не должен перекрывать контент сверху, если он не нужен */}
         </video>
 
         {/* Улучшенный контрастный оверлей */}
