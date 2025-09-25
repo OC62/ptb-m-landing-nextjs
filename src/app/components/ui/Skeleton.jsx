@@ -144,6 +144,14 @@ const Skeleton = () => {
           </div>
         </div>
       </div>
+
+      {/* Progress Indicator */}
+      <div className="skeleton-progress">
+        <div className="skeleton-progress-bar">
+          <div className="skeleton-progress-fill"></div>
+        </div>
+        <div className="skeleton-progress-text">Загрузка...</div>
+      </div>
     </div>
   );
 };

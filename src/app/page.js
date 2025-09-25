@@ -19,18 +19,33 @@ import Skeleton from './components/ui/Skeleton';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
-  // Имитация загрузки данных для демонстрации Skeleton
+  // Управление последовательностью загрузки: Preloader → Skeleton → Контент
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Preloader работает 2 секунды, затем показываем Skeleton
+    const preloaderTimer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // 3 секунды для демонстрации Skeleton
+      
+      // Skeleton показывается 3 секунды, затем контент
+      const skeletonTimer = setTimeout(() => {
+        setShowContent(true);
+        document.body.classList.add('content-loaded');
+      }, 3000); // Skeleton показывается 3 секунды
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(skeletonTimer);
+    }, 2000); // Preloader работает 2 секунды
+
+    return () => clearTimeout(preloaderTimer);
   }, []);
 
-  // Показываем Skeleton во время загрузки
+  // Показываем Skeleton после прелоадера
   if (isLoading) {
+    return null; // В это время показывается Preloader из layout.js
+  }
+
+  // Показываем Skeleton в течение 3 секунд после прелоадера
+  if (!showContent) {
     return (
       <ErrorBoundary>
         <div className="min-h-screen bg-white">
@@ -40,12 +55,12 @@ export default function Home() {
     );
   }
 
-  // Основной контент после загрузки
+  // Основной контент после завершения всей последовательности
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-white">
         <Breadcrumbs />
-        <main role="main" className="main-content">
+        <main role="main" className="main-content animated-content">
           <Hero />
           <About />
           <ServicesGrid />
