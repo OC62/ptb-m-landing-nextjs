@@ -2,7 +2,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay, Navigation } from 'swiper/modules'; // Добавлен Navigation в импорт
 import LazyImage from '../LazyImage';
 
 import 'swiper/css';
@@ -156,7 +156,7 @@ const About = () => {
           {/* Контейнер для слайдера с навигацией */}
           <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group"> {/* Добавлен класс group */}
             <Swiper
-              modules={[Autoplay, Navigation]}
+              modules={[Autoplay, Navigation]} // Navigation добавлен обратно в modules
               spaceBetween={0}
               slidesPerView={1}
               loop={true}
@@ -195,8 +195,10 @@ const About = () => {
                         />
                       </div>
                       {/* Текстовая панель, теперь внутри контейнера с paddingBottom, ширина теперь 100% от этого контейнера */}
+                      {/* Позиционирование: absolute, bottom-0, inset-x-0 (ширина от левого до правого края родителя) */}
+                      {/* Размер: height 25% от родительского контейнера (с paddingBottom), minHeight 75px */}
                       <div
-                        className="absolute bottom-0 inset-x-0 bg-black/50 text-white rounded-b-xl" // Ширина теперь inset-x-0 (от левого до правого края родителя)
+                        className="absolute bottom-0 inset-x-0 bg-black/50 text-white rounded-b-xl"
                         style={{
                           minHeight: '75px', // Минимальная высота
                           height: '25%',    // Высота 25% от родительского контейнера (с paddingBottom)

@@ -34,7 +34,7 @@ const Hero = () => {
 
       {/* Фоновое изображение и видео */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Фоновое изображение */}
+        {/* Фоновое изображение - отображается всегда, поверх него может быть видео */}
         <Image
           src="/images/bg_Hero.webp"
           alt="Фон: дорожный объект, мост"
@@ -45,18 +45,18 @@ const Hero = () => {
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
         />
-        {/* Фоновое видео - скрывается на мобильных */}
+        {/* Фоновое видео - отображается поверх изображения на десктопе, скрывается на мобильных */}
         <video
           autoPlay
           loop
           muted
           playsInline
           preload="metadata"
-          className="absolute inset-0 w-full h-full object-cover hidden md:block" // Добавлен класс hidden md:block
+          className="absolute inset-0 w-full h-full object-cover md:block hidden" // Порядок классов изменен: md:block hidden
           aria-hidden="true"
         >
           <source src="/videos/Bridge.mp4" type="video/mp4" />
-          {/* Резервный вариант: если видео не поддерживается или не загрузилось */}
+          {/* Резервный вариант: если видео не поддерживается или не загрузилось, отображается Image */}
         </video>
 
         {/* Улучшенный контрастный оверлей */}
