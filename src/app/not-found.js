@@ -1,14 +1,12 @@
 // src/app/not-found.js
 import Link from 'next/link';
-import { Header } from './components/layout/Header';
-import { Footer } from './components/layout/Footer';
+import Header from '@/app/components/layout/Header';
+import Footer from '@/app/components/layout/Footer';
 
 export default function NotFound() {
   return (
     <>
-      {/* Используем ваш Header */}
       <Header />
-
       <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 p-4">
         <div className="max-w-2xl w-full text-center">
           {/* Иконка 404 */}
@@ -47,8 +45,6 @@ export default function NotFound() {
           </div>
         </div>
       </main>
-
-      {/* Используем ваш Footer */}
       <Footer />
     </>
   );
