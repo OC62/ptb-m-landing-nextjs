@@ -1,4 +1,7 @@
 // nextjs/src/app/page.js
+'use client';
+
+import { useState, useEffect } from 'react';
 import Breadcrumbs from '@/app/components/Breadcrumbs';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 
@@ -15,11 +18,34 @@ import ContactForm from '@/app/components/sections/ContactForm';
 import Skeleton from './components/ui/Skeleton';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Имитация загрузки данных для демонстрации Skeleton
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 секунды для демонстрации Skeleton
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Показываем Skeleton во время загрузки
+  if (isLoading) {
+    return (
+      <ErrorBoundary>
+        <div className="min-h-screen bg-white">
+          <Skeleton />
+        </div>
+      </ErrorBoundary>
+    );
+  }
+
+  // Основной контент после загрузки
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-white">
         <Breadcrumbs />
-        <main role="main">
+        <main role="main" className="main-content">
           <Hero />
           <About />
           <ServicesGrid />
