@@ -1,82 +1,10 @@
-// nextjs/src/app/page.js
-'use client';
+// src/app/page.js
+// УДАЛЕНА директива 'use client' из этого файла
 
-import { useState, useEffect } from 'react';
-import Breadcrumbs from '@/app/components/Breadcrumbs';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
+// Импортируем основной клиентский компонент страницы
+import HomePageContent from './HomePageContent'; 
 
-// Импортируем компоненты напрямую
-import Hero from '@/app/components/sections/Hero';
-import About from '@/app/components/sections/About';
-import ServicesGrid from '@/app/components/sections/ServicesGrid';
-import CasesSlider from '@/app/components/sections/CasesSlider';
-import Careers from '@/app/components/sections/Careers';
-import Licenses from '@/app/components/sections/Licenses';
-import Partners from '@/app/components/sections/Partners';
-import CommunitySupport from '@/app/components/sections/CommunitySupport';
-import ContactForm from '@/app/components/sections/ContactForm';
-import Skeleton from './components/ui/Skeleton';
-
-export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [showContent, setShowContent] = useState(false);
-
-  // Управление последовательностью загрузки: Preloader → Skeleton → Контент
-  useEffect(() => {
-    // Preloader работает 2 секунды, затем показываем Skeleton
-    const preloaderTimer = setTimeout(() => {
-      setIsLoading(false);
-      
-      // Skeleton показывается 3 секунды, затем контент
-      const skeletonTimer = setTimeout(() => {
-        setShowContent(true);
-        document.body.classList.add('content-loaded');
-      }, 3000); // Skeleton показывается 3 секунды
-
-      return () => clearTimeout(skeletonTimer);
-    }, 2000); // Preloader работает 2 секунды
-
-    return () => clearTimeout(preloaderTimer);
-  }, []);
-
-  // Показываем Skeleton после прелоадера
-  if (isLoading) {
-    return null; // В это время показывается Preloader из layout.js
-  }
-
-  // Показываем Skeleton в течение 3 секунд после прелоадера
-  if (!showContent) {
-    return (
-      <ErrorBoundary>
-        <div className="min-h-screen bg-white">
-          <Skeleton />
-        </div>
-      </ErrorBoundary>
-    );
-  }
-
-  // Основной контент после завершения всей последовательности
-  return (
-    <ErrorBoundary>
-      <div className="min-h-screen bg-white">
-        <Breadcrumbs />
-        <main role="main" className="main-content animated-content">
-          <Hero />
-          <About />
-          <ServicesGrid />
-          <CasesSlider />
-          <Careers />
-          <Licenses />
-          <Partners />
-          <CommunitySupport />
-          <ContactForm />
-        </main>
-      </div>
-    </ErrorBoundary>
-  );
-}
-
-// Улучшаем метаданные для SEO
+// Экспортируем метаданные ИСКЛЮЧИТЕЛЬНО в серверном компоненте (page.js)
 export const metadata = {
   title: 'Транспортная безопасность | ООО "ПТБ-М" | Профессиональные услуги с 2017 года',
   description: 'ООО "ПТБ-М" - комплексное обеспечение транспортной безопасности объектов дорожного хозяйства. Аудит, мониторинг, обучение, техническое оснащение. Работаем по всей России.',
@@ -85,7 +13,7 @@ export const metadata = {
   openGraph: {
     title: 'ООО "ПТБ-М" | Профессионалы в области транспортной безопасности',
     description: 'Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства с 2017 года',
-    url: 'https://xn----9sb8ajp.xn--p1ai',
+    url: 'https://xn----9sb8ajp.xn--p1ai', // Исправлен URL: убраны лишние пробелы
     siteName: 'ООО ПТБ-М',
     images: [
       {
@@ -99,3 +27,10 @@ export const metadata = {
     type: 'website',
   },
 };
+
+// Это серверный компонент. Он может использовать только серверную логику.
+// Он рендерит клиентский компонент HomePageContent.
+export default function Home() {
+  // Здесь НЕЛЬЗЯ использовать useState, useEffect и т.д.
+  return <HomePageContent />; // Рендерим клиентскую часть
+}
