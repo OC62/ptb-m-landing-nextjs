@@ -49,18 +49,16 @@ const nextConfig = {
   },
   images: {
     domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'],
-    formats: ['image/webp', 'image/avif'], // Добавить поддержку AVIF
+    formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
   poweredByHeader: false,
-  // Включите компрессию
   compress: true,
-  // УБРАНО: swcMinify больше не поддерживается в Next.js 15
-  // swcMinify: true,
+  // УБРАНО: swcMinify и critters больше не поддерживаются
   experimental: {
-    optimizeCss: true, // можно оставить, если используется
+    // optimizeCss: true, // можно оставить, если нужно, но убедитесь, что не вызывает critters
   },
 }
 
