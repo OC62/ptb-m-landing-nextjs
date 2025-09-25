@@ -11,16 +11,16 @@ const Preloader = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const videoRef = useRef(null);
 
-  // Шаги прелоадера с временными метками
+  // Ускоренные шаги прелоадера (2 секунды вместо 8)
   const steps = [
     { time: 100, action: 'start' },
-    { time: 1200, action: 'step1' },
-    { time: 2400, action: 'step2' },
-    { time: 3600, action: 'step3' },
-    { time: 4800, action: 'step4' },
-    { time: 6000, action: 'step5' },
-    { time: 7000, action: 'final' },
-    { time: 8000, action: 'complete' }
+    { time: 300, action: 'step1' },
+    { time: 600, action: 'step2' },
+    { time: 900, action: 'step3' },
+    { time: 1200, action: 'step4' },
+    { time: 1500, action: 'step5' },
+    { time: 1800, action: 'final' },
+    { time: 2000, action: 'complete' }
   ];
 
   useEffect(() => {
@@ -35,13 +35,13 @@ const Preloader = () => {
                 setVideoError(true);
               });
             }
-          }, 500);
+          }, 200);
         });
       }
     };
 
     // Запускаем видео с небольшой задержкой
-    const videoTimer = setTimeout(startVideo, 200);
+    const videoTimer = setTimeout(startVideo, 100);
 
     // Управление шагами анимации
     const stepTimers = steps.map(step => 

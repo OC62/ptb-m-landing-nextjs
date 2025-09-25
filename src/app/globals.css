@@ -134,7 +134,7 @@ h6 {
   background: rgba(255, 255, 255, 0.95);
 }
 
-/* === СТИЛИ ДЛЯ ПРЕЛОАДЕРА === */
+/* === УСКОРЕННЫЕ СТИЛИ ДЛЯ ПРЕЛОАДЕРА (2 секунды) === */
 .animation-preloader {
   position: fixed;
   top: 0;
@@ -146,7 +146,7 @@ h6 {
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
 }
 
@@ -171,7 +171,7 @@ h6 {
   height: 52vw;
   max-height: 520px;
   margin-bottom: 2rem;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .preloader-img {
@@ -180,7 +180,7 @@ h6 {
   left: 50%;
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
   width: 52%;
   height: auto;
   max-width: 220px;
@@ -191,44 +191,44 @@ h6 {
   transform-style: preserve-3d;
 }
 
-/* Анимации с упрощенными ключевыми кадрами 0% → 100% */
+/* Ускоренные анимации для 2-секундного прелоадера */
 .preloader-1 {
-  animation: fullScreenToNormal 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
+  animation: fullScreenToNormal 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
 }
 
 .preloader-2 {
-  animation: fadeInOut 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
+  animation: fadeInOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
 }
 
 .preloader-3 {
-  animation: moveFromTop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
+  animation: moveFromTop 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
 .preloader-4 {
-  animation: moveFromLeft 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
+  animation: moveFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
 .preloader-5 {
-  animation: moveFromRight 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.4s forwards;
+  animation: moveFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
 .preloader-6 {
-  animation: moveFromTop 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3.6s forwards;
+  animation: moveFromTop 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s forwards;
 }
 
 .preloader-7 {
-  animation: moveFromBottom 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3.6s forwards;
+  animation: moveFromBottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s forwards;
 }
 
 .preloader-8 {
-  animation: scaleFromInside 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.8s forwards;
+  animation: scaleFromInside 0.375s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
 }
 
 .preloader-9 {
-  animation: scaleFromLarge 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.3s forwards;
+  animation: scaleFromLarge 0.375s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.575s forwards;
 }
 
-/* Упрощенные ключевые кадры только 0% и 100% */
+/* Ускоренные ключевые кадры */
 @keyframes fullScreenToNormal {
   0% {
     opacity: 1;
@@ -326,7 +326,7 @@ h6 {
   height: 1em;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 .letters-loading {
@@ -335,30 +335,30 @@ h6 {
   display: inline-block;
   width: 1.2em;
   height: 1.5em;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   transform: scale(1.5);
   will-change: transform, opacity;
   backface-visibility: hidden;
 }
 
 .letter-1 {
-  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.8s forwards;
+  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.7s forwards;
 }
 
 .letter-2 {
-  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 6.9s forwards;
+  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.725s forwards;
 }
 
 .letter-3 {
-  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.0s forwards;
+  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.75s forwards;
 }
 
 .letter-4 {
-  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.1s forwards;
+  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.775s forwards;
 }
 
 .letter-5 {
-  animation: letterAnimation 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 7.2s forwards;
+  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s forwards;
 }
 
 @keyframes letterAnimation {
@@ -385,7 +385,7 @@ h6 {
   color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   opacity: 0;
-  animation: fadeIn 0.5s ease 7.4s forwards;
+  animation: fadeIn 0.125s ease 1.85s forwards;
 }
 
 .vecteezy-credit a {
@@ -429,12 +429,12 @@ h6 {
 
 .final-animation::before {
   left: 0;
-  animation: splitLeft 1s ease 7s forwards;
+  animation: splitLeft 0.25s ease 1.75s forwards;
 }
 
 .final-animation::after {
   right: 0;
-  animation: splitRight 1s ease 7s forwards;
+  animation: splitRight 0.25s ease 1.75s forwards;
 }
 
 @keyframes splitLeft {
@@ -462,7 +462,7 @@ h6 {
 .main-content {
   opacity: 0;
   visibility: hidden;
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
   z-index: 1;
 }
 
@@ -477,10 +477,12 @@ body.loaded .animation-preloader {
   pointer-events: none;
 }
 
+/* Мобильные стили - буквы опущены ниже */
 @media screen and (max-width: 767px) {
   .preloader-image-container {
     height: 52vw;
     max-height: 450px;
+    margin-bottom: 1rem;
   }
   
   .preloader-img {
@@ -491,6 +493,7 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 3.5em;
+    margin-top: 80px; /* Опускаем буквы ниже на мобильных */
   }
 }
 
@@ -498,6 +501,7 @@ body.loaded .animation-preloader {
   .preloader-image-container {
     height: 48vw;
     max-height: 350px;
+    margin-bottom: 0.5rem;
   }
   
   .preloader-img {
@@ -508,6 +512,7 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 2.5em;
+    margin-top: 60px; /* Опускаем буквы ниже на маленьких экранах */
   }
 }
 
@@ -515,6 +520,7 @@ body.loaded .animation-preloader {
   .preloader-image-container {
     height: 45vw;
     max-height: 300px;
+    margin-bottom: 0;
   }
   
   .preloader-img {
@@ -525,6 +531,145 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 2em;
+    margin-top: 50px; /* Опускаем буквы ниже на очень маленьких экранах */
+  }
+}
+
+/* === СТИЛИ ДЛЯ SKELETON UI === */
+.skeleton-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.skeleton-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.skeleton-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 2s infinite;
+  margin-right: 1.5rem;
+}
+
+.skeleton-title {
+  flex: 1;
+}
+
+.skeleton-line {
+  height: 20px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 2s infinite;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+.skeleton-line.medium {
+  width: 80%;
+}
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.skeleton-grid-item {
+  background: #f8fafc;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 2s infinite;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-button {
+  width: 120px;
+  height: 40px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 2s infinite;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.skeleton-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.skeleton-list-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 6px;
+}
+
+.skeleton-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 2s infinite;
+  margin-right: 1rem;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Темная тема для скелетона */
+@media (prefers-color-scheme: dark) {
+  .skeleton-card,
+  .skeleton-grid-item,
+  .skeleton-list-item {
+    background: #1e293b;
+  }
+  
+  .skeleton-avatar,
+  .skeleton-line,
+  .skeleton-image,
+  .skeleton-button,
+  .skeleton-icon {
+    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+    background-size: 200% 100%;
   }
 }
 

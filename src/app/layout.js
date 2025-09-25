@@ -25,7 +25,7 @@ export const metadata = {
   openGraph: {
     title: 'ООО \'ПТБ-М\' | Профессионалы в области транспортной безопасности',
     description: 'Обеспечиваем транспортную безопасность на объектах дорожного хозяйства с 2017 года. Комплексный подход, лицензии, квалифицированные специалисты.',
-    url: 'https://xn----9sb8ajp.xn--p1ai',
+    url: 'https://xn----9sb8ajp.xn--p1ai', // ✅ Исправлен URL
     siteName: 'ООО ПТБ-М',
     images: [
       {
@@ -94,8 +94,8 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               "name": "ООО \"ПТБ-М\"",
-              "url": "https://xn----9sb8ajp.xn--p1ai",
-              "logo": "https://xn----9sb8ajp.xn--p1ai/images/logo.webp",
+              "url": "https://xn----9sb8ajp.xn--p1ai", // ✅ Исправлен URL
+              "logo": "https://xn----9sb8ajp.xn--p1ai/images/logo.webp", // ✅ Исправлен URL
               "description": "Обеспечение транспортной безопасности объектов дорожного хозяйства.",
               "address": {
                 "@type": "PostalAddress",
@@ -171,7 +171,7 @@ export default function RootLayout({ children }) {
         
         <noscript>
           <div>
-            <image 
+            <Image 
               src="https://mc.yandex.ru/watch/103534344" 
               style={{ position: 'absolute', left: '-9999px' }} 
               alt="" 

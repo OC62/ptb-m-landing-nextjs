@@ -12,6 +12,7 @@ import Licenses from '@/app/components/sections/Licenses';
 import Partners from '@/app/components/sections/Partners';
 import CommunitySupport from '@/app/components/sections/CommunitySupport';
 import ContactForm from '@/app/components/sections/ContactForm';
+import Skeleton from './components/ui/Skeleton';
 
 export default function Home() {
   return (
