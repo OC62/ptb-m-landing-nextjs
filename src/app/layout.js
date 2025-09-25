@@ -156,6 +156,7 @@ export default function RootLayout({ children }) {
         {/* Тег <img> внутри <noscript> остается как есть */}
         <noscript>
           <div>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img 
               src="https://mc.yandex.ru/watch/103534344" // Исправлен URL: убраны лишние пробелы
               style={{ position: 'absolute', left: '-9999px' }} 
