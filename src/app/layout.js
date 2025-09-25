@@ -22,7 +22,7 @@ export const metadata = {
   openGraph: {
     title: 'ООО \'ПТБ-М\' | Профессионалы в области транспортной безопасности',
     description: 'Обеспечиваем транспортную безопасность на объектах дорожного хозяйства с 2017 года. Комплексный подход, лицензии, квалифицированные специалисты.',
-    url: 'https://xn----9sb8ajp.xn--p1ai', // Убраны лишние пробелы
+    url: 'https://xn----9sb8ajp.xn--p1ai', // Исправлен URL: убраны лишние пробелы
     siteName: 'ООО ПТБ-М',
     images: [
       {
@@ -67,12 +67,7 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
         <link rel="dns-prefetch" href="https://yastatic.net" />
         
-        <link 
-          rel="preload" 
-          href="/images/bg_Hero.webp" 
-          as="image"
-          type="image/webp"
-        />
+        {/* Убран preload для bg_Hero.webp */}
 
         <script
           type="application/ld+json"
@@ -153,7 +148,7 @@ export default function RootLayout({ children }) {
           }}
         />
         
-        {/* Тег <img> внутри <noscript> остается как есть */}
+        {/* Тег <img> внутри <noscript> остается как есть, добавлено исключение ESLint */}
         <noscript>
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}

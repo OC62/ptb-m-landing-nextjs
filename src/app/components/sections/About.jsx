@@ -2,7 +2,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules'; // Добавлен Navigation в импорт
+import { Autoplay, Navigation } from 'swiper/modules';
 import LazyImage from '../LazyImage';
 
 import 'swiper/css';
@@ -154,9 +154,9 @@ const About = () => {
           </p>
 
           {/* Контейнер для слайдера с навигацией */}
-          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group"> {/* Добавлен класс group */}
+          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group">
             <Swiper
-              modules={[Autoplay, Navigation]} // Navigation добавлен обратно в modules
+              modules={[Autoplay, Navigation]}
               spaceBetween={0}
               slidesPerView={1}
               loop={true}
@@ -165,7 +165,7 @@ const About = () => {
                 disableOnInteraction: false,
               }}
               navigation={{
-                nextEl: '.about-swiper-next', // Указываем селекторы кнопок
+                nextEl: '.about-swiper-next',
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
@@ -179,7 +179,7 @@ const About = () => {
                   key={index}
                   className="flex items-center justify-center"
                 >
-                  {/* Внешний контейнер слайда */}
+                  {/* Внешний контейнер слайда - исправленная структура */}
                   <div className="relative w-full rounded-xl overflow-hidden">
                     {/* Контейнер с фиксированным соотношением сторон для изображения */}
                     <div className="w-full" style={{ paddingBottom: '66.67%' }}>
@@ -187,37 +187,36 @@ const About = () => {
                         <LazyImage
                           src={member.src}
                           alt={`${member.name} - ${member.position}`}
-                          width={600} // Убедитесь, что LazyImage поддерживает width/height для next/image
-                          height={400} // Убедитесь, что LazyImage поддерживает width/height для next/image
+                          width={600}
+                          height={400}
                           quality={70}
                           placeholder="blur"
-                          className="max-h-full max-w-full object-contain rounded-t-xl" // Применены стили из второго примера
+                          className="max-h-full max-w-full object-contain rounded-t-xl"
                         />
                       </div>
-                      {/* Текстовая панель, теперь внутри контейнера с paddingBottom, ширина теперь 100% от этого контейнера */}
-                      {/* Позиционирование: absolute, bottom-0, inset-x-0 (ширина от левого до правого края родителя) */}
-                      {/* Размер: height 25% от родительского контейнера (с paddingBottom), minHeight 75px */}
-                      <div
-                        className="absolute bottom-0 inset-x-0 bg-black/50 text-white rounded-b-xl"
-                        style={{
-                          minHeight: '75px', // Минимальная высота
-                          height: '25%',    // Высота 25% от родительского контейнера (с paddingBottom)
-                        }}
-                      >
-                        <div className="p-2 h-full flex flex-col justify-center"> {/* Уменьшен отступ p-4 -> p-2 */}
-                          <p
-                            className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5" // Применены стили шрифта из второго примера
-                            style={{ lineHeight: '1.1' }}
-                          >
-                            {member.name}
-                          </p>
-                          <p
-                            className="text-sm sm:text-xs md:text-sm xs:text-[0.75rem] xxs:text-[0.65rem] xxxs:text-[0.55rem] xxxxs:text-[0.45rem]" // Применены стили шрифта из второго примера
-                            style={{ lineHeight: '1.1' }}
-                          >
-                            {member.position}
-                          </p>
-                        </div>
+                    </div>
+                    
+                    {/* Текстовый блок ВНЕ контейнера с paddingBottom - ключевое изменение */}
+                    <div
+                      className="absolute bottom-0 left-0 right-0 bg-black/50 text-white rounded-b-xl"
+                      style={{
+                        minHeight: '75px',
+                        height: '25%',
+                      }}
+                    >
+                      <div className="p-2 h-full flex flex-col justify-center">
+                        <p
+                          className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5"
+                          style={{ lineHeight: '1.1' }}
+                        >
+                          {member.name}
+                        </p>
+                        <p
+                          className="text-sm sm:text-xs md:text-sm xs:text-[0.75rem] xxs:text-[0.65rem] xxxs:text-[0.55rem] xxxxs:text-[0.45rem]"
+                          style={{ lineHeight: '1.1' }}
+                        >
+                          {member.position}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -226,7 +225,6 @@ const About = () => {
             </Swiper>
             
             {/* Кнопки навигации */}
-            {/* Скрытые по умолчанию, появляются при наведении на .group (контейнер слайдера) */}
             <button 
               className="about-swiper-prev absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               aria-label="Предыдущее фото"

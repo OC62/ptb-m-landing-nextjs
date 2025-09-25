@@ -100,6 +100,24 @@ h6 {
   @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
 }
 
+/* Стили для кастомной навигации слайдера */
+.about-swiper-prev,
+.about-swiper-next {
+  transition: all 0.3s ease;
+}
+
+.about-swiper-prev:hover,
+.about-swiper-next:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.about-swiper-prev:focus,
+.about-swiper-next:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
 .swiper-button-prev svg,
 .swiper-button-next svg {
   display: none !important;
@@ -494,7 +512,7 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 3.5em;
-    margin-top: 150px; /* Опускаем буквы ниже на мобильных */
+    margin-top: 150px;
   }
 }
 
@@ -513,7 +531,7 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 2.5em;
-    margin-top: 130px; /* Опускаем буквы ниже на маленьких экранах */
+    margin-top: 130px;
   }
 }
 
@@ -532,7 +550,7 @@ body.loaded .animation-preloader {
   
   .txt-loading {
     font-size: 2em;
-    margin-top: 120px; /* Опускаем буквы ниже на очень маленьких экранах */
+    margin-top: 120px;
   }
 }
 
@@ -850,8 +868,6 @@ body.loaded .animation-preloader {
   outline-offset: 2px;
 }
 
-/* Добавляем эти стили в конец файла globals.css */
-
 /* Стили для индикатора прогресса Skeleton */
 .skeleton-progress {
   position: fixed;
@@ -944,7 +960,3 @@ body.content-loaded .main-content {
     text-align: center;
   }
 }
-
-/* === КОНЕЦ УДАЛЕННЫХ СТИЛЕЙ === */
-
-/* === КОНЕЦ НОВЫХ СТИЛЕЙ === */

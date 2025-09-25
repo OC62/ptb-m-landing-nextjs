@@ -35,8 +35,9 @@ const Careers = () => {
         'Недопущение АНВ',
       ],
     },
-     {
-      id: 1,
+    // Исправлено: изменен id с 1 на 5 для второго элемента, чтобы избежать дубликата
+    {
+      id: 5,
       title: 'Специалист по транспортной безопасности',
       department:
         'ГБР, Досмотр и дополнительный досмотр, ТСО, Наблюдение и собеседование',
@@ -143,13 +144,13 @@ const Careers = () => {
               role="listitem"
             >
               <button
-                className="w-full p-4 md:p-6 text-left bg-white hover:bg-gray-50 transition-colors flex justify-between items-start md:items-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                className="w-full p-4 text-left bg-white hover:bg-gray-50 transition-colors flex justify-between items-start md:items-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" // Убран md:p-6
                 onClick={() => toggleJob(job.id)}
                 aria-expanded={openJobId === job.id}
                 aria-controls={`job-content-${job.id}`}
               >
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-lg md:text-xl font-bold text-gray-800 mb-2">
+                  <h4 className="text-base md:text-lg lg:text-xl font-bold text-gray-800 mb-2"> {/* Уменьшен шрифт заголовка на мобильных */}
                     {job.title}
                   </h4>
                   <div className="flex flex-wrap gap-2 mt-2" aria-label="Детали вакансии">
@@ -166,7 +167,7 @@ const Careers = () => {
                 </div>
                 <div className="text-gray-500 ml-2 flex-shrink-0 transition-transform" aria-hidden="true">
                   <svg
-                    className={`w-5 h-5 md:w-6 md:h-6 transition-transform duration-200 ${
+                    className={`w-5 h-5 transition-transform duration-200 ${ // Убран md:w-6 md:h-6
                       openJobId === job.id ? 'rotate-180' : ''
                     }`}
                     fill="none"
@@ -189,7 +190,7 @@ const Careers = () => {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="px-4 md:px-6 pb-4 md:pb-6 border-t border-gray-100"
+                  className="px-4 pb-4 border-t border-gray-100" // Убран md:px-6 md:pb-6
                   role="region"
                   aria-labelledby={`job-heading-${job.id}`}
                 >
@@ -197,32 +198,32 @@ const Careers = () => {
                     Подробности вакансии: {job.title}
                   </h5>
                   
-                  <p className="text-gray-600 my-4 text-sm md:text-base">{job.description}</p>
+                  <p className="text-gray-600 my-4 text-sm md:text-base">{job.description}</p> {/* Уменьшен шрифт описания на мобильных */}
 
-                  <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+                  <div className="grid md:grid-cols-2 gap-4"> {/* Убран md:gap-6 */}
                     <div>
-                      <h6 className="font-semibold text-gray-800 mb-2 text-sm md:text-base">
+                      <h6 className="font-semibold text-gray-800 mb-2 text-sm md:text-base"> {/* Уменьшен шрифт заголовка обязанностей на мобильных */}
                         Обязанности:
                       </h6>
                       <ul className="space-y-2" aria-label="Обязанности">
                         {job.responsibilities.map((resp, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="w-2 h-2 bg-red-500 rounded-full mr-3 mt-2 flex-shrink-0" aria-hidden="true"></span>
-                            <span className="text-gray-600 text-sm md:text-base">{resp}</span>
+                            <span className="text-gray-600 text-sm md:text-base">{resp}</span> {/* Уменьшен шрифт обязанностей на мобильных */}
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     <div>
-                      <h6 className="font-semibold text-gray-800 mb-2 text-sm md:text-base">
+                      <h6 className="font-semibold text-gray-800 mb-2 text-sm md:text-base"> {/* Уменьшен шрифт заголовка требований на мобильных */}
                         Требования:
                       </h6>
                       <ul className="space-y-2" aria-label="Требования">
                         {job.requirements.map((req, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2 flex-shrink-0" aria-hidden="true"></span>
-                            <span className="text-gray-600 text-sm md:text-base">{req}</span>
+                            <span className="text-gray-600 text-sm md:text-base">{req}</span> {/* Уменьшен шрифт требований на мобильных */}
                           </li>
                         ))}
                       </ul>
@@ -234,7 +235,7 @@ const Careers = () => {
                       variant="onWhite"
                       size="large"
                       onClick={scrollToContact}
-                      className="focus-visible"
+                      className="focus-visible w-full md:w-auto" // Кнопка на мобильных занимает всю ширину
                       aria-label={`Откликнуться на вакансию: ${job.title}`}
                     >
                       Откликнуться на вакансию
@@ -254,17 +255,17 @@ const Careers = () => {
           role="complementary"
           aria-label="Дополнительная информация о вакансиях"
         >
-          <h4 className="text-2xl font-bold text-gray-800 mb-2">
+          <h4 className="text-xl md:text-2xl font-bold text-gray-800 mb-2"> {/* Уменьшен шрифт заголовка на мобильных */}
             Не нашли подходящую вакансию?
           </h4>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 text-sm md:text-base"> {/* Уменьшен шрифт текста на мобильных */}
             Присылайте ваше резюме, мы свяжемся с вами при появлении подходящих предложений
           </p>
           <GlassmorphicButton
             variant="onWhite"
             size="large"
             onClick={scrollToContact}
-            className="focus-visible"
+            className="focus-visible w-full md:w-auto" // Кнопка на мобильных занимает всю ширину
             aria-label="Отправить резюме в компанию"
           >
             Отправить резюме
