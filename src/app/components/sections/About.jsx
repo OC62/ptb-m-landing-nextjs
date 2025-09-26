@@ -169,7 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              style={{ height: '480px' }} // Обновленная высота слайда для десктопа/планшета
+              style={{ height: 'calc(100vh - 200px)' }} // Высота слайда - оставшееся место
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -178,28 +178,24 @@ const About = () => {
                   className="flex items-center justify-center"
                 >
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
-                  <div className="relative w-full h-[100%] rounded-xl overflow-hidden flex flex-col items-center justify-center "> 
-                    {/* Контейнер с изображением */}
-                    <div className="w-full h-[100%] relative"> {/* w-full и h-[100%] */}
+                  <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col items-center justify-center"> {/* h-full и flex-col */}
+                    {/* Контейнер с изображением - занимает оставшееся место */}
+                    <div className="w-full flex-1 relative"> {/* flex-1 */}
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
-                        // fill // УБРАНО: fill несовместим с фиксированной высотой слайда
-                        // sizes="(max-width: 375px) 95vw, (max-width: 640px) 600px, 400px" // УБРАНО: не нужно без fill
-                        // width={400} // УБРАНО: несовместимо с fill
-                        // height={267} // УБРАНО: несовместимо с fill
                         quality={70}
-                        className="w-full h-full object-contain rounded-t-xl" // Добавлены w-full, h-full, object-contain
-                        style={{ objectFit: 'cover', objectPosition: 'top' }} // Добавлены objectFit и objectPosition
+                        className="w-full h-full object-cover rounded-t-xl" // object-cover вместо object-contain
+                        style={{ objectPosition: 'top' }} // Только objectPosition
                         loading="lazy" // Включаем lazy loading
                       />
                     </div>
                     
                     {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
                     <div
-                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/0 (полностью прозрачный)
+                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // h-[33.33%], bg-black/50
                     >
-                      <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
+                      <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center">
                         <p
                           className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5"
                           style={{ lineHeight: '1.1' }}

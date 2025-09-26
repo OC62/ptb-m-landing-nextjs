@@ -952,47 +952,7 @@ body.content-loaded .main-content {
   .about-swiper-next,
   .partners-swiper-prev,
   .partners-swiper-next {
-    display: none;
-  }
-}
-
-/* === АДАПТИВНОСТЬ СЛАЙДЕРА В ABOUT === */
-/* Высота слайда для планшетов среднего размера (шире 426px, уже 768px) */
-@media (min-width: 426px) and (max-width: 768px) {
-  .swiper-wrapper > .swiper-slide {
-    height: 480px; /* Увеличенная высота */
-  }
-  .swiper-wrapper > .swiper-slide .bg-black\/0 { /* Обновленный селектор для текстового блока */
-    height: 33.33%;
-  }
-}
-
-/* Высота слайда для десктопов и больших планшетов (шире 768px) */
-@media (min-width: 769px) {
-  .swiper-wrapper > .swiper-slide {
-    width: 100%; /* Ширина 100% от родителя */
-    height: 480px; /* Увеличенная высота */
-  }
-  .swiper-wrapper > .swiper-slide .relative {
-    height: 66.67%;
-  }
-  .swiper-wrapper > .swiper-slide .bg-black\/0 { /* Обновленный селектор для текстового блока */
-    height: 33.33%;
-  }
-}
-
-/* Высота слайда для мобильных устройств (шире 320px, уже 426px) */
-@media (min-width: 320px) and (max-width: 425px) {
-  .swiper-wrapper > .swiper-slide {
-    width: 95vw; /* Занимает 95% ширины экрана */
-    max-width: 400px; /* Максимальная ширина */
-    height: 450px; /* Высота для мобильных */
-  }
-  /* Опционально: корректировка высоты дочерних элементов */
-  .swiper-wrapper > .swiper-slide .relative {
-    height: 66.67%;
-  }
-  .swiper-wrapper > .swiper-slide .bg-black\/0 { /* Обновленный селектор для текстового блока */
-    height: 33.33%;
+    opacity: 0;
+    pointer-events: none; /* Добавлено для полного отключения кнопок на мобильных */
   }
 }
