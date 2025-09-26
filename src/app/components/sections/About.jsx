@@ -169,9 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              style={{
-                minHeight: '300px',
-              }}
+              // style={{ minHeight: '300px' }} // УБРАНО: стиль высоты конфликтует с fill
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -186,10 +184,12 @@ const About = () => {
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
-                        fill // Используем fill для растягивания
-                        sizes="(max-width: 375px) 95vw, (max-width: 640px) 600px, 400px" // Указываем размеры для ленивой загрузки
+                        // fill // УБРАНО: fill несовместим с фиксированной высотой слайда
+                        // sizes="(max-width: 375px) 95vw, (max-width: 640px) 600px, 400px" // УБРАНО: не нужно без fill
+                        // width={400} // УБРАНО: несовместимо с fill
+                        // height={267} // УБРАНО: несовместимо с fill
                         quality={70}
-                        className="w-full h-full object-cover rounded-t-xl" // Убраны max-h/max-w, добавлены w-full, h-full, object-cover
+                        className="w-full h-full object-contain rounded-t-xl" // Добавлены w-full, h-full, object-contain
                         loading="lazy" // Включаем lazy loading
                       />
                     </div>
