@@ -1,5 +1,14 @@
 // nextjs/src/app/policy/page.js
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
+
+// Используем шаблон 'policy'
+export const metadata = generateMetadataForPage('policy', {
+  title: 'Политика конфиденциальности | ООО "ПТБ-М"',
+  description: 'Политика конфиденциальности и обработки персональных данных ООО "ПТБ-М". Узнайте о сборе, использовании и защите ваших данных. Ростов-на-Дону.',
+  keywords: ['политика конфиденциальности', 'персональные данные', 'обработка', 'ПТБ-М', 'Ростов-на-Дону'],
+  path: '/policy',
+});
 
 export default function PolicyPage() {
   return (
@@ -109,8 +118,3 @@ export default function PolicyPage() {
     </div>
   );
 }
-
-export const metadata = {
-  title: 'Политика конфиденциальности | ООО "ПТБ-М"',
-  description: 'Политика конфиденциальности и обработки персональных данных ООО "ПТБ-М". Узнайте о сборе, использовании и защите ваших данных.',
-};

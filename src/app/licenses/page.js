@@ -1,6 +1,15 @@
 // src/app/licenses/page.js
 import Licenses from '@/components/sections/Licenses';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
+
+// Используем шаблон 'licenses'
+export const metadata = generateMetadataForPage('licenses', {
+  title: 'Лицензии и свидетельства | ООО "ПТБ-М" - Официальные документы',
+  description: 'Официальные лицензии и свидетельства ООО "ПТБ-М". Свидетельство об аккредитации, лицензия на работу с источниками ионизирующего излучения. Ростов-на-Дону.',
+  keywords: ['лицензии ПТБ-М', 'свидетельства', 'аккредитация', 'официальные документы', 'разрешительные документы', 'Ростов-на-Дону'],
+  path: '/licenses',
+});
 
 export default function LicensesPage() {
   return (
@@ -12,9 +21,3 @@ export default function LicensesPage() {
     </div>
   );
 }
-
-export const metadata = {
-  title: 'Лицензии и свидетельства | ООО "ПТБ-М" - Официальные документы',
-  description: 'Официальные лицензии и свидетельства ООО "ПТБ-М". Свидетельство об аккредитации, лицензия на работу с источниками ионизирующего излучения.',
-  keywords: 'лицензии ПТБ-М, свидетельства, аккредитация, официальные документы, разрешительные документы',
-};

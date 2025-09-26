@@ -3,7 +3,7 @@
 // !! БАЗОВЫЕ ДАННЫЕ САЙТА !!
 export const SEO_BASE_DATA = {
   siteName: 'ООО "ПТБ-М"',
-  siteUrl: 'https://xn----9sb8ajp.xn--p1ai', // !! Убедитесь, что URL правильный !!
+  siteUrl: 'https://xn----9sb8ajp.xn--p1ai', // !! УБРАНЫ ПРОБЕЛЫ !!
   defaultTitle: 'ООО "ПТБ-М" | Комплексное обеспечение транспортной безопасности',
   defaultDescription: 'Обеспечение транспортной безопасности объектов дорожного хозяйства. Аудит, мониторинг, оснащение, обучение. Работаем по всей России.',
   defaultKeywords: ['транспортная безопасность', 'ПТБ', 'ОТИ', 'Ростов-на-Дону', 'ПТБ-М', 'Подразделение транспортной безопасности'],
@@ -36,7 +36,33 @@ export const SEO_PAGE_TEMPLATES = {
     description: (jobDesc = '') => jobDesc || SEO_BASE_DATA.defaultDescription.replace('транспортной безопасности', 'в сфере транспортной безопасности'),
     keywords: (jobKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'работа', 'вакансии', ...jobKeywords],
   },
-  // Шаблон для других страниц (например, about, contacts)
+  // !! ШАБЛОНЫ ДЛЯ НОВЫХ СТРАНИЦ !!
+  about: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `О компании | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || SEO_BASE_DATA.defaultDescription.replace('Обеспечение транспортной безопасности', 'Узнайте о нашей компании, специализирующейся на обеспечении транспортной безопасности'),
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'о компании', 'история', 'опыт', 'команда', ...customKeywords],
+  },
+  contacts: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Контакты | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Контактная информация. Адрес, телефоны, email. Получите консультацию по транспортной безопасности.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'контакты', 'адрес', 'телефоны', 'email', 'связаться', 'Ростов-на-Дону', ...customKeywords],
+  },
+  licenses: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Лицензии | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Официальные лицензии и свидетельства. Документы, подтверждающие право на осуществление деятельности в сфере транспортной безопасности.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'лицензии', 'свидетельства', 'документы', 'разрешения', 'аккредитация', ...customKeywords],
+  },
+  partners: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Партнеры | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Наши партнёры и клиенты в сфере транспортной инфраструктуры. Сотрудничество с ведущими организациями России.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'партнеры', 'клиенты', 'сотрудничество', 'транспортная инфраструктура', 'организации', ...customKeywords],
+  },
+  policy: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Политика конфиденциальности | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Политика конфиденциальности и обработки персональных данных. Ваши права и наша ответственность.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'политика', 'конфиденциальность', 'персональные данные', 'обработка', ...customKeywords],
+  },
+  // Шаблон для других страниц (например, если не найден конкретный шаблон)
   default: {
     title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : SEO_BASE_DATA.defaultTitle,
     description: (customDesc = '') => customDesc || SEO_BASE_DATA.defaultDescription,
@@ -47,7 +73,7 @@ export const SEO_PAGE_TEMPLATES = {
 
 // !! СХЕМА Schema.org (Organization) !!
 export const ORGANIZATION_SCHEMA = {
-  "@context": "https://schema.org",
+  "@context": "https://schema.org", // !! УБРАНЫ ПРОБЕЛЫ !!
   "@type": "Organization", // Или "LocalBusiness", если фокус на регион
   "name": SEO_BASE_DATA.siteName,
   "url": SEO_BASE_DATA.siteUrl,
@@ -74,8 +100,8 @@ export const ORGANIZATION_SCHEMA = {
     "availableLanguage": ["Russian"]
   },
   "sameAs": [
-    "https://vk.com/ptbm_rnd",
-    "https://t.me/ptbm_rnd"
+    "https://vk.com/ptbm_rnd", // !! УБРАНЫ ПРОБЕЛЫ !!
+    "https://t.me/ptbm_rnd"    // !! УБРАНЫ ПРОБЕЛЫ !!
   ],
   "foundingDate": "2017",
   "serviceArea": {
@@ -87,4 +113,20 @@ export const ORGANIZATION_SCHEMA = {
 // !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ JSON-LD (экспортируем отдельно) !!
 export const generateSchemaJSONLD = () => {
   return JSON.stringify(ORGANIZATION_SCHEMA);
+};
+
+// !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ BREADCRUMB SCHEMA !!
+export const generateBreadcrumbSchema = (breadcrumbs) => { // breadcrumbs - массив объектов { name, url }
+  const itemList = breadcrumbs.map((crumb, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": crumb.name,
+    "item": crumb.url ? `${SEO_BASE_DATA.siteUrl}${crumb.url}` : undefined,
+  })).filter(item => item.item); // Фильтруем, если url не определен (например, для текущей страницы)
+
+  return JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": itemList
+  });
 };
