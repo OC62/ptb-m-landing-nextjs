@@ -169,7 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              style={{ height: 'calc(100vh - 200px)' }} // Высота слайда - оставшееся место
+              style={{ height: '60vh' }} // Высота слайда - 60% от высоты окна просмотра на десктопе/планшете
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -179,8 +179,8 @@ const About = () => {
                 >
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
                   <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col items-center justify-center"> {/* h-full и flex-col */}
-                    {/* Контейнер с изображением - занимает оставшееся место */}
-                    <div className="w-full flex-1 relative"> {/* flex-1 */}
+                    {/* Контейнер с изображением - занимает 80% высоты слайда */}
+                    <div className="w-full h-[80%] relative"> {/* h-[80%] */}
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
@@ -191,19 +191,19 @@ const About = () => {
                       />
                     </div>
                     
-                    {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
+                    {/* Текстовый блок - обновлен для адаптивности и прозрачности, занимает 20% высоты слайда */}
                     <div
-                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // h-[33.33%], bg-black/50
+                      className="bg-black/50 text-white rounded-b-xl w-full h-[20%] flex items-center justify-center" // h-[20%], bg-black/50
                     >
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center">
                         <p
-                          className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5"
+                          className="font-semibold text-xs sm:text-xs md:text-sm xs:text-[0.65rem] xxs:text-[0.7rem] xxxs:text-[0.6rem] xxxxs:text-[0.5rem] mb-0.5" // Уменьшен размер шрифта
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.name}
                         </p>
                         <p
-                          className="text-sm sm:text-xs md:text-sm xs:text-[0.75rem] xxs:text-[0.65rem] xxxs:text-[0.55rem] xxxxs:text-[0.45rem]"
+                          className="text-xs sm:text-xs md:text-sm xs:text-[0.55rem] xxs:text-[0.6rem] xxxs:text-[0.5rem] xxxxs:text-[0.4rem]" // Уменьшен размер шрифта
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.position}
