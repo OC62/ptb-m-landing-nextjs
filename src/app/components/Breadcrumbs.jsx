@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
-// !! ИМПОРТ usePathname для получения текущего пути !!
 import { usePathname } from 'next/navigation';
-// !! ИМПОРТ generateBreadcrumbSchema из SEO конфига !!
-import { generateBreadcrumbSchema } from '../seo.config'; // Убедитесь, что путь правильный
+// !! ИСПРАВЛЕН ПУТЬ К SEO CONFIG !! 
+import { generateBreadcrumbSchema } from '../seo.config'; // Было '../../seo.config'
 
 const sections = [
   { id: 'hero', name: 'Главная' },
@@ -18,31 +17,32 @@ const sections = [
 ];
 
 const Breadcrumbs = () => {
-  // !! ИСПОЛЬЗОВАНИЕ usePathname !!
   const pathname = usePathname();
   const [activeSection, setActiveSection] = useState('hero');
   const [isVisible, setIsVisible] = useState(false);
+  // !! СОСТОЯНИЕ ДЛЯ ХРАНЕНИЯ JSON-LD СТРОКИ !! 
+  const [breadcrumbSchemaJsonLd, setBreadcrumbSchemaJsonLd] = useState('');
 
-  // !! ГЕНЕРАЦИЯ BREADCRUMB SCHEMA !!
-  // !! ПРЕДПОЛАГАЕТСЯ, ЧТО pathname - ЭТО ТЕКУЩАЯ СТРАНИЦА, И sections - ЭТО ПУТИ ВНУТРИ ЭТОЙ СТРАНИЦЫ !!
-  // !! ДЛЯ ТОЧНОГО СООТВЕТСТВИЯ СТРУКТУРЕ САЙТА МОЖЕТ ПОТРЕБОВАТЬСЯ НАСТРОЙКА !!
-  const generateBreadcrumbListSchema = () => {
-    // !! БАЗОВЫЙ ПУТЬ ДЛЯ ССЫЛОК В ХЛЕБНЫХ КРОШКАХ !!
-    const baseUrl = window.location.origin; // Получаем базовый URL (например, https://xn----9sb8ajp.xn--p1ai)
+  // !! ГЕНЕРАЦИЯ BREADCRUMB SCHEMA !! 
+  // !! ВЫНЕСЕНА В ОТДЕЛЬНУЮ ФУНКЦИЮ !! 
+  const generateBreadcrumbListSchema = (currentPathname) => {
+    // !! ПРОВЕРКА НАЛИЧИЯ window ПЕРЕД ИСПОЛЬЗОВАНИЕМ !!
+    if (typeof window === 'undefined') {
+      console.warn('window is not available, cannot generate schema with window.location.origin');
+      return JSON.stringify({ // Возвращаем пустой объект или заглушку, если на сервере
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": []
+      });
+    }
 
-    // !! БАЗОВАЯ ХЛЕБНАЯ КРОШКА - ГЛАВНАЯ СТРАНИЦА !!
+    const baseUrl = window.location.origin;
+
     let breadcrumbs = [
       { name: 'Главная', url: '/' }
     ];
 
-    // !! ДОБАВЛЕНИЕ ТЕКУЩЕЙ СТРАНИЦЫ В ХЛЕБНЫЕ КРОШКИ (если не главная) !!
-    if (pathname && pathname !== '/') {
-      // !! ПРОСТОЙ ПОДХОД: ИСПОЛЬЗУЕМ pathname КАК ЧАСТЬ URL И ИМЯ СТРАНИЦЫ !!
-      // !! МОЖНО НАСТРОИТЬ БОЛЕЕ ТОЧНО, СОПОСТАВИВ pathname С КОНКРЕТНОЙ СТРАНИЦЕЙ !!
-      const currentPageName = pathname.split('/').pop() || pathname; // Берем последнюю часть пути или сам путь
-      // !! ВАЖНО: ЭТО УПРОЩЕННЫЙ ПОДХОД. ЛУЧШЕ ИМЕТЬ КАРТУ ПУТЕЙ -> ИМЁН !!
-      // !! НАПРИМЕР: const pathToName = { '/services': 'Услуги', '/careers': 'Карьера', ... };
-      // !! ПОКА ИСПОЛЬЗУЕМ УПРОЩЕННОЕ СОПОСТАВЛЕНИЕ:
+    if (currentPathname && currentPathname !== '/') {
       const pathToNameMap = {
         '/': 'Главная',
         '/about': 'О нас',
@@ -52,21 +52,21 @@ const Breadcrumbs = () => {
         '/licenses': 'Лицензии',
         '/partners': 'Партнеры',
         '/policy': 'Политика конфиденциальности',
-        // ... добавьте другие, если нужно
       };
-      const resolvedName = pathToNameMap[pathname] || currentPageName.charAt(0).toUpperCase() + currentPageName.slice(1); // Капитализируем первую букву, если нет в мапе
-      breadcrumbs.push({ name: resolvedName, url: pathname });
+      const resolvedName = pathToNameMap[currentPathname] || currentPathname.split('/').pop() || currentPathname;
+      breadcrumbs.push({ name: resolvedName, url: currentPathname });
     }
 
-    // !! НЕ ДОБАВЛЯЕМ sections КАК ОТДЕЛЬНЫЕ ХЛЕБНЫЕ КРОШКИ, ЕСЛИ ОНИ НЕ ССЫЛКИ НА ОТДЕЛЬНЫЕ СТРАНИЦЫ !!
-    // !! ВАШИ sections ('hero', 'about', 'services'...) ССЫЛАЮТСЯ НА ЯКОРЯ НА ТЕКУЩЕЙ СТРАНИЦЕ, А НЕ НА ОТДЕЛЬНЫЕ URL.
-    // !! ПОЭТОМУ ОСТАВЛЯЕМ breadcrumbs ТОЛЬКО С БАЗОВЫМИ ЭЛЕМЕНТАМИ (ГЛАВНАЯ -> ТЕКУЩАЯ СТРАНИЦА).
-
-    // !! ВОЗВРАЩАЕМ JSON-LD СТРОКУ !!
     return generateBreadcrumbSchema(breadcrumbs);
   };
 
-  const breadcrumbSchema = generateBreadcrumbListSchema(); // Генерируем схему при рендере
+  // !! ГЕНЕРИРУЕМ СХЕМУ ТОЛЬКО НА КЛИЕНТЕ !! 
+  useEffect(() => {
+    if (pathname) {
+      const schema = generateBreadcrumbListSchema(pathname);
+      setBreadcrumbSchemaJsonLd(schema);
+    }
+  }, [pathname]); // Запускаем при изменении pathname
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,10 +137,13 @@ const Breadcrumbs = () => {
   return (
     <>
       {/* !! ВСТАВКА JSON-LD BREADCRUMB SCHEMA !! */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: breadcrumbSchema }}
-      />
+      {/* !! РЕНДЕРИМ ТОЛЬКО ЕСЛИ СХЕМА СГЕНЕРИРОВАНА !! */}
+      {breadcrumbSchemaJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: breadcrumbSchemaJsonLd }}
+        />
+      )}
       {/* !! ОСНОВНОЙ JSX КОМПОНЕНТА ХЛЕБНЫХ КРОШЕК !! */}
       <nav
         aria-label="Навигация по разделам страницы"
