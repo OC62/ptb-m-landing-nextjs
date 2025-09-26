@@ -1,4 +1,5 @@
-// nextjs/src/app/components/sections/Careers.jsx
+// src/app/components/sections/Careers.jsx
+
 'use client';
 
 import { useState } from 'react';
@@ -26,51 +27,28 @@ const Careers = () => {
       location: 'Ростов-на-Дону',
       type: 'Полная занятость',
       description: 'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
-      requirements: [
-        'Опыт работы - не требуется',
-        'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)',
-      ],
-      responsibilities: [
-        'Работа на объектах транспортной инфраструктуры',
-        'Недопущение АНВ',
-      ],
+      requirements: ['Опыт работы - не требуется', 'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)'],
+      responsibilities: ['Работа на объектах транспортной инфраструктуры', 'Недопущение АНВ'],
     },
-    
     {
       id: 2,
       title: 'Специалист по транспортной безопасности',
-      department:
-        'ГБР, Досмотр и дополнительный досмотр, ТСО, Наблюдение и собеседование',
+      department: 'ГБР, Досмотр и дополнительный досмотр, ТСО, Наблюдение и собеседование',
       location: 'Волгоград',
       type: 'Полная занятость',
-      description:
-        'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
-      requirements: [
-        'Опыт работы - не требуется',
-        'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)',
-      ],
-      responsibilities: [
-        'Работа на объектах транспортной инфраструктуры',
-        'Недопущение АНВ',
-      ],
+      description: 'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
+      requirements: ['Опыт работы - не требуется', 'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)'],
+      responsibilities: ['Работа на объектах транспортной инфраструктуры', 'Недопущение АНВ'],
     },
     {
       id: 3,
       title: 'Специалист по транспортной безопасности',
-      department:
-        'ГБР, Досмотр и дополнительный досмотр, ТСО, Наблюдение и собеседование',
+      department: 'ГБР, Досмотр и дополнительный досмотр, ТСО, Наблюдение и собеседование',
       location: 'Уфа',
       type: 'Полная занятость',
-      description:
-        'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
-      requirements: [
-        'Опыт работы - не требуется',
-        'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)',
-      ],
-      responsibilities: [
-        'Работа на объектах транспортной инфраструктуры',
-        'Недопущение АНВ',
-      ],
+      description: 'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
+      requirements: ['Опыт работы - не требуется', 'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)'],
+      responsibilities: ['Работа на объектах транспортной инфраструктуры', 'Недопущение АНВ'],
     },
     {
       id: 4,
@@ -78,27 +56,16 @@ const Careers = () => {
       department: 'ГБР, ТСО, Наблюдение и собеседование',
       location: 'Казань',
       type: 'Полная занятость',
-      description:
-        'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
-      requirements: [
-        'Опыт работы - не требуется',
-        'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)',
-      ],
-      responsibilities: [
-        'Работа на объектах транспортной инфраструктуры',
-        'Недопущение АНВ',
-      ],
+      description: 'Недопущение актов незаконного вмешательства на объектах транспортной инфраструктуры',
+      requirements: ['Опыт работы - не требуется', 'Наличие свидетельства об аттестации в качестве специалиста по транспортной безопасности (не обязательно)'],
+      responsibilities: ['Работа на объектах транспортной инфраструктуры', 'Недопущение АНВ'],
     },
   ];
 
   return (
-    <section 
-      className="py-20 bg-white" 
-      id="careers"
-      aria-labelledby="careers-heading"
-    >
+    <section className="py-20 bg-white" id="careers" aria-labelledby="careers-heading">
       <h2 id="careers-heading" className="sr-only">Вакансии компании</h2>
-      
+
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -126,32 +93,30 @@ const Careers = () => {
               role="listitem"
             >
               <button
-                className="w-full p-2 text-left bg-white hover:bg-gray-50 transition-colors flex justify-between items-start md:items-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" // Убран md:p-6, уменьшен p-4 до p-2
+                className="w-full p-3 text-left bg-white hover:bg-gray-50 transition-colors flex justify-between items-start md:items-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 onClick={() => toggleJob(job.id)}
                 aria-expanded={openJobId === job.id}
                 aria-controls={`job-content-${job.id}`}
               >
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-xs md:text-lg lg:text-xl font-bold text-gray-800 mb-1"> {/* Уменьшен шрифт заголовка на мобильных */}
+                  <h4 className="text-xs md:text-lg lg:text-xl font-bold text-gray-800 mb-1">
                     {job.title}
                   </h4>
-                  <div className="flex flex-wrap gap-1 mt-1" aria-label="Детали вакансии"> {/* Уменьшены gap и mt */}
-                    <span className="px-1 py-1 bg-blue-100 text-blue-800 text-xs md:text-sm rounded-full"> {/* Уменьшены px, py, text */}
+                  <div className="flex flex-wrap gap-2 mt-1" aria-label="Детали вакансии">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs md:text-sm rounded-full">
                       {job.department}
                     </span>
-                    <span className="px-1 py-1 bg-green-100 text-green-800 text-xs md:text-sm rounded-full"> {/* Уменьшены px, py, text */}
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs md:text-sm rounded-full">
                       {job.location}
                     </span>
-                    <span className="px-1 py-1 bg-purple-100 text-purple-800 text-xs md:text-sm rounded-full"> {/* Уменьшены px, py, text */}
+                    <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs md:text-sm rounded-full">
                       {job.type}
                     </span>
                   </div>
                 </div>
-                <div className="text-gray-500 ml-1 flex-shrink-0 transition-transform" aria-hidden="true"> {/* Уменьшен ml */}
+                <div className="text-gray-500 ml-2 flex-shrink-0 transition-transform" aria-hidden="true">
                   <svg
-                    className={`w-4 h-4 transition-transform duration-200 ${ // Уменьшены w и h
-                      openJobId === job.id ? 'rotate-180' : ''
-                    }`}
+                    className={`w-4 h-4 transition-transform duration-200 ${openJobId === job.id ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -172,52 +137,52 @@ const Careers = () => {
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  className="px-2 pb-2 border-t border-gray-100" // Убран md:px-6 md:pb-6, уменьшены px, pb
+                  className="px-3 pb-3 border-t border-gray-100"
                   role="region"
                   aria-labelledby={`job-heading-${job.id}`}
                 >
                   <h5 id={`job-heading-${job.id}`} className="sr-only">
                     Подробности вакансии: {job.title}
                   </h5>
-                  
-                  <p className="text-gray-600 my-2 text-xs md:text-base">{job.description}</p> {/* Уменьшен шрифт описания на мобильных */}
 
-                  <div className="grid md:grid-cols-2 gap-2"> {/* Убран md:gap-6, уменьшен gap */}
+                  <p className="text-gray-600 my-2 text-xs md:text-base">{job.description}</p>
+
+                  <div className="grid md:grid-cols-2 gap-3">
                     <div>
-                      <h6 className="font-semibold text-gray-800 mb-1 text-xs md:text-base"> {/* Уменьшен шрифт заголовка обязанностей на мобильных */}
+                      <h6 className="font-semibold text-gray-800 mb-2 text-xs md:text-base">
                         Обязанности:
                       </h6>
-                      <ul className="space-y-1" aria-label="Обязанности"> {/* Уменьшен space-y */}
+                      <ul className="space-y-2" aria-label="Обязанности">
                         {job.responsibilities.map((resp, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="w-1.5 h-1.5 bg-red-500 rounded-full mr-1 mt-1.5 flex-shrink-0" aria-hidden="true"></span> {/* Уменьшены w, h, mr, mt */}
-                            <span className="text-gray-600 text-xs md:text-base">{resp}</span> {/* Уменьшен шрифт обязанностей на мобильных */}
+                            <span className="w-2 h-2 bg-red-500 rounded-full mr-2 mt-2 flex-shrink-0" aria-hidden="true"></span>
+                            <span className="text-gray-600 text-xs md:text-base">{resp}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
                     <div>
-                      <h6 className="font-semibold text-gray-800 mb-1 text-xs md:text-base"> {/* Уменьшен шрифт заголовка требований на мобильных */}
+                      <h6 className="font-semibold text-gray-800 mb-2 text-xs md:text-base">
                         Требования:
                       </h6>
-                      <ul className="space-y-1" aria-label="Требования"> {/* Уменьшен space-y */}
+                      <ul className="space-y-2" aria-label="Требования">
                         {job.requirements.map((req, idx) => (
                           <li key={idx} className="flex items-start">
-                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1 mt-1.5 flex-shrink-0" aria-hidden="true"></span> {/* Уменьшены w, h, mr, mt */}
-                            <span className="text-gray-600 text-xs md:text-base">{req}</span> {/* Уменьшен шрифт требований на мобильных */}
+                            <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 mt-2 flex-shrink-0" aria-hidden="true"></span>
+                            <span className="text-gray-600 text-xs md:text-base">{req}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   </div>
 
-                  <div className="mt-2"> {/* Уменьшен mt */}
+                  <div className="mt-3">
                     <GlassmorphicButton
                       variant="onWhite"
                       size="large"
                       onClick={scrollToContact}
-                      className="focus-visible w-full md:w-auto text-xs md:text-base" // Кнопка на мобильных занимает всю ширину, уменьшен размер шрифта
+                      className="focus-visible w-full md:w-auto text-xs md:text-base p-3"
                       aria-label={`Откликнуться на вакансию: ${job.title}`}
                     >
                       Откликнуться на вакансию
@@ -233,21 +198,21 @@ const Careers = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          className="text-center mt-16 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl" // Убран p-8, уменьшен до p-4
+          className="text-center mt-16 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl"
           role="complementary"
           aria-label="Дополнительная информация о вакансиях"
         >
-          <h4 className="text-lg md:text-2xl font-bold text-gray-800 mb-1"> {/* Уменьшен шрифт заголовка на мобильных */}
+          <h4 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">
             Не нашли подходящую вакансию?
           </h4>
-          <p className="text-gray-600 mb-4 text-xs md:text-base"> {/* Уменьшен шрифт текста на мобильных */}
+          <p className="text-gray-600 mb-4 text-xs md:text-base">
             Присылайте ваше резюме, мы свяжемся с вами при появлении подходящих предложений
           </p>
           <GlassmorphicButton
             variant="onWhite"
             size="large"
             onClick={scrollToContact}
-            className="focus-visible w-full md:w-auto text-xs md:text-base" // Кнопка на мобильных занимает всю ширину, уменьшен размер шрифта
+            className="focus-visible w-full md:w-auto text-xs md:text-base p-3"
             aria-label="Отправить резюме в компанию"
           >
             Отправить резюме

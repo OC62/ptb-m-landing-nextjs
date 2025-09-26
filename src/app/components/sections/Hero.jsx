@@ -1,4 +1,4 @@
-// nextjs/src/app/components/sections/Hero.jsx
+// src/app/components/sections/Hero.jsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -27,14 +27,13 @@ const Hero = () => {
       aria-labelledby="hero-heading"
     >
       {/* Скрытый семантический заголовок */}
+      {/* !! КРИТИЧЕСКИ ВАЖНО: ВКЛЮЧИТЬ КЛЮЧЕВОЙ ЗАПРОС !! */}
       <h1 className="sr-only">
-        ООО ПТБ-М - Комплексное обеспечение транспортной безопасности для
-        объектов дорожного хозяйства с 2017 года
+        Транспортная безопасность в Ростове-на-Дону | ООО ПТБ-М
       </h1>
 
       {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        {/* Фоновое изображение - теперь отображается всегда */}
         <Image
           src="/images/bg_Hero.webp"
           alt="Фон: дорожный объект, мост"
@@ -68,33 +67,33 @@ const Hero = () => {
               },
             },
           }}
-          className="max-w-3xl" // Убран items-start, text-center не было
+          className="max-w-3xl"
         >
-          {/* Заголовок с улучшенным контрастом */}
+          {/* !! КРИТИЧЕСКИ ВАЖНО: ВКЛЮЧИТЬ КЛЮЧЕВОЙ ЗАПРОС !! */}
+          {/* Используем h2, т.к. h1 уже есть (даже если скрытый) */}
           <motion.h2
-            id="hero-heading"
+            id="hero-heading" // Связываем с aria-labelledby в section
             variants={{
               hidden: { opacity: 0, y: -20 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ type: "spring", stiffness: 100, damping: 12 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left" // text-left добавлен
+            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left"
           >
-            Комплексное обеспечение транспортной безопасности для объектов
-            дорожного хозяйства с 2017 года
+            {/* !! ОСНОВНОЙ ВИДИМЫЙ ЗАГОЛОК !! */}
+            Транспортная безопасность в Ростове-на-Дону
           </motion.h2>
 
-          {/* Подзаголовок с улучшенным контрастом */}
+          {/* !! КРИТИЧЕСКИ ВАЖНО: УЛУЧШИТЬ ПОДЗАГОЛОВОК !! */}
           <motion.p
             variants={{
               hidden: { opacity: 0, y: -15 },
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 text-blue-100 text-left" // text-left добавлен
+            className="text-lg md:text-xl mb-8 text-blue-100 text-left"
           >
-            ООО "Подразделение транспортной безопасности -М" – профессионалы,
-            которым можно доверять
+            ООО "Подразделение транспортной безопасности -М" – профессиональные услуги по обеспечению ОТИ (ПТБ) с 2017 года. Комплексный подход, лицензии, опыт.
           </motion.p>
 
           {/* Кнопка CTA */}
