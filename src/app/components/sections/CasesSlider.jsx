@@ -73,7 +73,7 @@ const CasesSlider = () => {
           </p>
         </div>
 
-        {/* Контейнер для слайдера с навигацией и индикаторами */}
+        {/* Контейнер для слайдера с индикаторами */}
         <div 
           className="max-w-6xl mx-auto bg-gray-800 rounded-xl overflow-hidden relative group" // Добавлен класс group и relative
           onMouseEnter={handleAutoplayPause}
@@ -83,7 +83,7 @@ const CasesSlider = () => {
         >
           <Swiper
             ref={sliderRef}
-            modules={[Autoplay, Navigation, Keyboard, A11y]}
+            modules={[Autoplay, Navigation, Keyboard, A11y]} // Navigation оставлен, но кнопки не подключены
             spaceBetween={0}
             slidesPerView={1}
             loop={true}
@@ -92,10 +92,10 @@ const CasesSlider = () => {
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
-            navigation={{
-              nextEl: '.cases-swiper-next', // Указываем селекторы кнопок
-              prevEl: '.cases-swiper-prev',
-            }}
+            // navigation={{ // <-- Закомментирован/удалён блок navigation
+            //   nextEl: '.cases-swiper-next', // Указываем селекторы кнопок
+            //   prevEl: '.cases-swiper-prev',
+            // }}
             keyboard={{
               enabled: true,
               onlyInViewport: true,
@@ -147,25 +147,7 @@ const CasesSlider = () => {
             ))}
           </Swiper>
 
-          {/* Навигационные кнопки */}
-          {/* Скрытые по умолчанию, появляются при наведении на .group (контейнер слайдера) */}
-          {/* Позиционирование: absolute, отцентрованы по вертикали, с отступом от краев */}
-          <button 
-            className="cases-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-            aria-label="Предыдущий слайд"
-          >
-            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button 
-            className="cases-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-            aria-label="Следующий слайд"
-          >
-            <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          {/* <!-- Навигационные кнопки УДАЛЕНЫ --> */}
 
           {/* Индикаторы прогресса */}
           <div className="flex justify-center mt-4 pb-6" role="tablist" aria-label="Выбор слайда">
