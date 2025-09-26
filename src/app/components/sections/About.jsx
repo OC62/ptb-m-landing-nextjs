@@ -169,7 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              style={{ height: '400px' }} // Фиксированная высота слайда
+              style={{ height: '480px' }} // Обновленная высота слайда для десктопа/планшета
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -197,7 +197,7 @@ const About = () => {
                     
                     {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
                     <div
-                      className="bg-black/20 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/20 (80% прозрачности)
+                      className="bg-black/0 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/0 (полностью прозрачный)
                     >
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
                         <p
