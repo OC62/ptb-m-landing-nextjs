@@ -178,7 +178,7 @@ const About = () => {
                   className="flex items-center justify-center"
                 >
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
-                  <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center justify-center h-full"> {/* Добавлены flex-col, items-center, justify-center, h-full */}
+                  <div className="relative w-full h-[100%] rounded-xl overflow-hidden flex flex-col items-center justify-center "> 
                     {/* Контейнер с изображением */}
                     <div className="w-full h-[100%] relative"> {/* w-full и h-[100%] */}
                       <Image
