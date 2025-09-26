@@ -1,3 +1,4 @@
+// nextjs/src/app/components/sections/Partners.jsx
 "use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -16,49 +17,49 @@ const partners = [
     id: 1,
     name: "ООО 'Ростдонавтовокзал'",
     logo: '/images/logo_rda.webp',
-    url: 'https://rostdonavtokozal.ru',
+    url: 'https://rostdonavtokozal.ru  ',
   },
   {
     id: 2,
     name: 'ФКУ УПРДОР МОСКВА-ВОЛГОГРАД',
     logo: '/images/fkuLogo.svg',
-    url: 'https://mv.rosavtodor.gov.ru',
+    url: 'https://mv.rosavtodor.gov.ru  ',
   },
   {
     id: 3,
     name: 'ГБУ Вокзал-Авто',
     logo: '/images/GBUVolgograd.webp',
-    url: 'https://vokzal-avto.ru',
+    url: 'https://vokzal-avto.ru  ',
   },
   {
     id: 4,
     name: 'ООО Т-Транс',
     logo: '/images/Ttrans.webp',
-    url: 'https://t-trans61.ru',
+    url: 'https://t-trans61.ru  ',
   },
   {
     id: 5,
     name: 'ГКУ Транспортная дирекция РБ',
     logo: '/images/logoBashkiria.webp',
-    url: 'https://tdrb.bashkortostan.ru',
+    url: 'https://tdrb.bashkortostan.ru  ',
   },
   {
     id: 6,
     name: "МКУ 'Комитет внешнего благоустройства Казани'",
     logo: '/images/logoKazan.webp',
-    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva',
+    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva  ',
   },
   {
     id: 7,
     name: 'СК Автодор-Казань',
     logo: '/images/logoAvtodor.webp',
-    url: 'https://skavtodor.ru',
+    url: 'https://skavtodor.ru  ',
   },
   {
     id: 8,
     name: 'АО Донавтовокзал',
     logo: '/images/LogoDonavto.webp',
-    url: 'https://donavto.ru',
+    url: 'https://donavto.ru  ',
   },
   {
     id: 9,
@@ -108,8 +109,8 @@ const Partners = () => {
                 pauseOnMouseEnter: true,
               }}
               navigation={{
-                nextEl: '.cases-swiper-next', // Обновлен селектор
-                prevEl: '.cases-swiper-prev', // Обновлен селектор
+                nextEl: '.partners-swiper-next', // Обновлен селектор
+                prevEl: '.partners-swiper-prev', // Обновлен селектор
               }}
               breakpoints={{
                 320: {
@@ -204,7 +205,7 @@ const Partners = () => {
 
           {/* Кнопки навигации с обновленным стилем */}
           <button
-            className="cases-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            className="partners-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
             aria-label="Предыдущий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -212,7 +213,7 @@ const Partners = () => {
             </svg>
           </button>
           <button
-            className="cases-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            className="partners-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
             aria-label="Следующий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

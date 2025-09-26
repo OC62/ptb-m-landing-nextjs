@@ -203,7 +203,7 @@ const Header = () => {
             aria-label="Перейти на главную страницу"
           >
             <img
-              src="/images/logo.webp"
+              src="/images/preloader.png"
               alt="Логотип ООО ПТБ-М"
               className="h-8"
               width={32}

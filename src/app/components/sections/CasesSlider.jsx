@@ -1,3 +1,4 @@
+// nextjs/src/app/components/sections/CasesSlider.jsx
 "use client";
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
