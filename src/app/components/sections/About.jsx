@@ -180,7 +180,7 @@ const About = () => {
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
                   <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center justify-center h-full"> {/* Добавлены flex-col, items-center, justify-center, h-full */}
                     {/* Контейнер с изображением */}
-                    <div className="w-full h-[66.67%] relative"> {/* w-full и h-[66.67%] */}
+                    <div className="w-full h-[100%] relative"> {/* w-full и h-[100%] */}
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
@@ -197,7 +197,7 @@ const About = () => {
                     
                     {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
                     <div
-                      className="bg-black/0 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/0 (полностью прозрачный)
+                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/0 (полностью прозрачный)
                     >
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
                         <p
