@@ -957,23 +957,24 @@ body.content-loaded .main-content {
 }
 
 /* === АДАПТИВНОСТЬ СЛАЙДЕРА В ABOUT === */
+/* Устанавливаем базовую высоту для слайдов */
+.swiper-wrapper > .swiper-slide {
+  height: 300px; /* Базовая высота */
+  width: 100%; /* Ширина 100% от родителя */
+}
+
 /* Изменяем размеры слайда на мобильных устройствах (ширина <= 375px) */
 @media (max-width: 375px) {
   .swiper-wrapper > .swiper-slide {
-    width: 95vw !important; /* Занимает 95% ширины экрана */
+    width: 95vw; /* Занимает 95% ширины экрана */
     max-width: 400px; /* Максимальная ширина */
-    height: 500px !important; /* Фиксированная высота для мобильных */
+    height: 500px; /* Фиксированная высота для мобильных */
   }
+  /* Опционально: корректировка высоты дочерних элементов */
   .swiper-wrapper > .swiper-slide .relative {
-    height: 66.67% !important; /* Высота контейнера изображения */
+    height: 66.67%;
   }
   .swiper-wrapper > .swiper-slide .bg-black\/50 {
-    height: 33.33% !important; /* Высота текстового блока */
+    height: 33.33%;
   }
-}
-
-/* Для устройств шире 375px высота слайда остается фиксированной в 300px, ширина 100% от родителя */
-.swiper-wrapper > .swiper-slide {
-  height: 300px !important;
-  width: 100% !important;
 }
