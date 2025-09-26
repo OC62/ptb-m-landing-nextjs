@@ -897,7 +897,7 @@ body.loaded .animation-preloader {
   height: 100%;
   background: linear-gradient(90deg, #3b82f6, #60a5fa);
   border-radius: 3px;
-  animation: progressFill 3s ease-in-out forwards;
+  animation: progressFill 1,5s ease-in-out forwards;
 }
 
 .skeleton-progress-text {

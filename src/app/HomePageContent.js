@@ -29,11 +29,11 @@ export default function HomePageContent() {
     const preloaderTimer = setTimeout(() => {
       setIsLoading(false);
       
-      // Skeleton показывается 3 секунды, затем контент
+      // Skeleton показывается 1,5 секунды, затем контент
       const skeletonTimer = setTimeout(() => {
         setShowContent(true);
         document.body.classList.add('content-loaded');
-      }, 3000); // Skeleton показывается 3 секунды
+      }, 1500); // Skeleton показывается 1,5 секунды
 
       return () => clearTimeout(skeletonTimer);
     }, 2000); // Preloader работает 2 секунды
@@ -46,7 +46,7 @@ export default function HomePageContent() {
     return null; // В это время показывается Preloader из layout.js
   }
 
-  // Показываем Skeleton в течение 3 секунд после прелоадера
+  // Показываем Skeleton в течение 1,5 секунд после прелоадера
   if (!showContent) {
     return (
       <ErrorBoundary>
