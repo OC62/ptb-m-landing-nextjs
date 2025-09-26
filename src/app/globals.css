@@ -100,58 +100,7 @@ h6 {
   @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
 }
 
-/* Стили для кастомной навигации слайдера */
-.about-swiper-prev,
-.about-swiper-next {
-  transition: all 0.3s ease;
-}
-
-.about-swiper-prev:hover,
-.about-swiper-next:hover {
-  background: rgba(255, 255, 255, 0.95) !important;
-  transform: translateY(-50%) scale(1.1);
-}
-
-.about-swiper-prev:focus,
-.about-swiper-next:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-.swiper-button-prev svg,
-.swiper-button-next svg {
-  display: none !important;
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  border-top: 2px solid #4B5563;
-  border-right: 2px solid #4B5563;
-  transition: all 0.2s ease;
-}
-
-.swiper-button-prev::after {
-  transform: rotate(-135deg);
-  margin-right: -2px;
-}
-
-.swiper-button-next::after {
-  transform: rotate(45deg);
-  margin-left: -2px;
-}
-
-.swiper-button-prev:hover::after,
-.swiper-button-next:hover::after {
-  border-color: #1E40AF;
-}
-
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-  background: rgba(255, 255, 255, 0.95);
-}
+/* Стили для кастомной навигации слайдера - УДАЛЕНЫ */
 
 /* === УСКОРЕННЫЕ СТИЛИ ДЛЯ ПРЕЛОАДЕРА (2 секунды) === */
 .animation-preloader {
