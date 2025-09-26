@@ -169,7 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              style={{ height: '60vh' }} // Высота слайда - 60% от высоты окна просмотра на десктопе/планшете
+              style={{ height: '60vh' }} 
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
