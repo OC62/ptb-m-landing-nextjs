@@ -1,8 +1,8 @@
 // src/app/page.js
 // УДАЛЕНА директива 'use client' из этого файла
 
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
-import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь, что путь правильный
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
+import { generateMetadataForPage } from './lib/generateMetadata'; // Было '../lib/generateMetadata'
 
 // Импортируем основной клиентский компонент страницы
 import HomePageContent from "./HomePageContent";

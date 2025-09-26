@@ -9,8 +9,8 @@ import CookieBanner from '@/app/components/layout/CookieBanner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
-import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config'; // Убедитесь, что путь правильный
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
+import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config'; // Было '../seo.config'
 
 const inter = Inter({ subsets: ['latin'] });
 

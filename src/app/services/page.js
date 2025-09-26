@@ -2,8 +2,8 @@
 import ServicesGrid from '@/components/sections/ServicesGrid';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
-import { generateMetadataForPage } from '../../lib/generateMetadata'; // Убедитесь, что путь правильный
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
+import { generateMetadataForPage } from '../lib/generateMetadata'; // Было '../../lib/generateMetadata' или '../lib/generateMetadata'
 
 // !! ОБНОВЛЁННЫЕ МЕТАДАННЫЕ ДЛЯ СТРАНИЦЫ УСЛУГ - ИСПОЛЬЗУЕМ НОВУЮ СИСТЕМУ !!
 export const metadata = generateMetadataForPage('services', { // Используем шаблон 'services'

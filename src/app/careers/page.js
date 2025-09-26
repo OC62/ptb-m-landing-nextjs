@@ -2,8 +2,8 @@
 import Careers from '@/components/sections/Careers';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
-import { generateMetadataForPage } from '../../lib/generateMetadata'; // Убедитесь, что путь правильный
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
+import { generateMetadataForPage } from '../lib/generateMetadata'; // Было '../../lib/generateMetadata' или '../lib/generateMetadata'
 
 // !! ОБНОВЛЁННЫЕ МЕТАДАННЫЕ ДЛЯ СТРАНИЦЫ КАРЬЕРЫ - ИСПОЛЬЗУЕМ НОВУЮ СИСТЕМУ !!
 export const metadata = generateMetadataForPage('careers', { // Используем шаблон 'careers'

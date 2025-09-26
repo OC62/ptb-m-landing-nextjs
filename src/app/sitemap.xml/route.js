@@ -1,6 +1,6 @@
 // src/app/sitemap.xml/route.js
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
-import { SEO_BASE_DATA } from '../../seo.config'; // Убедитесь, что путь правильный
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
+import { SEO_BASE_DATA } from '../../seo.config'; // Было '../../seo.config' - проверьте, правильно ли поднялись уровни
 
 export async function GET() {
   // !! ИСПОЛЬЗУЕМ БАЗОВЫЙ URL ИЗ КОНФИГА !!

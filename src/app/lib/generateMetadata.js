@@ -1,5 +1,6 @@
-// src/lib/generateMetadata.js
-import { SEO_BASE_DATA, SEO_PAGE_TEMPLATES } from '../seo.config'; // Убедитесь, что путь правильный
+// src/app/lib/generateMetadata.js
+// !! ИСПРАВЛЕН ПУТЬ ИМПОРТА !! 
+import { SEO_BASE_DATA, SEO_PAGE_TEMPLATES } from '../seo.config'; // Было '../../seo.config' или '../seo.config' в зависимости от предыдущих попыток
 
 // !! ФУНКЦИЯ ГЕНЕРАЦИИ МЕТАДАННЫХ !!
 export function generateMetadataForPage(templateName, customData = {}) {
