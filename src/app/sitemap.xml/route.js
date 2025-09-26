@@ -1,6 +1,11 @@
+// src/app/sitemap.xml/route.js
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
+import { SEO_BASE_DATA } from '../../seo.config'; // Убедитесь, что путь правильный
+
 export async function GET() {
-  const baseUrl = 'https://xn----9sb8ajp.xn--p1ai';
-  
+  // !! ИСПОЛЬЗУЕМ БАЗОВЫЙ URL ИЗ КОНФИГА !!
+  const baseUrl = SEO_BASE_DATA.siteUrl;
+
   const pages = [
     { url: '', priority: 1.0, changeFreq: 'daily' },
     { url: '/about', priority: 0.8, changeFreq: 'monthly' },

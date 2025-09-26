@@ -9,103 +9,51 @@ import CookieBanner from '@/app/components/layout/CookieBanner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 
+// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO !!
+import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config'; // Убедитесь, что путь правильный
+
 const inter = Inter({ subsets: ['latin'] });
 
-// !! ОБНОВЛЁННАЯ SCHEMA.ORG РАЗМЕТКА !!
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization", // Или "LocalBusiness", если фокус на регион
-  "name": "ООО \"ПТБ-М\"",
-  "url": "https://xn----9sb8ajp.xn--p1ai", // !! Проверьте URL !!
-  "logo": "https://xn----9sb8ajp.xn--p1ai/images/logo.webp", // !! Проверьте URL !!
-  "description": "Обеспечение транспортной безопасности объектов дорожного хозяйства. ООО ПТБ-М. Аудит, мониторинг, обучение, техническое оснащение.",
-  // !! ДОБАВЛЕН АДРЕС !!
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "ул. Большая Садовая, 102, офис 15",
-    "addressLocality": "Ростов-на-Дону",
-    "addressRegion": "Ростовская область", // !! ДОБАВЛЕНО !!
-    "postalCode": "344019",
-    "addressCountry": "RU"
-  },
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "telephone": "+7-909-407-23-74",
-    "contactType": "customer service",
-    "email": "dtsm.rnd@gmail.com",
-    // !! ДОБАВЛЕНО areaServed !!
-    "areaServed": [
-      {
-        "@type": "City",
-        "name": "Ростов-на-Дону"
-      },
-      {
-        "@type": "State",
-        "name": "Ростовская область"
-      },
-      {
-        "@type": "Country",
-        "name": "Россия"
-      }
-    ],
-    "availableLanguage": ["Russian"]
-  },
-  // !! ДОБАВЛЕНО sameAs !!
-  "sameAs": [
-    "https://vk.com/ptbm_rnd",
-    "https://t.me/ptbm_rnd"
-  ],
-  // !! ДОБАВЛЕНО foundingDate !!
-  "foundingDate": "2017", // Уточните год основания
-  // !! ДОБАВЛЕНО serviceArea !!
-  "serviceArea": {
-    "@type": "AdministrativeArea",
-    "name": "Ростов-на-Дону и Ростовская область, Россия"
-  },
-  // !! ДОБАВЛЕНО mainEntityOfPage !!
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://xn----9sb8ajp.xn--p1ai"
-  }
-};
+// !! ОБНОВЛЁННАЯ SCHEMA.ORG РАЗМЕТКА из новой системы !!
+const organizationSchema = generateSchemaJSONLD(); // Получаем JSON строку
 
+// !! ГЛОБАЛЬНЫЕ МЕТАДАННЫЕ из новой системы !!
 export const metadata = {
-  // !! ГЛОБАЛЬНЫЕ МЕТАДАННЫЕ !!
   // !! Эти значения могут быть ПЕРЕОПРЕДЕЛЕНЫ в конкретных page.js !!
   title: {
-    default: 'ООО "ПТБ-М" | Комплексное обеспечение транспортной безопасности',
-    template: '%s | ООО "ПТБ-М"'
+    default: SEO_BASE_DATA.defaultTitle,
+    template: `%s | ${SEO_BASE_DATA.siteName}`
   },
-  description: 'ООО "ПТБ-М". Обеспечение транспортной безопасности объектов дорожного хозяйства. Аудит, мониторинг, оснащение, обучение. Работаем по всей России.',
-  keywords: 'транспортная безопасность, ПТБ, ОТИ, аудит, мониторинг, обучение, Ростов-на-Дону, Подразделение транспортной безопасности, ПТБ-М',
-  authors: [{ name: 'ООО ПТБ-М' }],
-  creator: 'ООО ПТБ-М',
-  publisher: 'ООО ПТБ-М',
+  description: SEO_BASE_DATA.defaultDescription,
+  keywords: SEO_BASE_DATA.defaultKeywords.join(', '), // Объединяем в строку
+  authors: [{ name: SEO_BASE_DATA.author }],
+  creator: SEO_BASE_DATA.author,
+  publisher: SEO_BASE_DATA.author,
   robots: 'index, follow',
   verification: {
-    yandex: 'f5bc48680f827787',
+    yandex: SEO_BASE_DATA.yandexVerification,
   },
   openGraph: {
-    title: 'ООО "ПТБ-М" | Профессионалы в области транспортной безопасности',
-    description: 'Обеспечиваем транспортную безопасность на объектах дорожного хозяйства с 2017 года. Комплексный подход, лицензии, квалифицированные специалисты.',
-    url: 'https://xn----9sb8ajp.xn--p1ai',
-    siteName: 'ООО ПТБ-М',
+    title: SEO_BASE_DATA.defaultTitle,
+    description: SEO_BASE_DATA.defaultDescription,
+    url: SEO_BASE_DATA.siteUrl, // !! ИСПОЛЬЗУЕМ URL ИЗ КОНФИГА !!
+    siteName: SEO_BASE_DATA.siteName,
     images: [
       {
-        url: '/images/og-preview.jpg',
+        url: SEO_BASE_DATA.defaultImage,
         width: 1200,
         height: 630,
-        alt: 'ООО ПТБ-М - Транспортная безопасность',
+        alt: SEO_BASE_DATA.defaultImageAlt,
       },
     ],
-    locale: 'ru_RU',
+    locale: SEO_BASE_DATA.locale,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ООО "ПТБ-М" | Профессионалы в области транспортной безопасности',
-    description: 'Обеспечиваем транспортную безопасность на объектах дорожного хозяйства с 2017 года.',
-    images: ['/images/og-preview.jpg'],
+    title: SEO_BASE_DATA.defaultTitle,
+    description: SEO_BASE_DATA.defaultDescription,
+    images: [SEO_BASE_DATA.defaultImage],
   },
 };
 
@@ -122,7 +70,7 @@ export default function RootLayout({ children }) {
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#3b82f6" />
 
-        {/* DNS Prefetch для внешних ресурсов */}
+        {/* DNS Prefetch для внешних ресурсов - !! УБРАНЫ ПРОБЕЛЫ !! */}
         <link rel="preconnect" href="https://smartcaptcha.yandexcloud.net" />
         <link rel="preconnect" href="https://mc.yandex.ru" />
         <link rel="preconnect" href="https://yastatic.net" />
@@ -133,7 +81,7 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
+            __html: organizationSchema, // !! ИСПОЛЬЗУЕМ ОБНОВЛЁННЫЙ ОБЪЕКТ ИЗ НОВОЙ СИСТЕМЫ !!
           }}
         />
       </head>
@@ -147,7 +95,7 @@ export default function RootLayout({ children }) {
         </div>
 
         <Script
-          src="https://smartcaptcha.yandexcloud.net/captcha.js"
+          src="https://smartcaptcha.yandexcloud.net/captcha.js" // !! УБРАНЫ ПРОБЕЛЫ !!
           strategy="afterInteractive"
         />
 
@@ -168,7 +116,7 @@ export default function RootLayout({ children }) {
                 k.async=1;
                 k.src=r;
                 a.parentNode.insertBefore(k,a);
-              })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+              })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); // !! УБРАНЫ ПРОБЕЛЫ !!
 
               ym(103534344, "init", {
                 defer: true,
@@ -187,7 +135,7 @@ export default function RootLayout({ children }) {
           <div>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://mc.yandex.ru/watch/103534344"
+              src="https://mc.yandex.ru/watch/103534344" // !! УБРАНЫ ПРОБЕЛЫ !!
               style={{ position: 'absolute', left: '-9999px' }}
               alt=""
               width="1"
