@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 // !! ИМПОРТ usePathname для получения текущего пути !!
 import { usePathname } from 'next/navigation';
 // !! ИМПОРТ generateBreadcrumbSchema из SEO конфига !!
-import { generateBreadcrumbSchema } from '../../seo.config'; // Убедитесь, что путь правильный
+import { generateBreadcrumbSchema } from '../seo.config'; // Убедитесь, что путь правильный
 
 const sections = [
   { id: 'hero', name: 'Главная' },

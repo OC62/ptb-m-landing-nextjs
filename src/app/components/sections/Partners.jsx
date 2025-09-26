@@ -17,49 +17,49 @@ const partners = [
     id: 1,
     name: "ООО 'Ростдонавтовокзал'",
     logo: '/images/logo_rda.webp',
-    url: 'https://rostdonavtokozal.ru  ',
+    url: 'https://rostdonavtokozal.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 2,
     name: 'ФКУ УПРДОР МОСКВА-ВОЛГОГРАД',
     logo: '/images/fkuLogo.svg',
-    url: 'https://mv.rosavtodor.gov.ru  ',
+    url: 'https://mv.rosavtodor.gov.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 3,
     name: 'ГБУ Вокзал-Авто',
     logo: '/images/GBUVolgograd.webp',
-    url: 'https://vokzal-avto.ru  ',
+    url: 'https://vokzal-avto.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 4,
     name: 'ООО Т-Транс',
     logo: '/images/Ttrans.webp',
-    url: 'https://t-trans61.ru  ',
+    url: 'https://t-trans61.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 5,
     name: 'ГКУ Транспортная дирекция РБ',
     logo: '/images/logoBashkiria.webp',
-    url: 'https://tdrb.bashkortostan.ru  ',
+    url: 'https://tdrb.bashkortostan.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 6,
     name: "МКУ 'Комитет внешнего благоустройства Казани'",
     logo: '/images/logoKazan.webp',
-    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva  ',
+    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 7,
     name: 'СК Автодор-Казань',
     logo: '/images/logoAvtodor.webp',
-    url: 'https://skavtodor.ru  ',
+    url: 'https://skavtodor.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 8,
     name: 'АО Донавтовокзал',
     logo: '/images/LogoDonavto.webp',
-    url: 'https://donavto.ru  ',
+    url: 'https://donavto.ru', // !! ИСПРАВЛЕН URL !!
   },
   {
     id: 9,
@@ -90,9 +90,9 @@ const Partners = () => {
           </p>
         </motion.div>
 
-        {/* Контейнер с уменьшенной на 20% высотой, добавлен класс group и relative */}
+        {/* !! КОНТЕЙНЕР СЛАЙДЕРА: ДОБАВЛЕНЫ КЛАССЫ 'slider-container group' !! */}
         <div
-          className="relative h-[256px] md:h-[288px] group"
+          className="relative h-[256px] md:h-[288px] slider-container group" // !! Добавлены 'slider-container group' !!
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -116,25 +116,25 @@ const Partners = () => {
                 320: {
                   slidesPerView: 2,
                   spaceBetween: 15,
-                  navigation: { enabled: false },
+                  navigation: { enabled: false }, // Кнопки скрыты на мобильных
                 },
                 480: {
                   slidesPerView: 3,
                   spaceBetween: 20,
-                  navigation: { enabled: false },
+                  navigation: { enabled: false }, // Кнопки скрыты на мобильных
                 },
                 768: {
                   slidesPerView: 4,
                   spaceBetween: 24,
-                  navigation: { enabled: false },
+                  navigation: { enabled: false }, // Кнопки скрыты на планшетах
                 },
                 1024: {
                   slidesPerView: 5,
-                  navigation: { enabled: true },
+                  navigation: { enabled: true }, // Кнопки доступны на десктопе
                 },
                 1280: {
                   slidesPerView: 6,
-                  navigation: { enabled: true },
+                  navigation: { enabled: true }, // Кнопки доступны на десктопе
                 },
               }}
               className="h-full"
@@ -203,9 +203,10 @@ const Partners = () => {
             </Swiper>
           </div>
 
-          {/* Кнопки навигации с обновленным стилем */}
+          {/* !! КНОПКИ НАВИГАЦИИ: ОБНОВЛЕНЫ СТИЛИ !! */}
+          {/* !! opacity-0 и transition по-прежнему в глобальных стилях, появляются при hover на .slider-container !! */}
           <button
-            className="partners-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            className="partners-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // !! УБРАНЫ: opacity-0 group-hover:opacity-100 !!
             aria-label="Предыдущий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,7 +214,7 @@ const Partners = () => {
             </svg>
           </button>
           <button
-            className="partners-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+            className="partners-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // !! УБРАНЫ: opacity-0 group-hover:opacity-100 !!
             aria-label="Следующий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

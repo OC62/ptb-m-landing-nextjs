@@ -153,8 +153,8 @@ const About = () => {
             Фото из архива ООО "ПТБ-М"
           </p>
 
-          {/* Контейнер для слайдера с навигацией */}
-          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group">
+          {/* Контейнер для слайдера с навигацией и классами для hover-эффекта кнопок */}
+          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group slider-container"> {/* !! ДОБАВЛЕНЫ КЛАССЫ 'group slider-container' !! */}
             <Swiper
               modules={[Autoplay, Navigation]}
               spaceBetween={0}
@@ -215,9 +215,9 @@ const About = () => {
               ))}
             </Swiper>
             
-            {/* Кнопки навигации - обновленные стили */}
+            {/* Кнопки навигации - обновленные стили, появление при hover на .slider-container на десктопе */}
             <button 
-              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // Убраны: opacity-0 pointer-events-none visibility-hidden invisible
               aria-label="Предыдущее фото"
             >
               <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,7 +225,7 @@ const About = () => {
               </svg>
             </button>
             <button 
-              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // Убраны: opacity-0 pointer-events-none visibility-hidden invisible
               aria-label="Следующее фото"
             >
               <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

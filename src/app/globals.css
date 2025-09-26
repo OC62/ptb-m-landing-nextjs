@@ -920,7 +920,7 @@ body.content-loaded .main-content {
 .about-swiper-next,
 .partners-swiper-prev,
 .partners-swiper-next {
-  @apply absolute top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-none opacity-0 pointer-events-none invisible; /* ИСПРАВЛЕНО: visibility-hidden -> invisible */
+  @apply absolute top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 pointer-events-none;
 }
 
 .cases-swiper-prev,
@@ -944,17 +944,28 @@ body.content-loaded .main-content {
   @apply w-5 h-5 text-gray-800;
 }
 
-/* Скрытие кнопок на мобильных устройствах (< 768px) */
-@media (max-width: 768px) {
+/* Скрытие кнопок на планшетах и мобильных устройствах */
+@media (max-width: 1023.98px) { /* md: 768px, lg: 1024px. Скрываем на md и меньше */
   .cases-swiper-prev,
   .cases-swiper-next,
   .about-swiper-prev,
   .about-swiper-next,
   .partners-swiper-prev,
   .partners-swiper-next {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-    transition: none; /* Добавлено для полного отключения кнопок на мобильных */
+    display: none; /* Полностью скрываем на планшетах и мобильных */
+  }
+}
+
+/* Появление кнопок при наведении на десктопе */
+@media (min-width: 1024px) { /* lg: и выше - десктоп */
+  /* !! ПОЯВЛЕНИЕ КНОПОК ПРИ НАВЕДЕНИИ НА РОДИТЕЛЬСКИЙ КОНТЕЙНЕР !! */
+  /* !! УБЕДИТЕСЬ, ЧТО РОДИТЕЛЬСКИЙ DIV СЛАЙДЕРА (например, в About.jsx) ИМЕЕТ КЛАСС 'slider-container group' !! */
+  .slider-container:hover .cases-swiper-prev,
+  .slider-container:hover .cases-swiper-next,
+  .slider-container:hover .about-swiper-prev,
+  .slider-container:hover .about-swiper-next,
+  .slider-container:hover .partners-swiper-prev,
+  .slider-container:hover .partners-swiper-next {
+    @apply opacity-100 pointer-events-auto;
   }
 }
