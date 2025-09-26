@@ -968,7 +968,7 @@ body.content-loaded .main-content {
   .swiper-wrapper > .swiper-slide .relative {
     height: 66.67%;
   }
-  .swiper-wrapper > .swiper-slide .bg-black\/30 { /* Обновленный селектор для текстового блока */
+  .swiper-wrapper > .swiper-slide .bg-black\/20 { /* Обновленный селектор для текстового блока */
     height: 33.33%;
   }
 }

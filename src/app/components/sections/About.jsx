@@ -190,13 +190,14 @@ const About = () => {
                         // height={267} // УБРАНО: несовместимо с fill
                         quality={70}
                         className="w-full h-full object-contain rounded-t-xl" // Добавлены w-full, h-full, object-contain
+                        style={{ objectFit: 'cover', objectPosition: 'top' }} // Добавлены objectFit и objectPosition
                         loading="lazy" // Включаем lazy loading
                       />
                     </div>
                     
                     {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
                     <div
-                      className="bg-black/30 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/30
+                      className="bg-black/20 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/20 (80% прозрачности)
                     >
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
                         <p
