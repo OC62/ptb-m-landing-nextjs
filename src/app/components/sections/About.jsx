@@ -169,7 +169,6 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
-              // style={{ minHeight: '300px' }} // УБРАНО: стиль высоты конфликтует с fill
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -196,7 +195,7 @@ const About = () => {
                     
                     {/* Текстовый блок - обновлен для адаптивности */}
                     <div
-                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center
+                      className="bg-black/30 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/30
                     >
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
                         <p

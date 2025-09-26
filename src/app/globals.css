@@ -959,12 +959,12 @@ body.content-loaded .main-content {
 /* === АДАПТИВНОСТЬ СЛАЙДЕРА В ABOUT === */
 /* Устанавливаем базовую высоту для слайдов */
 .swiper-wrapper > .swiper-slide {
-  height: 300px; /* Базовая высота */
+  height: 400px; /* Обновленная базовая высота */
   width: 100%; /* Ширина 100% от родителя */
 }
 
-/* Изменяем размеры слайда на мобильных устройствах (ширина <= 375px) */
-@media (max-width: 375px) {
+/* Изменяем размеры слайда на мобильных устройствах (ширина <= 425px) */
+@media (max-width: 425px) {
   .swiper-wrapper > .swiper-slide {
     width: 95vw; /* Занимает 95% ширины экрана */
     max-width: 400px; /* Максимальная ширина */
@@ -974,7 +974,7 @@ body.content-loaded .main-content {
   .swiper-wrapper > .swiper-slide .relative {
     height: 66.67%;
   }
-  .swiper-wrapper > .swiper-slide .bg-black\/50 {
+  .swiper-wrapper > .swiper-slide .bg-black\/30 { /* Обновленный селектор для текстового блока */
     height: 33.33%;
   }
 }
