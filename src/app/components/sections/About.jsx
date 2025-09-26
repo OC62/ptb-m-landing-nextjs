@@ -169,6 +169,7 @@ const About = () => {
                 prevEl: '.about-swiper-prev',
               }}
               className="w-full"
+              style={{ height: '400px' }} // Фиксированная высота слайда
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -177,7 +178,7 @@ const About = () => {
                   className="flex items-center justify-center"
                 >
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
-                  <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center justify-center"> {/* Добавлены flex-col, items-center, justify-center */}
+                  <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center justify-center h-full"> {/* Добавлены flex-col, items-center, justify-center, h-full */}
                     {/* Контейнер с изображением */}
                     <div className="w-full h-[66.67%] relative"> {/* w-full и h-[66.67%] */}
                       <Image
@@ -193,7 +194,7 @@ const About = () => {
                       />
                     </div>
                     
-                    {/* Текстовый блок - обновлен для адаптивности */}
+                    {/* Текстовый блок - обновлен для адаптивности и прозрачности */}
                     <div
                       className="bg-black/30 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center, bg-black/30
                     >
