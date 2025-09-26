@@ -1,6 +1,6 @@
 // src/app/robots.txt/route.js
 // !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
-import { SEO_BASE_DATA } from '../../seo.config'; // Было '../../seo.config' - проверьте, правильно ли поднялись уровни
+import { SEO_BASE_DATA } from '../seo.config'; // Было '../../seo.config'
 
 export async function GET() {
   // !! ИСПОЛЬЗУЕМ БАЗОВЫЙ URL ИЗ КОНФИГА !!
