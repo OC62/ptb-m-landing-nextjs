@@ -100,8 +100,6 @@ h6 {
   @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
 }
 
-/* Стили для кастомной навигации слайдера - УДАЛЕНЫ */
-
 /* === УСКОРЕННЫЕ СТИЛИ ДЛЯ ПРЕЛОАДЕРА (2 секунды) === */
 .animation-preloader {
   position: fixed;
@@ -799,6 +797,10 @@ body.loaded .animation-preloader {
   object-fit: contain;
 }
 
+.object-cover {
+  object-fit: cover;
+}
+
 /* Новые стили для доступности */
 .sr-only {
   position: absolute;
@@ -952,4 +954,26 @@ body.content-loaded .main-content {
   .partners-swiper-next {
     display: none;
   }
+}
+
+/* === АДАПТИВНОСТЬ СЛАЙДЕРА В ABOUT === */
+/* Изменяем размеры слайда на мобильных устройствах (ширина <= 375px) */
+@media (max-width: 375px) {
+  .swiper-wrapper > .swiper-slide {
+    width: 95vw !important; /* Занимает 95% ширины экрана */
+    max-width: 400px; /* Максимальная ширина */
+    height: 500px !important; /* Фиксированная высота для мобильных */
+  }
+  .swiper-wrapper > .swiper-slide .relative {
+    height: 66.67% !important; /* Высота контейнера изображения */
+  }
+  .swiper-wrapper > .swiper-slide .bg-black\/50 {
+    height: 33.33% !important; /* Высота текстового блока */
+  }
+}
+
+/* Для устройств шире 375px высота слайда остается фиксированной в 300px, ширина 100% от родителя */
+.swiper-wrapper > .swiper-slide {
+  height: 300px !important;
+  width: 100% !important;
 }

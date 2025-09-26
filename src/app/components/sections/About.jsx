@@ -180,31 +180,25 @@ const About = () => {
                   className="flex items-center justify-center"
                 >
                   {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
-                  <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center"> {/* Добавлены flex-col и items-center */}
-                    {/* Контейнер с фиксированным соотношением сторон для изображения */}
-                    <div className="w-full max-w-[400px] relative" style={{ paddingBottom: '66.67%' }}> {/* Ограничиваем ширину */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Image
-                          src={member.src}
-                          alt={`${member.name} - ${member.position}`}
-                          fill // Используем fill для растягивания
-                          sizes="(max-width: 374px) 95vw, (max-width: 640px) 600px, 400px" // Указываем размеры для ленивой загрузки
-                          quality={70}
-                          className="max-h-full max-w-full object-contain rounded-t-xl"
-                          loading="lazy" // Включаем lazy loading
-                        />
-                      </div>
+                  <div className="relative w-full rounded-xl overflow-hidden flex flex-col items-center justify-center"> {/* Добавлены flex-col, items-center, justify-center */}
+                    {/* Контейнер с изображением */}
+                    <div className="w-full h-[66.67%] relative"> {/* w-full и h-[66.67%] */}
+                      <Image
+                        src={member.src}
+                        alt={`${member.name} - ${member.position}`}
+                        fill // Используем fill для растягивания
+                        sizes="(max-width: 375px) 95vw, (max-width: 640px) 600px, 400px" // Указываем размеры для ленивой загрузки
+                        quality={70}
+                        className="w-full h-full object-cover rounded-t-xl" // Убраны max-h/max-w, добавлены w-full, h-full, object-cover
+                        loading="lazy" // Включаем lazy loading
+                      />
                     </div>
                     
                     {/* Текстовый блок - обновлен для адаптивности */}
                     <div
-                      className="bg-black/50 text-white rounded-b-xl w-full max-w-[400px] flex items-center justify-center" // Добавлены w-full и max-w-[400px], flex, items-center, justify-center
-                      style={{
-                        minHeight: '75px',
-                        height: '25%',
-                      }}
+                      className="bg-black/50 text-white rounded-b-xl w-full h-[33.33%] flex items-center justify-center" // w-full, h-[33.33%], flex, items-center, justify-center
                     >
-                      <div className="p-2 h-full flex flex-col justify-center items-center text-center"> {/* Добавлены flex-col, justify-center, items-center, text-center */}
+                      <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center"> {/* h-full, w-full, flex-col, justify-center, items-center, text-center */}
                         <p
                           className="font-semibold text-base sm:text-sm md:text-base xs:text-xs xxs:text-[0.85rem] xxxs:text-[0.75rem] xxxxs:text-[0.65rem] mb-0.5"
                           style={{ lineHeight: '1.1' }}
