@@ -30,7 +30,7 @@ const nextConfig = {
               script-src 'self' 'unsafe-eval' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net;
               style-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net;
               img-src 'self' data: blob: https: https://mc.yandex.ru https://yastatic.net;
-              font-src 'self' data: https://smartcaptcha.yandexcloud.net;
+              font-src 'self'  https://smartcaptcha.yandexcloud.net;
               connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
               frame-src https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
               child-src https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
