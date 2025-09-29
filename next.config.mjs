@@ -48,17 +48,29 @@ const nextConfig = {
     ]
   },
 
-  // ✅ Добавляем редиректы
+  // ✅ Редиректы: только с 'птб-м.рф' на 'www.xn----9sb8ajp.xn--p1ai'
   async redirects() {
     return [
       {
         source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: '(www\\.)?птб-м\\.рф', // Регулярное выражение для ptb-m.rf (с www или без)
+          },
+        ],
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true, // HTTP 301
         basePath: false,
       },
       {
         source: '/',
+        has: [
+          {
+            type: 'host',
+            value: '(www\\.)?птб-м\\.рф',
+          },
+        ],
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/',
         permanent: true,
       },
