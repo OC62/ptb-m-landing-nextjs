@@ -1,9 +1,7 @@
 // src/app/robots.txt/route.js
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
-import { SEO_BASE_DATA } from '../seo.config'; // Было '../../seo.config'
+import { SEO_BASE_DATA } from '../seo.config';
 
 export async function GET() {
-  // !! ИСПОЛЬЗУЕМ БАЗОВЫЙ URL ИЗ КОНФИГА !!
   const baseUrl = SEO_BASE_DATA.siteUrl;
 
   const robots = `User-agent: *
@@ -12,9 +10,7 @@ Disallow: /api/
 Disallow: /admin/
 
 Sitemap: ${baseUrl}/sitemap.xml
-Host: ${baseUrl}
 
-# Yandex
 User-agent: Yandex
 Disallow: /api/
 Disallow: /admin/

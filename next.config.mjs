@@ -47,6 +47,24 @@ const nextConfig = {
       },
     ]
   },
+
+  // ✅ Добавляем редиректы
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
+        permanent: true, // HTTP 301
+        basePath: false,
+      },
+      {
+        source: '/',
+        destination: 'https://www.xn----9sb8ajp.xn--p1ai/',
+        permanent: true,
+      },
+    ];
+  },
+
   images: {
     domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'], // УБРАНЫ ПРОБЕЛЫ
     formats: ['image/webp', 'image/avif'],
@@ -56,7 +74,6 @@ const nextConfig = {
   },
   poweredByHeader: false,
   compress: true,
-  // УБРАНО: swcMinify и critters больше не поддерживаются
   experimental: {
     // optimizeCss: true, // можно оставить, если нужно, но убедитесь, что не вызывает critters
   },
