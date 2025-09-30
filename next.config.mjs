@@ -30,7 +30,7 @@ const nextConfig = {
               script-src 'self' 'unsafe-eval' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net;
               style-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net;
               img-src 'self' data: blob: https: https://mc.yandex.ru https://yastatic.net;
-              font-src 'self'  https://smartcaptcha.yandexcloud.net;
+              font-src 'self' data: https://smartcaptcha.yandexcloud.net;
               connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
               frame-src https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
               child-src https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
@@ -51,6 +51,18 @@ const nextConfig = {
   // ✅ Редиректы: 'птб-м.рф' и 'non-www' → 'www.xn----9sb8ajp.xn--p1ai'
   async redirects() {
     return [
+      // Исключаем файл подтверждения из редиректа
+      {
+        source: '/yandex_f5bc48680f827787.html',
+        has: [
+          {
+            type: 'host',
+            value: '(www\\.)?птб-м\\.рф',
+          },
+        ],
+        destination: '/yandex_f5bc48680f827787.html',
+        permanent: false,
+      },
       // Редирект с 'птб-м.рф' на 'www.xn----9sb8ajp.xn--p1ai'
       {
         source: '/:path*',
