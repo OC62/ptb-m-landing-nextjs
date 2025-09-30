@@ -32,6 +32,7 @@ export const metadata = {
   robots: 'index, follow',
   verification: {
     yandex: SEO_BASE_DATA.yandexVerification,
+    google: 'ваш-google-verification-code', // Добавьте если есть
   },
   openGraph: {
     title: SEO_BASE_DATA.defaultTitle,
@@ -61,6 +62,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
+        {/* ✅ ЯВНЫЙ META-TEГ ДЛЯ ПОДТВЕРЖДЕНИЯ ЯНДЕКС */}
+        <meta name="yandex-verification" content={SEO_BASE_DATA.yandexVerification} />
+        
         <meta name="google" content="notranslate" />
         <link rel="icon" type="image/webp" href="/images/logo.webp" />
         <link rel="icon" type="image/png" sizes="120x120" href="/images/favicon-120x120.png" />
