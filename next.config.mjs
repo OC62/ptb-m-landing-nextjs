@@ -1,71 +1,53 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          // Basic Security Headers
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block'
-          },
-          // CSP Header
-          {
-            key: 'Content-Security-Policy',
-            value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net;
-              style-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net;
-              img-src 'self' data: blob: https:;
-              font-src 'self' data: https://smartcaptcha.yandexcloud.net;
-              connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
-              frame-src https://smartcaptcha.yandexcloud.net;
-              child-src https://smartcaptcha.yandexcloud.net;
-              base-uri 'self';
-              form-action 'self';
-            `.replace(/\s{2,}/g, ' ').trim()
-          },
-          // Permissions Policy
-          {
-            key: 'Permissions-Policy',
-            value: 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()'
-          }
-        ],
-      },
-    ]
-  },
+  // УБИРАЕМ headers временно для диагностики
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/(.*)',
+  //       headers: [
+  //         {
+  //           key: 'X-Frame-Options',
+  //           value: 'DENY'
+  //         },
+  //         {
+  //           key: 'X-Content-Type-Options',
+  //           value: 'nosniff'
+  //         }
+  //       ],
+  //     },
+  //   ]
+  // },
 
-  // ✅ Правильные редиректы с исключением для файла подтверждения
+  // ✅ ПРАВИЛЬНЫЕ редиректы ТОЛЬКО для альтернативных доменов
   async redirects() {
     return [
-      // Редирект с кириллических доменов на основной
+      // Редирект с кириллического домена на основной
       {
-        source: '/:path((?!yandex_f5bc48680f827787\\.html).*)',
+        source: '/:path*',
         has: [
           {
             type: 'host',
-            value: '(www\\.)?птб-м\\.рф',
+            value: 'птб-м.рф',
           },
         ],
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
       },
-      // Редирект с non-www на www
       {
-        source: '/:path((?!yandex_f5bc48680f827787\\.html).*)',
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.птб-м.рф',
+          },
+        ],
+        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
+        permanent: true,
+      },
+      // Редирект с non-www punycode на www
+      {
+        source: '/:path*',
         has: [
           {
             type: 'host',
@@ -85,8 +67,11 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
   },
+  
   poweredByHeader: false,
   compress: true,
+  // Добавляем для стабильности
+  trailingSlash: false,
 }
 
 export default nextConfig

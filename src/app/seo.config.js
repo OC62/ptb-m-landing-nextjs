@@ -1,9 +1,9 @@
 // src/seo.config.js
 
-// !! БАЗОВЫЕ ДАННЫЕ САЙТА !!
+// !! БАЗОВЫЕ ДАННЫЕ САЙТА - ИСПРАВЛЕН URL !!
 export const SEO_BASE_DATA = {
   siteName: 'ООО "ПТБ-М"',
-  siteUrl: 'https://xn----9sb8ajp.xn--p1ai', // !! УБРАНЫ ПРОБЕЛЫ !!
+  siteUrl: 'https://www.xn----9sb8ajp.xn--p1ai', // ✅ ИСПРАВЛЕНО: добавлен www
   defaultTitle: 'ООО "ПТБ-М" | Комплексное обеспечение транспортной безопасности',
   defaultDescription: 'Обеспечение транспортной безопасности объектов дорожного хозяйства. Аудит, мониторинг, оснащение, обучение. Работаем по всей России.',
   defaultKeywords: ['транспортная безопасность', 'ПТБ', 'ОТИ', 'Ростов-на-Дону', 'ПТБ-М', 'Подразделение транспортной безопасности'],
@@ -11,32 +11,27 @@ export const SEO_BASE_DATA = {
   defaultImageAlt: 'ООО ПТБ-М - Транспортная безопасность',
   locale: 'ru_RU',
   author: 'ООО ПТБ-М',
-  twitter: '@your_twitter_handle', // если есть
+  twitter: '@your_twitter_handle',
   yandexVerification: 'f5bc48680f827787',
-  // ... другие глобальные данные
 };
 
-// !! ШАБЛОНЫ ДЛЯ РАЗНЫХ ТИПОВ СТРАНИЦ !!
+// !! ШАБЛОНЫ ДЛЯ РАЗНЫХ ТИПОВ СТРАНИЦ - ДОБАВЛЕНЫ НЕДОСТАЮЩИЕ !!
 export const SEO_PAGE_TEMPLATES = {
-  // Шаблон для главной страницы
   home: {
     title: (customTitle = '') => customTitle || SEO_BASE_DATA.defaultTitle,
     description: (customDesc = '') => customDesc || SEO_BASE_DATA.defaultDescription,
     keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, ...customKeywords],
   },
-  // Шаблон для страницы "Услуги"
   services: {
     title: (serviceName = '') => serviceName ? `${serviceName} | Услуги | ${SEO_BASE_DATA.siteName}` : `Услуги | ${SEO_BASE_DATA.siteName}`,
     description: (serviceDesc = '') => serviceDesc || SEO_BASE_DATA.defaultDescription,
     keywords: (serviceKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'услуги', ...serviceKeywords],
   },
-  // Шаблон для страницы "Карьера"
   careers: {
     title: (jobTitle = '') => jobTitle ? `Работа "${jobTitle}" | Карьера | ${SEO_BASE_DATA.siteName}` : `Карьера | ${SEO_BASE_DATA.siteName}`,
     description: (jobDesc = '') => jobDesc || SEO_BASE_DATA.defaultDescription.replace('транспортной безопасности', 'в сфере транспортной безопасности'),
     keywords: (jobKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'работа', 'вакансии', ...jobKeywords],
   },
-  // !! ШАБЛОНЫ ДЛЯ НОВЫХ СТРАНИЦ !!
   about: {
     title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `О компании | ${SEO_BASE_DATA.siteName}`,
     description: (customDesc = '') => customDesc || SEO_BASE_DATA.defaultDescription.replace('Обеспечение транспортной безопасности', 'Узнайте о нашей компании, специализирующейся на обеспечении транспортной безопасности'),
@@ -62,22 +57,31 @@ export const SEO_PAGE_TEMPLATES = {
     description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Политика конфиденциальности и обработки персональных данных. Ваши права и наша ответственность.`,
     keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'политика', 'конфиденциальность', 'персональные данные', 'обработка', ...customKeywords],
   },
-  // Шаблон для других страниц (например, если не найден конкретный шаблон)
+  // ✅ ДОБАВЛЕНЫ НЕДОСТАЮЩИЕ ШАБЛОНЫ
+  cases: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Кейсы | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Реализованные проекты и кейсы в сфере транспортной безопасности. Наш опыт и успешные решения.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'кейсы', 'проекты', 'опыт', 'решения', 'реализованные проекты', ...customKeywords],
+  },
+  community: {
+    title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : `Сообщество | ${SEO_BASE_DATA.siteName}`,
+    description: (customDesc = '') => customDesc || `${SEO_BASE_DATA.siteName}. Участие в профессиональном сообществе и поддержка транспортной инфраструктуры.`,
+    keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, 'сообщество', 'поддержка', 'профессиональное сообщество', 'транспортная инфраструктура', ...customKeywords],
+  },
   default: {
     title: (customTitle = '') => customTitle ? `${customTitle} | ${SEO_BASE_DATA.siteName}` : SEO_BASE_DATA.defaultTitle,
     description: (customDesc = '') => customDesc || SEO_BASE_DATA.defaultDescription,
     keywords: (customKeywords = []) => [...SEO_BASE_DATA.defaultKeywords, ...customKeywords],
   },
-  // ... другие шаблоны
 };
 
-// !! СХЕМА Schema.org (Organization) !!
+// !! СХЕМА Schema.org (Organization) - ИСПРАВЛЕНЫ URL !!
 export const ORGANIZATION_SCHEMA = {
-  "@context": "https://schema.org", // !! УБРАНЫ ПРОБЕЛЫ !!
-  "@type": "Organization", // Или "LocalBusiness", если фокус на регион
+  "@context": "https://schema.org",
+  "@type": "Organization",
   "name": SEO_BASE_DATA.siteName,
-  "url": SEO_BASE_DATA.siteUrl,
-  "logo": `${SEO_BASE_DATA.siteUrl}/images/logo.webp`,
+  "url": SEO_BASE_DATA.siteUrl, // ✅ Теперь с www
+  "logo": `${SEO_BASE_DATA.siteUrl}/images/logo.webp`, // ✅ Теперь с www
   "description": SEO_BASE_DATA.defaultDescription,
   "address": {
     "@type": "PostalAddress",
@@ -100,8 +104,8 @@ export const ORGANIZATION_SCHEMA = {
     "availableLanguage": ["Russian"]
   },
   "sameAs": [
-    "https://vk.com/ptbm_rnd", // !! УБРАНЫ ПРОБЕЛЫ !!
-    "https://t.me/ptbm_rnd"    // !! УБРАНЫ ПРОБЕЛЫ !!
+    "https://vk.com/ptbm_rnd",
+    "https://t.me/ptbm_rnd"
   ],
   "foundingDate": "2017",
   "serviceArea": {
@@ -110,19 +114,19 @@ export const ORGANIZATION_SCHEMA = {
   }
 };
 
-// !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ JSON-LD (экспортируем отдельно) !!
+// !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ JSON-LD !!
 export const generateSchemaJSONLD = () => {
   return JSON.stringify(ORGANIZATION_SCHEMA);
 };
 
 // !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ BREADCRUMB SCHEMA !!
-export const generateBreadcrumbSchema = (breadcrumbs) => { // breadcrumbs - массив объектов { name, url }
+export const generateBreadcrumbSchema = (breadcrumbs) => {
   const itemList = breadcrumbs.map((crumb, index) => ({
     "@type": "ListItem",
     "position": index + 1,
     "name": crumb.name,
     "item": crumb.url ? `${SEO_BASE_DATA.siteUrl}${crumb.url}` : undefined,
-  })).filter(item => item.item); // Фильтруем, если url не определен (например, для текущей страницы)
+  })).filter(item => item.item);
 
   return JSON.stringify({
     "@context": "https://schema.org",

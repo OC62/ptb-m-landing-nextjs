@@ -9,19 +9,19 @@ Allow: /
 Disallow: /api/
 Disallow: /admin/
 
-Sitemap: ${baseUrl}/sitemap.xml
-
 User-agent: Yandex
+Allow: /
 Disallow: /api/
 Disallow: /admin/
-Host: ${baseUrl}
+Clean-param: utm_source&utm_medium&utm_campaign /
 
-Host: https://www.xn----9sb8ajp.xn--p1ai/`;
+Sitemap: ${baseUrl}/sitemap.xml`;
 
   return new Response(robots, {
     status: 200,
     headers: {
       'Content-Type': 'text/plain',
+      'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate',
     },
   });
 }

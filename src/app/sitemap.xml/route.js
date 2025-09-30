@@ -14,23 +14,19 @@ export async function GET() {
     { url: '/partners', priority: 0.5, changeFreq: 'monthly' },
     { url: '/contacts', priority: 0.8, changeFreq: 'monthly' },
     { url: '/policy', priority: 0.3, changeFreq: 'yearly' },
+    { url: '/community', priority: 0.4, changeFreq: 'monthly' },
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${pages.map(page => `
     <url>
       <loc>${baseUrl}${page.url}</loc>
-      <lastmod>${new Date().toISOString()}</lastmod>
+      <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
       <changefreq>${page.changeFreq}</changefreq>
       <priority>${page.priority}</priority>
-      <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}${page.url}"/>
     </url>
   `).join('')}
-  <url>
-    <loc>${baseUrl}</loc>
-    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}"/>
-  </url>
 </urlset>`;
 
   return new Response(sitemap, {
