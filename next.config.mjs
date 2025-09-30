@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Временно упрощенные headers для диагностики
   async headers() {
     return [
       {
@@ -11,7 +10,7 @@ const nextConfig = {
             value: 'DENY'
           },
           {
-            key: 'X-Content-Type-Options',
+            key: 'X-Content-Type-Options', 
             value: 'nosniff'
           }
         ],
@@ -19,12 +18,11 @@ const nextConfig = {
     ]
   },
 
-  // ✅ ПРАВИЛЬНЫЕ редиректы с явным исключением файлов подтверждения
+  // Базовые редиректы
   async redirects() {
     return [
-      // Редирект с кириллического домена на основной (кроме файлов подтверждения)
       {
-        source: '/:path((?!yandex_).+)',
+        source: '/:path*',
         has: [
           {
             type: 'host',
@@ -34,9 +32,8 @@ const nextConfig = {
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
       },
-      // Редирект с non-www на www (кроме файлов подтверждения)
       {
-        source: '/:path((?!yandex_).+)',
+        source: '/:path*',
         has: [
           {
             type: 'host',
@@ -45,6 +42,21 @@ const nextConfig = {
         ],
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
+      },
+    ];
+  },
+
+  // ✅ Явные rewrites для файлов подтверждения
+  async rewrites() {
+    return [
+      // Файлы подтверждения доступны напрямую на всех доменах
+      {
+        source: '/yandex_6c8d32099a45287d.html',
+        destination: '/yandex_6c8d32099a45287d.html',
+      },
+      {
+        source: '/yandex_f5bc48680f827787.html',
+        destination: '/yandex_f5bc48680f827787.html',
       },
     ];
   },
