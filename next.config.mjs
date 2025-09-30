@@ -5,6 +5,7 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
+          // Basic Security Headers
           {
             key: 'X-Frame-Options',
             value: 'DENY'
@@ -21,6 +22,7 @@ const nextConfig = {
             key: 'X-XSS-Protection',
             value: '1; mode=block'
           },
+          // CSP Header
           {
             key: 'Content-Security-Policy',
             value: `
@@ -36,6 +38,7 @@ const nextConfig = {
               form-action 'self';
             `.replace(/\s{2,}/g, ' ').trim()
           },
+          // Permissions Policy
           {
             key: 'Permissions-Policy',
             value: 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()'
@@ -45,21 +48,12 @@ const nextConfig = {
     ]
   },
 
+  // ✅ Правильные редиректы с исключением для файла подтверждения
   async redirects() {
     return [
+      // Редирект с кириллических доменов на основной
       {
-        source: '/yandex_f5bc48680f827787.html',
-        has: [
-          {
-            type: 'host',
-            value: '(www\\.)?птб-м\\.рф',
-          },
-        ],
-        destination: '/yandex_f5bc48680f827787.html',
-        permanent: false,
-      },
-      {
-        source: '/:path*',
+        source: '/:path((?!yandex_f5bc48680f827787\\.html).*)',
         has: [
           {
             type: 'host',
@@ -69,8 +63,9 @@ const nextConfig = {
         destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
       },
+      // Редирект с non-www на www
       {
-        source: '/:path*',
+        source: '/:path((?!yandex_f5bc48680f827787\\.html).*)',
         has: [
           {
             type: 'host',
