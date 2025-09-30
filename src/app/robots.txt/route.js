@@ -14,7 +14,9 @@ Sitemap: ${baseUrl}/sitemap.xml
 User-agent: Yandex
 Disallow: /api/
 Disallow: /admin/
-Host: ${baseUrl}`;
+Host: ${baseUrl}
+
+Host: https://www.xn----9sb8ajp.xn--p1ai`;
 
   return new Response(robots, {
     status: 200,

@@ -1,9 +1,7 @@
 // src/app/sitemap.xml/route.js
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
-import { SEO_BASE_DATA } from '../seo.config'; // Было '../../seo.config'
+import { SEO_BASE_DATA } from '../seo.config';
 
 export async function GET() {
-  // !! ИСПОЛЬЗУЕМ БАЗОВЫЙ URL ИЗ КОНФИГА !!
   const baseUrl = SEO_BASE_DATA.siteUrl;
 
   const pages = [
@@ -19,15 +17,20 @@ export async function GET() {
   ];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   ${pages.map(page => `
     <url>
       <loc>${baseUrl}${page.url}</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
       <changefreq>${page.changeFreq}</changefreq>
       <priority>${page.priority}</priority>
+      <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}${page.url}"/>
     </url>
   `).join('')}
+  <url>
+    <loc>${baseUrl}</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="${baseUrl}"/>
+  </url>
 </urlset>`;
 
   return new Response(sitemap, {
