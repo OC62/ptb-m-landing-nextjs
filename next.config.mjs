@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Временно упрощенные headers для диагностики
   async headers() {
     return [
       {
@@ -10,7 +11,7 @@ const nextConfig = {
             value: 'DENY'
           },
           {
-            key: 'X-Content-Type-Options', 
+            key: 'X-Content-Type-Options',
             value: 'nosniff'
           }
         ],
@@ -18,58 +19,32 @@ const nextConfig = {
     ]
   },
 
-  // ✅ ПРАВИЛЬНЫЕ редиректы с явным исключением файла подтверждения
+  // ✅ ПРАВИЛЬНЫЕ редиректы с явным исключением файлов подтверждения
   async redirects() {
     return [
-      // Редирект с кириллического домена на основной (исключая файл подтверждения)
+      // Редирект с кириллического домена на основной (кроме файлов подтверждения)
       {
-        source: '/:path+',
+        source: '/:path((?!yandex_).+)',
         has: [
           {
             type: 'host',
             value: 'птб-м.рф',
           },
         ],
-        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path+',
+        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
       },
+      // Редирект с non-www на www (кроме файлов подтверждения)
       {
-        source: '/:path+',
-        has: [
-          {
-            type: 'host',
-            value: 'www.птб-м.рф',
-          },
-        ],
-        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path+',
-        permanent: true,
-      },
-      // Редирект с non-www punycode на www (исключая файл подтверждения)
-      {
-        source: '/:path+',
+        source: '/:path((?!yandex_).+)',
         has: [
           {
             type: 'host',
             value: 'xn----9sb8ajp.xn--p1ai',
           },
         ],
-        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path+',
+        destination: 'https://www.xn----9sb8ajp.xn--p1ai/:path*',
         permanent: true,
-      },
-    ];
-  },
-
-  // ✅ REWRITES для файлов подтверждения - они будут доступны напрямую
-  async rewrites() {
-    return [
-      // Файлы подтверждения доступны на всех доменах без редиректа
-      {
-        source: '/yandex_6c8d32099a45287d.html',
-        destination: '/yandex_6c8d32099a45287d.html',
-      },
-      {
-        source: '/yandex_f5bc48680f827787.html', 
-        destination: '/yandex_f5bc48680f827787.html',
       },
     ];
   },
