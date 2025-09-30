@@ -16,7 +16,7 @@ Disallow: /api/
 Disallow: /admin/
 Host: ${baseUrl}
 
-Host: https://www.xn----9sb8ajp.xn--p1ai`;
+Host: https://www.xn----9sb8ajp.xn--p1ai/`;
 
   return new Response(robots, {
     status: 200,
