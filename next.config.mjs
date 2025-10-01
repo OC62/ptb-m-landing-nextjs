@@ -1,5 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Включение турбопак для разработки и сборки
+  experimental: {
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
+
+  // Оптимизированные заголовки безопасности и кэширования
   async headers() {
     return [
       {
@@ -12,13 +25,40 @@ const nextConfig = {
           {
             key: 'X-Content-Type-Options', 
             value: 'nosniff'
+          },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload'
+          },
+          // Кэширование для статических ресурсов
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          }
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          }
+        ],
+      },
+      {
+        source: '/(.*).(jpg|jpeg|png|gif|ico|webp|avif|svg)$',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, must-revalidate',
           }
         ],
       },
     ]
   },
 
-  // Базовые редиректы
+  // Оптимизированные редиректы
   async redirects() {
     return [
       {
@@ -46,10 +86,9 @@ const nextConfig = {
     ];
   },
 
-  // ✅ Явные rewrites для файлов подтверждения
+  // Оптимизированные rewrites
   async rewrites() {
     return [
-      // Файлы подтверждения доступны напрямую на всех доменах
       {
         source: '/yandex_6c8d32099a45287d.html',
         destination: '/yandex_6c8d32099a45287d.html',
@@ -61,17 +100,31 @@ const nextConfig = {
     ];
   },
 
+  // Оптимизированная конфигурация изображений
   images: {
     domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'],
-    formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    formats: ['image/avif', 'image/webp'], // AVIF первым - лучшее сжатие
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+    minimumCacheTTL: 3600, // Увеличено с 60 до 3600
+    dangerouslyAllowSVG: false, // Безопасность
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
-  
-  poweredByHeader: false,
+
+  // Включение компрессии Brotli
   compress: true,
+  
+  // Отключение ненужных заголовков
+  poweredByHeader: false,
+  
+  // Оптимизация сборки
   trailingSlash: false,
+  swcMinify: true,
+  
+  // Компиляторные оптимизации
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
 }
 
 export default nextConfig
