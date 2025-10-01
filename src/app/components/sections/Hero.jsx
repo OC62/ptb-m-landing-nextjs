@@ -1,10 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
 
-const Hero = () => {
+// Импортируем локальный Preloader для Hero
+import HeroPreloader from "../ui/HeroPreloader";
+
+const Hero = ({ onLoadComplete }) => {
+  const [isHeroLoading, setIsHeroLoading] = useState(true);
+  const [heroProgress, setHeroProgress] = useState(0);
+
   const scrollToContact = () => {
     const contactSection = document.getElementById("contact");
     if (contactSection) {
@@ -12,18 +19,52 @@ const Hero = () => {
     }
   };
 
+  // Локальная загрузка Hero
+  useEffect(() => {
+    const totalTime = 2000;
+    const steps = 10;
+    const stepTime = totalTime / steps;
+    
+    let currentStep = 0;
+    const progressTimer = setInterval(() => {
+      currentStep++;
+      setHeroProgress((currentStep / steps) * 100);
+      
+      if (currentStep >= steps) {
+        clearInterval(progressTimer);
+        setIsHeroLoading(false);
+        
+        // Сообщаем родителю что Hero загружен
+        if (onLoadComplete) {
+          setTimeout(() => {
+            onLoadComplete();
+          }, 300);
+        }
+      }
+    }, stepTime);
+
+    return () => {
+      clearInterval(progressTimer);
+    };
+  }, [onLoadComplete]);
+
+  // Показываем прелоадер пока Hero загружается
+  if (isHeroLoading) {
+    return <HeroPreloader progress={heroProgress} />;
+  }
+
+  // Основной контент Hero после загрузки
   return (
     <section
       id="hero"
       className="relative min-h-screen flex items-center overflow-hidden pt-16"
       aria-labelledby="hero-heading"
     >
-      {/* ✅ Семантический заголовок */}
       <h1 className="sr-only">
         Транспортная безопасность в Ростове-на-Дону | ООО ПТБ-М
       </h1>
 
-      {/* ✅ Оптимизированное фоновое изображение */}
+      {/* Фоновое изображение */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
           src="/images/bg_Hero.webp"
@@ -34,17 +75,16 @@ const Hero = () => {
           className="object-cover"
           sizes="100vw"
           placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
         />
 
-        {/* ✅ Контрастный оверлей */}
         <div
           className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/85 to-transparent"
           aria-hidden="true"
         />
       </div>
 
-      {/* ✅ Основной контент */}
+      {/* Основной контент */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -2,19 +2,13 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
+import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config';
 
-// ✅ Динамический импорт тяжелых компонентов
+// Динамический импорт компонентов (БЕЗ Preloader)
 import dynamic from 'next/dynamic';
-const Preloader = dynamic(() => import('@/app/components/ui/Preloader'), {
-  ssr: false,
-  loading: () => null
-});
 const Header = dynamic(() => import('@/app/components/layout/Header'));
 const Footer = dynamic(() => import('@/app/components/layout/Footer'));
 const CookieBanner = dynamic(() => import('@/app/components/layout/CookieBanner'));
-
-// ✅ Импорт из новой системы SEO
-import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config';
 
 const inter = Inter({ 
   subsets: ['latin', 'cyrillic'],
@@ -22,7 +16,6 @@ const inter = Inter({
   preload: true
 });
 
-// ✅ Оптимизированные метаданные
 export const metadata = {
   title: {
     default: SEO_BASE_DATA.defaultTitle,
@@ -59,30 +52,26 @@ export const metadata = {
   },
 };
 
-// ✅ Предзагрузка критических ресурсов
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
-        {/* ✅ Предзагрузка критических изображений */}
+        {/* Предзагрузка критических ресурсов */}
         <link rel="preload" href="/images/bg_Hero.webp" as="image" />
         <link rel="preload" href="/images/logo.webp" as="image" />
         
         <meta name="yandex-verification" content={SEO_BASE_DATA.yandexVerification} />
         <meta name="google" content="notranslate" />
         
-        {/* ✅ Оптимизированные фавиконки */}
         <link rel="icon" type="image/webp" href="/images/logo.webp" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#3b82f6" />
 
-        {/* ✅ DNS Prefetch для внешних ресурсов */}
         <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
 
-        {/* ✅ Schema.org разметка */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -91,7 +80,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        <Preloader />
+        {/* Preloader УДАЛЕН отсюда */}
         <div className="main-content">
           <Header />
           <main>{children}</main>
@@ -99,7 +88,6 @@ export default function RootLayout({ children }) {
           <CookieBanner />
         </div>
 
-        {/* ✅ Скрипты с отложенной загрузкой */}
         <script
           src="https://smartcaptcha.yandexcloud.net/captcha.js"
           async

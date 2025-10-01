@@ -1,156 +1,117 @@
-// nextjs/src/app/components/ui/Skeleton.jsx
 'use client';
 
 const Skeleton = () => {
   return (
-    <div className="skeleton-container">
-      {/* Breadcrumbs Skeleton */}
-      <div className="skeleton-card" style={{marginBottom: '1rem', padding: '1rem'}}>
-        <div className="skeleton-line short" style={{width: '200px', height: '16px'}}></div>
-      </div>
-
-      {/* Hero Section Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-header">
-          <div className="skeleton-avatar" style={{width: '100px', height: '100px'}}></div>
-          <div className="skeleton-title" style={{flex: 1}}>
-            <div className="skeleton-line" style={{height: '32px', marginBottom: '1rem'}}></div>
-            <div className="skeleton-line medium" style={{height: '24px', marginBottom: '0.5rem'}}></div>
-            <div className="skeleton-line short" style={{height: '20px', width: '70%'}}></div>
-          </div>
-        </div>
-        <div style={{display: 'flex', gap: '1rem', marginTop: '2rem'}}>
-          <div className="skeleton-button" style={{width: '160px', height: '48px'}}></div>
-          <div className="skeleton-button" style={{width: '160px', height: '48px'}}></div>
-        </div>
-      </div>
-
-      {/* About Section Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '40%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid">
-          <div className="skeleton-grid-item">
-            <div className="skeleton-image" style={{height: '300px'}}></div>
-          </div>
-          <div className="skeleton-grid-item">
-            <div className="skeleton-line" style={{height: '24px', marginBottom: '1rem'}}></div>
-            <div className="skeleton-line" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-            <div className="skeleton-line" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-            <div className="skeleton-line medium" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-            <div className="skeleton-line short" style={{height: '20px', width: '60%'}}></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Services Grid Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '35%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid">
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="skeleton-grid-item">
-              <div className="skeleton-image" style={{height: '200px'}}></div>
-              <div className="skeleton-line short" style={{height: '22px', marginTop: '1rem'}}></div>
-              <div className="skeleton-line" style={{height: '18px', marginTop: '0.5rem'}}></div>
-              <div className="skeleton-line medium" style={{height: '18px', marginTop: '0.5rem'}}></div>
+    <div className="min-h-screen bg-white">
+      {/* Skeleton для Header */}
+      <div className="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-gray-300 rounded animate-pulse"></div>
+              <div className="w-32 h-4 bg-gray-300 rounded animate-pulse"></div>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Cases Slider Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '30%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="skeleton-grid-item">
-              <div className="skeleton-image" style={{height: '250px'}}></div>
-              <div className="skeleton-line" style={{height: '20px', marginTop: '1rem'}}></div>
-              <div className="skeleton-line short" style={{height: '18px', marginTop: '0.5rem'}}></div>
+            <div className="hidden md:flex space-x-4">
+              {['Главная', 'О компании', 'Услуги', 'Проекты', 'Контакты'].map((item, index) => (
+                <div key={index} className="w-16 h-4 bg-gray-300 rounded animate-pulse"></div>
+              ))}
             </div>
-          ))}
+            <div className="w-32 h-10 bg-gray-300 rounded animate-pulse"></div>
+          </div>
         </div>
       </div>
 
-      {/* Careers Section Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '25%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-list">
-          {[1, 2, 3].map((item) => (
-            <div key={item} className="skeleton-list-item">
-              <div className="skeleton-icon"></div>
-              <div style={{flex: 1}}>
-                <div className="skeleton-line short" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-                <div className="skeleton-line medium" style={{height: '18px'}}></div>
+      {/* Skeleton для Hero секции */}
+      <div className="pt-16 min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-3xl">
+            <div className="h-12 bg-gray-300 rounded animate-pulse mb-6"></div>
+            <div className="h-12 bg-gray-300 rounded animate-pulse mb-6 w-4/5"></div>
+            <div className="h-6 bg-gray-300 rounded animate-pulse mb-8 w-2/3"></div>
+            <div className="h-14 bg-gray-300 rounded-lg animate-pulse w-64"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Skeleton для остальных секций */}
+      <div className="container mx-auto px-4 py-12 space-y-16">
+        {/* Секция услуг */}
+        <div className="space-y-6">
+          <div className="text-center">
+            <div className="h-8 bg-gray-300 rounded animate-pulse w-64 mx-auto mb-4"></div>
+            <div className="h-5 bg-gray-300 rounded animate-pulse w-96 mx-auto"></div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((item) => (
+              <div key={item} className="bg-white p-6 rounded-xl shadow-sm space-y-4 border border-gray-100">
+                <div className="h-12 w-12 bg-gray-300 rounded-lg animate-pulse"></div>
+                <div className="h-6 bg-gray-300 rounded animate-pulse"></div>
+                <div className="h-4 bg-gray-300 rounded animate-pulse w-5/6"></div>
+                <div className="space-y-2">
+                  {[1, 2, 3].map((line) => (
+                    <div key={line} className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
+                      <div className="h-3 bg-gray-300 rounded animate-pulse w-3/4"></div>
+                    </div>
+                  ))}
+                </div>
+                <div className="h-10 bg-gray-300 rounded-lg animate-pulse mt-4"></div>
               </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Licenses Section Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '20%', height: '28px', marginBottom: '2rem'}}></div>
-        <div style={{display: 'flex', gap: '1rem', overflow: 'hidden'}}>
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="skeleton-image" style={{minWidth: '200px', height: '150px'}}></div>
-          ))}
-        </div>
-      </div>
-
-      {/* Partners Section Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '15%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid" style={{gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem'}}>
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <div key={item} className="skeleton-grid-item" style={{padding: '1rem'}}>
-              <div className="skeleton-image" style={{height: '80px'}}></div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Community Support Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '40%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid">
-          <div className="skeleton-grid-item">
-            <div className="skeleton-image" style={{height: '300px'}}></div>
-          </div>
-          <div className="skeleton-grid-item">
-            <div className="skeleton-line" style={{height: '24px', marginBottom: '1rem'}}></div>
-            <div className="skeleton-line" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-            <div className="skeleton-line medium" style={{height: '20px', marginBottom: '0.5rem'}}></div>
-            <div style={{display: 'flex', gap: '1rem', marginTop: '1rem'}}>
-              <div className="skeleton-button" style={{width: '140px', height: '40px'}}></div>
-              <div className="skeleton-button" style={{width: '140px', height: '40px'}}></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Contact Form Skeleton */}
-      <div className="skeleton-card">
-        <div className="skeleton-line short" style={{width: '35%', height: '28px', marginBottom: '2rem'}}></div>
-        <div className="skeleton-grid">
-          <div className="skeleton-grid-item">
-            <div className="skeleton-line" style={{height: '20px', marginBottom: '1rem'}}></div>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <div key={item} className="skeleton-line" style={{height: '40px', marginBottom: '1rem'}}></div>
             ))}
-            <div className="skeleton-button" style={{width: '160px', height: '48px', marginTop: '1rem'}}></div>
           </div>
-          <div className="skeleton-grid-item">
-            <div className="skeleton-image" style={{height: '400px'}}></div>
+        </div>
+
+        {/* Секция кейсов */}
+        <div className="space-y-6">
+          <div className="text-center">
+            <div className="h-8 bg-gray-300 rounded animate-pulse w-48 mx-auto mb-4"></div>
+            <div className="h-5 bg-gray-300 rounded animate-pulse w-80 mx-auto"></div>
+          </div>
+          <div className="bg-gray-800 rounded-xl p-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div className="space-y-4">
+                <div className="h-8 bg-gray-600 rounded animate-pulse"></div>
+                <div className="h-5 bg-gray-600 rounded animate-pulse w-4/5"></div>
+                <div className="h-16 bg-gray-600 rounded animate-pulse"></div>
+              </div>
+              <div className="h-64 bg-gray-600 rounded-lg animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Секция о компании */}
+        <div className="space-y-6">
+          <div className="text-center">
+            <div className="h-8 bg-gray-300 rounded animate-pulse w-56 mx-auto mb-4"></div>
+            <div className="h-5 bg-gray-300 rounded animate-pulse w-72 mx-auto"></div>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="bg-white p-6 rounded-xl shadow-sm text-center space-y-4 border border-gray-100">
+                <div className="h-16 w-16 bg-gray-300 rounded-full animate-pulse mx-auto"></div>
+                <div className="h-6 bg-gray-300 rounded animate-pulse"></div>
+                <div className="h-4 bg-gray-300 rounded animate-pulse"></div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="skeleton-progress">
-        <div className="skeleton-progress-bar">
-          <div className="skeleton-progress-fill"></div>
+      {/* Skeleton для Footer */}
+      <div className="bg-gray-800 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <div className="w-8 h-8 bg-gray-600 rounded animate-pulse"></div>
+              <div className="w-32 h-4 bg-gray-600 rounded animate-pulse"></div>
+            </div>
+            <div className="flex space-x-6">
+              <div className="w-6 h-6 bg-gray-600 rounded animate-pulse"></div>
+              <div className="w-6 h-6 bg-gray-600 rounded animate-pulse"></div>
+              <div className="w-6 h-6 bg-gray-600 rounded animate-pulse"></div>
+            </div>
+          </div>
         </div>
-        <div className="skeleton-progress-text">Загрузка...</div>
       </div>
     </div>
   );
