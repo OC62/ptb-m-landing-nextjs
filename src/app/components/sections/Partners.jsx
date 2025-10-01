@@ -63,9 +63,9 @@ const partners = [
   },
   {
     id: 9,
-    name: "Ассоциация 'Транспортная безопасность'",
-    logo: '/images/logoAsTb.webp',
-    url: 'https://atb-tsa.ru/#',
+    name: "Ассоциация 'Транспортная безопасность Юга'",
+    logo: '/images/logoAsTb.svg',
+    url: 'https://atb-y.ru',
   },
 ];
 
