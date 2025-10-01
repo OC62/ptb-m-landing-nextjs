@@ -1,13 +1,13 @@
 // src/seo.config.js
 
-// !! БАЗОВЫЕ ДАННЫЕ САЙТА - ИСПРАВЛЕН URL !!
+// !! БАЗОВЫЕ ДАННЫЕ САЙТА - ИСПРАВЛЕНЫ ПРОБЕЛЫ И СДЕЛАН АБСОЛЮТНЫЙ URL ДЛЯ КАРТИНКИ !!
 export const SEO_BASE_DATA = {
   siteName: 'ООО "ПТБ-М"',
-  siteUrl: 'https://www.xn----9sb8ajp.xn--p1ai', // ✅ ИСПРАВЛЕНО: добавлен www
+  siteUrl: 'https://www.xn----9sb8ajp.xn--p1ai', // ✅ Убраны пробелы!
   defaultTitle: 'ООО "ПТБ-М" | Комплексное обеспечение транспортной безопасности',
   defaultDescription: 'Обеспечение транспортной безопасности объектов дорожного хозяйства. Аудит, мониторинг, оснащение, обучение. Работаем по всей России.',
   defaultKeywords: ['транспортная безопасность', 'ПТБ', 'ОТИ', 'Ростов-на-Дону', 'ПТБ-М', 'Подразделение транспортной безопасности'],
-  defaultImage: '/images/og-preview.jpg',
+  defaultImage: 'https://www.xn----9sb8ajp.xn--p1ai/images/og-preview.jpg', // ✅ Абсолютный URL
   defaultImageAlt: 'ООО ПТБ-М - Транспортная безопасность',
   locale: 'ru_RU',
   author: 'ООО ПТБ-М',
@@ -80,8 +80,8 @@ export const ORGANIZATION_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": SEO_BASE_DATA.siteName,
-  "url": SEO_BASE_DATA.siteUrl, // ✅ Теперь с www
-  "logo": `${SEO_BASE_DATA.siteUrl}/images/logo.webp`, // ✅ Теперь с www
+  "url": SEO_BASE_DATA.siteUrl, // ✅ Теперь с www и без пробелов
+  "logo": `${SEO_BASE_DATA.siteUrl}/images/logo.webp`, // ✅ Теперь с www и без пробелов
   "description": SEO_BASE_DATA.defaultDescription,
   "address": {
     "@type": "PostalAddress",

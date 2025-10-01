@@ -1,19 +1,24 @@
 // src/app/lib/generateMetadata.js
-// !! ИСПРАВЛЕН ПУТЬ ИМПОРТА !! 
-import { SEO_BASE_DATA, SEO_PAGE_TEMPLATES } from '../seo.config'; // Было '../../seo.config' или '../seo.config' в зависимости от предыдущих попыток
 
-// !! ФУНКЦИЯ ГЕНЕРАЦИИ МЕТАДАННЫХ !!
+// !! ИСПРАВЛЕН ПУТЬ ИМПОРТА !!
+import { SEO_BASE_DATA, SEO_PAGE_TEMPLATES } from '../seo.config';
+
+// !! ФУНКЦИЯ ГЕНЕРАЦИИ МЕТАДАННЫХ С ЗАЩИТОЙ ОТ ОТНОСИТЕЛЬНЫХ ПУТЕЙ !!
 export function generateMetadataForPage(templateName, customData = {}) {
-  const template = SEO_PAGE_TEMPLATES[templateName] || SEO_PAGE_TEMPLATES.default; // Используем шаблон по умолчанию, если не найден
+  const template = SEO_PAGE_TEMPLATES[templateName] || SEO_PAGE_TEMPLATES.default;
 
-  // Применяем шаблоны к предоставленным данным
   const title = template.title(customData.title);
   const description = template.description(customData.description);
   const keywords = template.keywords(customData.keywords).join(', ');
 
-  // Генерация Open Graph и Twitter данных
   const ogUrl = `${SEO_BASE_DATA.siteUrl}${customData.path || ''}`;
-  const ogImage = customData.image || SEO_BASE_DATA.defaultImage;
+
+  // Гарантируем, что ogImage — абсолютный URL
+  let ogImage = customData.image || SEO_BASE_DATA.defaultImage;
+  if (ogImage.startsWith('/')) {
+    ogImage = `${SEO_BASE_DATA.siteUrl}${ogImage}`;
+  }
+
   const ogImageAlt = customData.imageAlt || SEO_BASE_DATA.defaultImageAlt;
 
   return {
@@ -38,7 +43,7 @@ export function generateMetadataForPage(templateName, customData = {}) {
         },
       ],
       locale: SEO_BASE_DATA.locale,
-      type: customData.type || 'website', // можно указать 'article' для постов
+      type: customData.type || 'website',
     },
     twitter: {
       card: 'summary_large_image',
