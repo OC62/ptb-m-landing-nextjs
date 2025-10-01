@@ -163,5 +163,4 @@ const Licenses = () => {
     </section>
   );
 };
-
-export default Licenses;
+export default Licenses;   
