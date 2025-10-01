@@ -1,82 +1,82 @@
-// src/app/HomePageContent.js
-// Добавляем директиву 'use client' В ЭТОТ файл
 'use client';
 
-import { useState, useEffect } from 'react';
-import Breadcrumbs from '@/app/components/Breadcrumbs';
-import ErrorBoundary from '@/app/components/ErrorBoundary';
+import { useState, useEffect, Suspense } from 'react';
+import dynamic from 'next/dynamic';
 
-// Импортируем компоненты напрямую
-import Hero from '@/app/components/sections/Hero';
-import About from '@/app/components/sections/About';
-import ServicesGrid from '@/app/components/sections/ServicesGrid';
-import CasesSlider from '@/app/components/sections/CasesSlider';
-import Careers from '@/app/components/sections/Careers';
-import Licenses from '@/app/components/sections/Licenses';
-import Partners from '@/app/components/sections/Partners';
-import CommunitySupport from '@/app/components/sections/CommunitySupport';
-import ContactForm from '@/app/components/sections/ContactForm';
-import Skeleton from './components/ui/Skeleton';
+// ✅ Динамический импорт всех тяжелых компонентов
+const Hero = dynamic(() => import('@/app/components/sections/Hero'), {
+  loading: () => <div className="min-h-screen bg-gray-100" />
+});
+const About = dynamic(() => import('@/app/components/sections/About'));
+const ServicesGrid = dynamic(() => import('@/app/components/sections/ServicesGrid'));
+const CasesSlider = dynamic(() => import('@/app/components/sections/CasesSlider'));
+const Careers = dynamic(() => import('@/app/components/sections/Careers'));
+const Licenses = dynamic(() => import('@/app/components/sections/Licenses'));
+const Partners = dynamic(() => import('@/app/components/sections/Partners'));
+const CommunitySupport = dynamic(() => import('@/app/components/sections/CommunitySupport'));
+const ContactForm = dynamic(() => import('@/app/components/sections/ContactForm'));
 
-// Это Клиентский компонент
+// ✅ Легкий скелетон для загрузки
+const SectionSkeleton = () => (
+  <div className="animate-pulse bg-gray-200 h-64 rounded-lg mb-8"></div>
+);
+
 export default function HomePageContent() {
   const [isLoading, setIsLoading] = useState(true);
-  const [showContent, setShowContent] = useState(false);
 
-  // Управление последовательностью загрузки: Preloader → Skeleton → Контент
+  // ✅ Ускоренная загрузка - 1.5 секунды вместо 3.5
   useEffect(() => {
-    // Preloader работает 2 секунды, затем показываем Skeleton
-    const preloaderTimer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false);
-      
-      // Skeleton показывается 1,5 секунды, затем контент
-      const skeletonTimer = setTimeout(() => {
-        setShowContent(true);
-        document.body.classList.add('content-loaded');
-      }, 1500); // Skeleton показывается 1,5 секунды
+      document.body.classList.add('content-loaded');
+    }, 1500);
 
-      return () => clearTimeout(skeletonTimer);
-    }, 2000); // Preloader работает 2 секунды
-
-    return () => clearTimeout(preloaderTimer);
+    return () => clearTimeout(timer);
   }, []);
 
-  // Показываем Skeleton после прелоадера
   if (isLoading) {
-    return null; // В это время показывается Preloader из layout.js
-  }
-
-  // Показываем Skeleton в течение 1,5 секунд после прелоадера
-  if (!showContent) {
     return (
-      <ErrorBoundary>
-        <div className="min-h-screen bg-white">
-          <Skeleton />
+      <div className="min-h-screen bg-white">
+        <div className="container mx-auto px-4 py-8">
+          <SectionSkeleton />
+          <SectionSkeleton />
+          <SectionSkeleton />
         </div>
-      </ErrorBoundary>
+      </div>
     );
   }
 
-  // Основной контент после завершения всей последовательности
   return (
-    <ErrorBoundary>
-      <div className="min-h-screen bg-white">
-        <Breadcrumbs />
-        <main role="main" className="main-content animated-content">
+    <div className="min-h-screen bg-white">
+      <main role="main" className="main-content">
+        <Suspense fallback={<SectionSkeleton />}>
           <Hero />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <About />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <ServicesGrid />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <CasesSlider />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <Careers />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <Licenses />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <Partners />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <CommunitySupport />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
           <ContactForm />
-        </main>
-      </div>
-    </ErrorBoundary>
+        </Suspense>
+      </main>
+    </div>
   );
 }
-
-// УБРАНО: экспорт metadata из клиентского компонента
-// export const metadata = { ... };

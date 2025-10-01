@@ -1,43 +1,44 @@
-// src/app/layout.js
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Preloader from '@/app/components/ui/Preloader';
-import Header from '@/app/components/layout/Header';
-import Footer from '@/app/components/layout/Footer';
-import Script from 'next/script';
-import CookieBanner from '@/app/components/layout/CookieBanner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
 
-// !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
-import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config'; // Было '../seo.config'
+// ✅ Динамический импорт тяжелых компонентов
+import dynamic from 'next/dynamic';
+const Preloader = dynamic(() => import('@/app/components/ui/Preloader'), {
+  ssr: false,
+  loading: () => null
+});
+const Header = dynamic(() => import('@/app/components/layout/Header'));
+const Footer = dynamic(() => import('@/app/components/layout/Footer'));
+const CookieBanner = dynamic(() => import('@/app/components/layout/CookieBanner'));
 
-const inter = Inter({ subsets: ['latin'] });
+// ✅ Импорт из новой системы SEO
+import { SEO_BASE_DATA, generateSchemaJSONLD } from './seo.config';
 
-// !! ОБНОВЛЁННАЯ SCHEMA.ORG РАЗМЕТКА из новой системы !!
-const organizationSchema = generateSchemaJSONLD(); // Получаем JSON строку
+const inter = Inter({ 
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  preload: true
+});
 
-// !! ГЛОБАЛЬНЫЕ МЕТАДАННЫЕ из новой системы !!
+// ✅ Оптимизированные метаданные
 export const metadata = {
-  // !! Эти значения могут быть ПЕРЕОПРЕДЕЛЕНЫ в конкретных page.js !!
   title: {
     default: SEO_BASE_DATA.defaultTitle,
     template: `%s | ${SEO_BASE_DATA.siteName}`
   },
   description: SEO_BASE_DATA.defaultDescription,
-  keywords: SEO_BASE_DATA.defaultKeywords.join(', '), // Объединяем в строку
+  keywords: SEO_BASE_DATA.defaultKeywords.join(', '),
   authors: [{ name: SEO_BASE_DATA.author }],
-  creator: SEO_BASE_DATA.author,
-  publisher: SEO_BASE_DATA.author,
   robots: 'index, follow',
   verification: {
     yandex: SEO_BASE_DATA.yandexVerification,
-    google: 'ваш-google-verification-code', // Добавьте если есть
   },
   openGraph: {
     title: SEO_BASE_DATA.defaultTitle,
     description: SEO_BASE_DATA.defaultDescription,
-    url: SEO_BASE_DATA.siteUrl, // !! ИСПОЛЬЗУЕМ URL ИЗ КОНФИГА !!
+    url: SEO_BASE_DATA.siteUrl,
     siteName: SEO_BASE_DATA.siteName,
     images: [
       {
@@ -58,34 +59,34 @@ export const metadata = {
   },
 };
 
+// ✅ Предзагрузка критических ресурсов
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
-        {/* ✅ ЯВНЫЙ META-TEГ ДЛЯ ПОДТВЕРЖДЕНИЯ ЯНДЕКС */}
-        <meta name="yandex-verification" content={SEO_BASE_DATA.yandexVerification} />
+        {/* ✅ Предзагрузка критических изображений */}
+        <link rel="preload" href="/images/bg_Hero.webp" as="image" />
+        <link rel="preload" href="/images/logo.webp" as="image" />
         
+        <meta name="yandex-verification" content={SEO_BASE_DATA.yandexVerification} />
         <meta name="google" content="notranslate" />
+        
+        {/* ✅ Оптимизированные фавиконки */}
         <link rel="icon" type="image/webp" href="/images/logo.webp" />
-        <link rel="icon" type="image/png" sizes="120x120" href="/images/favicon-120x120.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#3b82f6" />
 
-        {/* DNS Prefetch для внешних ресурсов - !! УБРАНЫ ПРОБЕЛЫ !! */}
-        <link rel="preconnect" href="https://smartcaptcha.yandexcloud.net" />
-        <link rel="preconnect" href="https://mc.yandex.ru" />
-        <link rel="preconnect" href="https://yastatic.net" />
+        {/* ✅ DNS Prefetch для внешних ресурсов */}
         <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
         <link rel="dns-prefetch" href="https://mc.yandex.ru" />
-        <link rel="dns-prefetch" href="https://yastatic.net" />
 
+        {/* ✅ Schema.org разметка */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: organizationSchema, // !! ИСПОЛЬЗУЕМ ОБНОВЛЁННЫЙ ОБЪЕКТ ИЗ НОВОЙ СИСТЕМЫ !!
+            __html: generateSchemaJSONLD(),
           }}
         />
       </head>
@@ -98,55 +99,25 @@ export default function RootLayout({ children }) {
           <CookieBanner />
         </div>
 
-        <Script
-          src="https://smartcaptcha.yandexcloud.net/captcha.js" // !! УБРАНЫ ПРОБЕЛЫ !!
-          strategy="afterInteractive"
+        {/* ✅ Скрипты с отложенной загрузкой */}
+        <script
+          src="https://smartcaptcha.yandexcloud.net/captcha.js"
+          async
         />
 
-        <Script
-          id="yandex-metrika"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function(m,e,t,r,i,k,a){
                 m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
                 m[i].l=1*new Date();
-
-                for (var j = 0; j < document.scripts.length; j++) {
-                  if (document.scripts[j].src === r) { return; }
-                }
-
                 k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-                k.async=1;
-                k.src=r;
-                a.parentNode.insertBefore(k,a);
-              })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); // !! УБРАНЫ ПРОБЕЛЫ !!
-
-              ym(103534344, "init", {
-                defer: true,
-                clickmap: true,
-                trackLinks: true,
-                accurateTrackBounce: true,
-                webvisor: false,
-                ecommerce: false,
-                triggerEvent: false
-              });
+                k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
+              })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+              ym(103534344,"init",{defer:true,clickmap:true,trackLinks:true,accurateTrackBounce:true});
             `,
           }}
         />
-
-        <noscript>
-          <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="https://mc.yandex.ru/watch/103534344" // !! УБРАНЫ ПРОБЕЛЫ !!
-              style={{ position: 'absolute', left: '-9999px' }}
-              alt=""
-              width="1"
-              height="1"
-            />
-          </div>
-        </noscript>
 
         <SpeedInsights />
         <Analytics />

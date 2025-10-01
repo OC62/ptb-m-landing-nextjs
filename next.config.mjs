@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Включение турбопак для разработки и сборки
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+  // Включение турбопак для разработки
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
   },
@@ -30,11 +28,6 @@ const nextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload'
           },
-          // Кэширование для статических ресурсов
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          }
         ],
       },
       {
@@ -103,15 +96,14 @@ const nextConfig = {
   // Оптимизированная конфигурация изображений
   images: {
     domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'],
-    formats: ['image/avif', 'image/webp'], // AVIF первым - лучшее сжатие
+    formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    minimumCacheTTL: 3600, // Увеличено с 60 до 3600
-    dangerouslyAllowSVG: false, // Безопасность
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    minimumCacheTTL: 3600,
+    dangerouslyAllowSVG: false,
   },
 
-  // Включение компрессии Brotli
+  // Включение компрессии
   compress: true,
   
   // Отключение ненужных заголовков
@@ -119,7 +111,6 @@ const nextConfig = {
   
   // Оптимизация сборки
   trailingSlash: false,
-  swcMinify: true,
   
   // Компиляторные оптимизации
   compiler: {

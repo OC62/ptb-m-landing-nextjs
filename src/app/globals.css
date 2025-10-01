@@ -1,9 +1,6 @@
-/* nextjs/src/app/globals.css */
-/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* stylelint-enable at-rule-no-unknown */
 
 :root {
   --foreground-rgb: 15, 23, 42;
@@ -33,15 +30,55 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: bold;
+/* === УПРОЩЕННЫЕ СТИЛИ ПРЕЛОАДЕРА (1.5 секунды) === */
+.animation-preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: all 0.4s ease;
+  overflow: hidden;
 }
 
+.preloader-video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+}
+
+.main-content {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease 0.15s;
+  z-index: 1;
+}
+
+body.loaded .main-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.loaded .animation-preloader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* === СТИЛИ ДЛЯ КОМПОНЕНТОВ === */
 .header-company-name {
   @apply text-xl lg:text-base font-bold;
   color: rgb(var(--primary-color));
@@ -76,570 +113,73 @@ h6 {
   @apply py-20;
 }
 
-.dropdown-menu {
-  @apply transition-opacity transition-transform duration-100;
+/* === СТИЛИ КНОПОК НАВИГАЦИИ СЛАЙДЕРОВ === */
+.cases-swiper-prev,
+.cases-swiper-next,
+.about-swiper-prev,
+.about-swiper-next,
+.partners-swiper-prev,
+.partners-swiper-next {
+  @apply absolute top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300;
 }
 
-.dropdown-item {
-  @apply transition-colors duration-100;
+.cases-swiper-prev,
+.about-swiper-prev,
+.partners-swiper-prev {
+  @apply left-4;
 }
 
-.captcha-container {
-  @apply w-full min-h-[80px] relative border border-gray-300 rounded bg-gray-50 overflow-visible p-0 box-border;
+.cases-swiper-next,
+.about-swiper-next,
+.partners-swiper-next {
+  @apply right-4;
 }
 
-.captcha-container > iframe[src*='backend'] {
-  @apply absolute left-[-10000px] top-[-10000px] w-px h-px opacity-0 border-0 pointer-events-none;
+.cases-swiper-prev svg,
+.cases-swiper-next svg,
+.about-swiper-prev svg,
+.about-swiper-next svg,
+.partners-swiper-prev svg,
+.partners-swiper-next svg {
+  @apply w-5 h-5 text-gray-800;
 }
 
-.captcha-container > div {
-  @apply absolute inset-0 m-0 flex justify-center items-center w-full h-full;
-}
-
-.captcha-container > div iframe {
-  @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
-}
-
-/* === УСКОРЕННЫЕ СТИЛИ ДЛЯ ПРЕЛОАДЕРА (2 секунды) === */
-.animation-preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  overflow: hidden;
-}
-
-.preloader-video-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
-  object-fit: cover;
-  z-index: -1;
-  opacity: 1;
-}
-
-.preloader-image-container {
-  position: relative;
-  width: 100%;
-  max-width: 520px;
-  height: 52vw;
-  max-height: 520px;
-  margin-bottom: 2rem;
-  transition: opacity 0.3s ease;
-}
-
-.preloader-img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all 0.3s ease;
-  width: 52%;
-  height: auto;
-  max-width: 220px;
-  max-height: 220px;
-  object-fit: contain;
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-
-/* Ускоренные анимации для 2-секундного прелоадера */
-.preloader-1 {
-  animation: fullScreenToNormal 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s forwards;
-}
-
-.preloader-2 {
-  animation: fadeInOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
-}
-
-.preloader-3 {
-  animation: moveFromTop 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
-}
-
-.preloader-4 {
-  animation: moveFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
-}
-
-.preloader-5 {
-  animation: moveFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
-}
-
-.preloader-6 {
-  animation: moveFromTop 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s forwards;
-}
-
-.preloader-7 {
-  animation: moveFromBottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s forwards;
-}
-
-.preloader-8 {
-  animation: scaleFromInside 0.375s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s forwards;
-}
-
-.preloader-9 {
-  animation: scaleFromLarge 0.375s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.575s forwards;
-}
-
-/* Ускоренные ключевые кадры */
-@keyframes fullScreenToNormal {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(8);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
+/* Скрытие кнопок на планшетах и мобильных устройствах */
+@media (max-width: 1023.98px) {
+  .cases-swiper-prev,
+  .cases-swiper-next,
+  .about-swiper-prev,
+  .about-swiper-next,
+  .partners-swiper-prev,
+  .partners-swiper-next {
+    display: none;
   }
 }
 
-@keyframes fadeInOut {
-  0% { 
+/* Появление кнопок при наведении на десктопе */
+@media (min-width: 1024px) {
+  .cases-swiper-prev,
+  .cases-swiper-next,
+  .about-swiper-prev,
+  .about-swiper-next,
+  .partners-swiper-prev,
+  .partners-swiper-next {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(1);
+    pointer-events: none;
   }
-  100% { 
+
+  .slider-container:hover .cases-swiper-prev,
+  .slider-container:hover .cases-swiper-next,
+  .slider-container:hover .about-swiper-prev,
+  .slider-container:hover .about-swiper-next,
+  .slider-container:hover .partners-swiper-prev,
+  .slider-container:hover .partners-swiper-next {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
+    pointer-events: auto;
   }
 }
 
-@keyframes moveFromTop {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -100%) scale(2.1);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-@keyframes moveFromLeft {
-  0% { 
-    opacity: 0;
-    transform: translate(-100%, -50%) scale(2.1);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-@keyframes moveFromRight {
-  0% { 
-    opacity: 0;
-    transform: translate(0%, -50%) scale(2.1);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-@keyframes moveFromBottom {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, 0%) scale(2.1);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-@keyframes scaleFromInside {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.3);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-@keyframes scaleFromLarge {
-  0% { 
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(3.0);
-  }
-  100% { 
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(2.1);
-  }
-}
-
-.txt-loading {
-  font: bold 5em 'Montserrat', sans-serif;
-  text-align: center;
-  user-select: none;
-  display: flex;
-  gap: 0.1em;
-  height: 1em;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.3s ease;
-}
-
-.letters-loading {
-  opacity: 0;
-  position: relative;
-  display: inline-block;
-  width: 1.2em;
-  height: 1.5em;
-  transition: all 0.2s ease;
-  transform: scale(1.5);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-.letter-1 {
-  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.7s forwards;
-}
-
-.letter-2 {
-  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.725s forwards;
-}
-
-.letter-3 {
-  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.75s forwards;
-}
-
-.letter-4 {
-  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.775s forwards;
-}
-
-.letter-5 {
-  animation: letterAnimation 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.8s forwards;
-}
-
-@keyframes letterAnimation {
-  0% {
-    opacity: 0;
-    transform: scale(2.2);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
-}
-
-.letter-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.vecteezy-credit {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  opacity: 0;
-  animation: fadeIn 0.125s ease 1.85s forwards;
-}
-
-.vecteezy-credit a {
-  color: rgba(255, 255, 255, 0.6);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.vecteezy-credit a:hover {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: underline;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-.final-animation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.final-animation::before,
-.final-animation::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  background: lightgray;
-  opacity: 0;
-}
-
-.final-animation::before {
-  left: 0;
-  animation: splitLeft 0.25s ease 1.75s forwards;
-}
-
-.final-animation::after {
-  right: 0;
-  animation: splitRight 0.25s ease 1.75s forwards;
-}
-
-@keyframes splitLeft {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-100%);
-  }
-}
-
-@keyframes splitRight {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(100%);
-  }
-}
-
-.main-content {
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
-  z-index: 1;
-}
-
-body.loaded .main-content {
-  opacity: 1;
-  visibility: visible;
-}
-
-body.loaded .animation-preloader {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-/* Мобильные стили - буквы опущены ниже */
-@media screen and (max-width: 767px) {
-  .preloader-image-container {
-    height: 52vw;
-    max-height: 450px;
-    margin-bottom: 1rem;
-  }
-  
-  .preloader-img {
-    width: 50%;
-    max-width: 200px;
-    max-height: 200px;
-  }
-  
-  .txt-loading {
-    font-size: 3.5em;
-    margin-top: 150px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .preloader-image-container {
-    height: 48vw;
-    max-height: 350px;
-    margin-bottom: 0.5rem;
-  }
-  
-  .preloader-img {
-    width: 45%;
-    max-width: 180px;
-    max-height: 180px;
-  }
-  
-  .txt-loading {
-    font-size: 2.5em;
-    margin-top: 130px;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .preloader-image-container {
-    height: 45vw;
-    max-height: 300px;
-    margin-bottom: 0;
-  }
-  
-  .preloader-img {
-    width: 40%;
-    max-width: 160px;
-    max-height: 160px;
-  }
-  
-  .txt-loading {
-    font-size: 2em;
-    margin-top: 120px;
-  }
-}
-
-/* === СТИЛИ ДЛЯ SKELETON UI === */
-.skeleton-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.skeleton-card {
-  background: #f8fafc;
-  border-radius: 12px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.skeleton-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 2rem;
-}
-
-.skeleton-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 2s infinite;
-  margin-right: 1.5rem;
-}
-
-.skeleton-title {
-  flex: 1;
-}
-
-.skeleton-line {
-  height: 20px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 2s infinite;
-  border-radius: 4px;
-  margin-bottom: 1rem;
-}
-
-.skeleton-line.short {
-  width: 60%;
-}
-
-.skeleton-line.medium {
-  width: 80%;
-}
-
-.skeleton-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.skeleton-grid-item {
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.skeleton-image {
-  width: 100%;
-  height: 200px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 2s infinite;
-  border-radius: 6px;
-  margin-bottom: 1rem;
-}
-
-.skeleton-button {
-  width: 120px;
-  height: 40px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 2s infinite;
-  border-radius: 6px;
-  margin-top: 1rem;
-}
-
-.skeleton-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.skeleton-list-item {
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  background: #f8fafc;
-  border-radius: 6px;
-}
-
-.skeleton-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 2s infinite;
-  margin-right: 1rem;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Темная тема для скелетона */
-@media (prefers-color-scheme: dark) {
-  .skeleton-card,
-  .skeleton-grid-item,
-  .skeleton-list-item {
-    background: #1e293b;
-  }
-  
-  .skeleton-avatar,
-  .skeleton-line,
-  .skeleton-image,
-  .skeleton-button,
-  .skeleton-icon {
-    background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
-    background-size: 200% 100%;
-  }
-}
-
-/* Остальные стили без изменений */
+/* === СТИЛИ COOKIE BANNER === */
 .cookie-banner {
   position: fixed;
   bottom: 1rem;
@@ -748,16 +288,67 @@ body.loaded .animation-preloader {
   }
 }
 
-.cookie-link {
-  color: #2563eb;
-  text-decoration: underline;
-  font-size: 0.75rem;
+/* === УТИЛИТЫ ДОСТУПНОСТИ === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
-.cookie-link:hover {
-  color: #1d4ed8;
+.focus-visible:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
 }
 
+/* === ПРОСТЫЕ АНИМАЦИИ === */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+/* === СТИЛИ ДЛЯ CAPTCHA === */
+.captcha-container {
+  @apply w-full min-h-[80px] relative border border-gray-300 rounded bg-gray-50 overflow-visible p-0 box-border;
+}
+
+.captcha-container > iframe[src*='backend'] {
+  @apply absolute left-[-10000px] top-[-10000px] w-px h-px opacity-0 border-0 pointer-events-none;
+}
+
+.captcha-container > div {
+  @apply absolute inset-0 m-0 flex justify-center items-center w-full h-full;
+}
+
+.captcha-container > div iframe {
+  @apply w-full h-full min-h-[80px] border-0 m-0 p-0 block object-cover scale-100;
+}
+
+/* === ОСНОВНЫЕ УТИЛИТНЫЕ КЛАССЫ === */
 .cursor-pointer {
   cursor: pointer;
 }
@@ -801,171 +392,16 @@ body.loaded .animation-preloader {
   object-fit: cover;
 }
 
-/* Новые стили для доступности */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-.focus-visible:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-/* Стили для индикатора прогресса Skeleton */
-.skeleton-progress {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px 20px;
-  border-radius: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  backdrop-filter: blur(10px);
-}
-
-.skeleton-progress-bar {
-  width: 150px;
-  height: 6px;
-  background: #e5e7eb;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.skeleton-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #60a5fa);
-  border-radius: 3px;
-  animation: progressFill 1,5s ease-in-out forwards;
-}
-
-.skeleton-progress-text {
-  font-size: 14px;
-  color: #374151;
-  font-weight: 500;
-}
-
-@keyframes progressFill {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-/* Анимация появления контента */
-.animated-content {
-  animation: contentFadeIn 0.8s ease-in-out forwards;
-}
-
-@keyframes contentFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Класс для загруженного контента */
-body.content-loaded .main-content {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Адаптивность для прогресс-бара */
+/* === АДАПТИВНОСТЬ === */
 @media screen and (max-width: 768px) {
-  .skeleton-progress {
-    bottom: 10px;
-    padding: 8px 15px;
-  }
-  
-  .skeleton-progress-bar {
-    width: 120px;
-  }
-  
-  .skeleton-progress-text {
-    font-size: 12px;
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .skeleton-progress {
+  .cookie-banner-actions {
     flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
-}
-
-/* === СТИЛИ КНОПОК НАВИГАЦИИ СЛАЙДЕРОВ === */
-/* Универсальные стили для кнопок навигации */
-.cases-swiper-prev,
-.cases-swiper-next,
-.about-swiper-prev,
-.about-swiper-next,
-.partners-swiper-prev,
-.partners-swiper-next {
-  @apply absolute top-1/2 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300 opacity-0 pointer-events-none;
-}
-
-.cases-swiper-prev,
-.about-swiper-prev,
-.partners-swiper-prev {
-  @apply left-4;
-}
-
-.cases-swiper-next,
-.about-swiper-next,
-.partners-swiper-next {
-  @apply right-4;
-}
-
-.cases-swiper-prev svg,
-.cases-swiper-next svg,
-.about-swiper-prev svg,
-.about-swiper-next svg,
-.partners-swiper-prev svg,
-.partners-swiper-next svg {
-  @apply w-5 h-5 text-gray-800;
-}
-
-/* Скрытие кнопок на планшетах и мобильных устройствах */
-@media (max-width: 1023.98px) { /* md: 768px, lg: 1024px. Скрываем на md и меньше */
-  .cases-swiper-prev,
-  .cases-swiper-next,
-  .about-swiper-prev,
-  .about-swiper-next,
-  .partners-swiper-prev,
-  .partners-swiper-next {
-    display: none; /* Полностью скрываем на планшетах и мобильных */
-  }
-}
-
-/* Появление кнопок при наведении на десктопе */
-@media (min-width: 1024px) { /* lg: и выше - десктоп */
-  /* !! ПОЯВЛЕНИЕ КНОПОК ПРИ НАВЕДЕНИИ НА РОДИТЕЛЬСКИЙ КОНТЕЙНЕР !! */
-  /* !! УБЕДИТЕСЬ, ЧТО РОДИТЕЛЬСКИЙ DIV СЛАЙДЕРА (например, в About.jsx) ИМЕЕТ КЛАСС 'slider-container group' !! */
-  .slider-container:hover .cases-swiper-prev,
-  .slider-container:hover .cases-swiper-next,
-  .slider-container:hover .about-swiper-prev,
-  .slider-container:hover .about-swiper-next,
-  .slider-container:hover .partners-swiper-prev,
-  .slider-container:hover .partners-swiper-next {
-    @apply opacity-100 pointer-events-auto;
   }
 }
