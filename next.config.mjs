@@ -10,82 +10,7 @@ const nextConfig = {
     },
   },
 
-  // 🔒 ИСПРАВЛЕННЫЕ заголовки безопасности
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY'
-          },
-          {
-            key: 'X-Content-Type-Options', 
-            value: 'nosniff'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload'
-          },
-        ],
-      },
-      // 🔒 CSP для HTML страниц
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' data: blob: https:",
-              "font-src 'self' https://fonts.gstatic.com",
-              "connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru",
-              "frame-src 'self' https://smartcaptcha.yandexcloud.net",
-              "worker-src 'self' blob:",
-              "base-uri 'self'",
-              "form-action 'self'"
-            ].join('; ')
-          }
-        ],
-      },
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          }
-        ],
-      },
-      {
-        source: '/(.*)\\.(jpg|jpeg|png|gif|ico|webp|avif|svg)$',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=86400, must-revalidate',
-          }
-        ],
-      },
-      {
-        source: '/(.*)\\.(js|css)',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=31536000, immutable',
-          }
-        ],
-      },
-    ]
-  },
-
-  // Оптимизированные редиректы
+  // Только редиректы и rewrites - заголовки теперь в middleware
   async redirects() {
     return [
       {
@@ -113,7 +38,6 @@ const nextConfig = {
     ];
   },
 
-  // Оптимизированные rewrites
   async rewrites() {
     return [
       {
@@ -134,7 +58,6 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2560],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
     minimumCacheTTL: 86400,
-    dangerouslyAllowSVG: true,
   },
 
   // Включение компрессии
@@ -150,6 +73,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  
+  // Включение production source maps для отладки
+  productionBrowserSourceMaps: false,
 }
 
 export default nextConfig
