@@ -325,7 +325,7 @@ const Header = () => {
                           <Link
                             key={subIndex}
                             href={subItem.href}
-                            className={`block text-gray-600 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors focus-visible ${pathname === subItem.href ? 'text-primary font-medium' : ''}`}
+                            className={`block text-gray-700 hover:text-primary font-medium py-1 px-2 w-full text-left text-sm transition-colors focus-visible ${pathname === subItem.href ? 'text-primary font-medium' : ''}`}
                             onClick={() => setIsMenuOpen(false)}
                             role="menuitem"
                             aria-label={subItem.aria}

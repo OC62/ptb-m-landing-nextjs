@@ -62,7 +62,7 @@ class ErrorBoundary extends Component {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
               Что-то пошло не так
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-700 mb-6">
               Приносим извинения за неудобства. Пожалуйста, попробуйте обновить страницу или вернуться на главную.
             </p>
             

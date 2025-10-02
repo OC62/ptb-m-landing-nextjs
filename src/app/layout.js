@@ -80,7 +80,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={inter.className}>
-        {/* Preloader УДАЛЕН отсюда */}
         <div className="main-content">
           <Header />
           <main>{children}</main>

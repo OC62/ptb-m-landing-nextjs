@@ -71,7 +71,7 @@ const ServicesGrid = () => {
           <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Наши услуги
           </h3>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Комплексные решения для обеспечения транспортной безопасности на
             объектах дорожного хозяйства
           </p>
@@ -94,12 +94,12 @@ const ServicesGrid = () => {
                 <h4 className="text-2xl font-bold text-gray-800 mb-4">
                   {service.title}
                 </h4>
-                <p className="text-gray-600 mb-6 flex-1">
+                <p className="text-gray-700 mb-6 flex-1">
                   {service.description}
                 </p>
                 <ul className="space-y-2 mb-6" aria-label={`Особенности услуги: ${service.title}`}>
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-gray-600">
+                    <li key={idx} className="flex items-center text-gray-700">
                       <span className="w-2 h-2 bg-blue-500 rounded-full mr-3 flex-shrink-0" aria-hidden="true"></span>
                       <span className="text-sm">{feature}</span>
                     </li>

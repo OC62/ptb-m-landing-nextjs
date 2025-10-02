@@ -90,7 +90,7 @@ const About = () => {
           <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             О нашей компании
           </h3>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Мы специализируемся на реализации комплекса мер по обеспечению
             транспортной безопасности, защищая интересы государственных и
             частных организаций
@@ -104,7 +104,7 @@ const About = () => {
           className="max-w-3xl mb-16"
         >
           <h4 className="text-2xl font-bold text-gray-800 mb-4">Наша задача</h4>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             Обеспечение транспортой безопасности объектов дорожного хозяйства.
             Для этого мы сочетаем строгое соблюдение закона № 16-ФЗ с
             современными технологиями и экспертным подходом. Наша работа — это
@@ -112,7 +112,7 @@ const About = () => {
           </p>
 
           <h4 className="text-2xl font-bold text-gray-800 mb-4">Наш опыт</h4>
-          <p className="text-gray-600">
+          <p className="text-gray-700">
             Более 8 лет успешной работы в сфере транспортной безопасности. Мы
             являемся надежным партнером для государственных структур и частных
             компаний, обеспечивая безопасность на всех этапах — от строительства
@@ -135,7 +135,7 @@ const About = () => {
               <h5 className="text-xl font-semibold text-gray-800 mb-2">
                 {advantage.title}
               </h5>
-              <p className="text-gray-600">{advantage.description}</p>
+              <p className="text-gray-700">{advantage.description}</p>
             </motion.div>
           ))}
         </div>
@@ -149,7 +149,7 @@ const About = () => {
           <h4 className="text-2xl font-bold text-gray-800 text-center mb-6">
             Наша команда в действии
           </h4>
-          <p className="text-center text-gray-600 mb-6 text-sm">
+          <p className="text-center text-gray-700 mb-6 text-sm">
             Фото из архива ООО "ПТБ-М"
           </p>
 
@@ -184,10 +184,14 @@ const About = () => {
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
+                        width={600}
+                        height={400}
                         quality={70}
-                        className="w-full h-full object-cover rounded-t-xl" // object-cover вместо object-contain
-                        style={{ objectPosition: 'top' }} // Только objectPosition
-                        loading="lazy" // Включаем lazy loading
+                        className="w-full h-full object-cover rounded-t-xl"
+                        style={{ objectPosition: 'top' }}
+                        loading="lazy"
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
                       />
                     </div>
                     

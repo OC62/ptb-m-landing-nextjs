@@ -1,11 +1,8 @@
 "use client";
-
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
-
-// Импортируем локальный Preloader для Hero
 import HeroPreloader from "../ui/HeroPreloader";
 
 const Hero = ({ onLoadComplete }) => {
@@ -19,7 +16,6 @@ const Hero = ({ onLoadComplete }) => {
     }
   };
 
-  // Локальная загрузка Hero
   useEffect(() => {
     const totalTime = 2000;
     const steps = 10;
@@ -33,8 +29,6 @@ const Hero = ({ onLoadComplete }) => {
       if (currentStep >= steps) {
         clearInterval(progressTimer);
         setIsHeroLoading(false);
-        
-        // Сообщаем родителю что Hero загружен
         if (onLoadComplete) {
           setTimeout(() => {
             onLoadComplete();
@@ -48,12 +42,10 @@ const Hero = ({ onLoadComplete }) => {
     };
   }, [onLoadComplete]);
 
-  // Показываем прелоадер пока Hero загружается
   if (isHeroLoading) {
     return <HeroPreloader progress={heroProgress} />;
   }
 
-  // Основной контент Hero после загрузки
   return (
     <section
       id="hero"
@@ -64,7 +56,7 @@ const Hero = ({ onLoadComplete }) => {
         Транспортная безопасность в Ростове-на-Дону | ООО ПТБ-М
       </h1>
 
-      {/* Фоновое изображение */}
+      {/* Оптимизированное фоновое изображение */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <Image
           src="/images/bg_Hero.webp"
@@ -76,15 +68,15 @@ const Hero = ({ onLoadComplete }) => {
           sizes="100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
+          width={1920}
+          height={1080}
         />
-
         <div
           className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/85 to-transparent"
           aria-hidden="true"
         />
       </div>
 
-      {/* Основной контент */}
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

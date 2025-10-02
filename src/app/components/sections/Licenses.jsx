@@ -54,7 +54,7 @@ const Licenses = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Лицензии и свидетельства
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Наличие всех необходимых разрешений и сертификатов подтверждает наш
             профессионализм и надежность
           </p>
@@ -96,19 +96,19 @@ const Licenses = () => {
                     {license.title}
                   </h3>
                   <div className="space-y-2 mb-4">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-700">
                       <span className="font-medium">Номер:</span>{' '}
                       {license.number}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-700">
                       <span className="font-medium">Выдано:</span>{' '}
                       {license.issuedBy}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-700">
                       <span className="font-medium">Дата выдачи:</span>{' '}
                       {license.issueDate}
                     </p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-700">
                       <span className="font-medium">Действует до:</span>{' '}
                       {license.expiryDate}
                     </p>
@@ -131,7 +131,7 @@ const Licenses = () => {
             <h3 className="text-2xl font-bold text-gray-800 mb-2">
               Хотите увидеть оригиналы документов?
             </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-6 max-w-2xl mx-auto">
               Мы готовы предоставить полный пакет лицензий и свидетельств по
               запросу. Наши документы регулярно проходят проверку
               контролирующими органами.

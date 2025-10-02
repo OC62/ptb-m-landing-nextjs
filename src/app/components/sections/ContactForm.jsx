@@ -1,4 +1,3 @@
-// nextjs/src/app/components/sections/ContactForm.jsx
 "use client";
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useForm } from 'react-hook-form';
@@ -26,6 +25,7 @@ const ContactForm = () => {
   const [submitError, setSubmitError] = useState('');
   const [captchaToken, setCaptchaToken] = useState('');
   const [captchaError, setCaptchaError] = useState('');
+  const [formWorker, setFormWorker] = useState(null);
   const captchaContainerRef = useRef(null);
   const widgetId = useRef(null);
 
@@ -34,9 +34,55 @@ const ContactForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  // Инициализация Web Worker
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.Worker) {
+      const worker = new Worker('/form-worker.js');
+      setFormWorker(worker);
+
+      // Обработчик сообщений от worker
+      worker.onmessage = (e) => {
+        switch (e.data.type) {
+          case 'EMAIL_VALIDATED':
+            console.log('Email validation result:', e.data.isValid);
+            break;
+          case 'PHONE_VALIDATED':
+            console.log('Phone validation result:', e.data.isValid);
+            break;
+          case 'MESSAGE_PROCESSED':
+            console.log('Message processed:', e.data.processedMessage);
+            break;
+          default:
+            console.log('Worker message:', e.data);
+        }
+      };
+
+      return () => {
+        worker.terminate();
+      };
+    }
+  }, []);
+
+  // Валидация email через Web Worker
+  useEffect(() => {
+    const email = watch('email');
+    if (email && formWorker) {
+      formWorker.postMessage({ type: 'VALIDATE_EMAIL', data: { email } });
+    }
+  }, [watch('email'), formWorker]);
+
+  // Валидация телефона через Web Worker
+  useEffect(() => {
+    const phone = watch('phone');
+    if (phone && formWorker) {
+      formWorker.postMessage({ type: 'VALIDATE_PHONE', data: { phone } });
+    }
+  }, [watch('phone'), formWorker]);
 
   const reloadCaptcha = useCallback(() => {
     if (widgetId.current && window.smartCaptcha) {
@@ -190,11 +236,30 @@ const ContactForm = () => {
       return;
     }
 
-    const dataToSend = { ...data };
-    if (!IS_CAPTCHA_DISABLED_FOR_DEV) dataToSend.smartcaptcha_token = captchaToken;
-    else dataToSend.smartcaptcha_token = '';
+    // Обработка сообщения через Web Worker если доступен
+    let processedData = { ...data };
+    if (formWorker) {
+      try {
+        const processedMessage = await new Promise((resolve) => {
+          const messageHandler = (e) => {
+            if (e.data.type === 'MESSAGE_PROCESSED') {
+              formWorker.removeEventListener('message', messageHandler);
+              resolve(e.data.processedMessage);
+            }
+          };
+          formWorker.addEventListener('message', messageHandler);
+          formWorker.postMessage({ type: 'PROCESS_MESSAGE', data: { message: data.message } });
+        });
+        processedData.message = processedMessage;
+      } catch (error) {
+        console.warn('Web Worker error, using original message:', error);
+      }
+    }
 
-    await sendFormData(dataToSend);
+    if (!IS_CAPTCHA_DISABLED_FOR_DEV) processedData.smartcaptcha_token = captchaToken;
+    else processedData.smartcaptcha_token = '';
+
+    await sendFormData(processedData);
     setIsSubmitting(false);
   };
 
@@ -208,7 +273,7 @@ const ContactForm = () => {
             <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
               Свяжитесь с нами
             </h3>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-700">
               Получите консультацию специалиста по транспортной безопасности
             </p>
           </div>
@@ -220,7 +285,7 @@ const ContactForm = () => {
                 <h4 className="text-2xl font-bold text-green-600 mb-2">
                   Спасибо за заявку!
                 </h4>
-                <p className="text-gray-600">
+                <p className="text-gray-700">
                   Мы свяжемся с вами в ближайшее время.
                 </p>
               </div>
@@ -324,7 +389,7 @@ const ContactForm = () => {
                     required
                     className="mt-1 mr-2 h-5 w-5 text-blue-600 rounded focus:ring-blue-500 border-gray-300 focus:outline-none"
                   />
-                  <label htmlFor="privacy" className="text-gray-600 text-sm cursor-pointer">
+                  <label htmlFor="privacy" className="text-gray-700 text-sm cursor-pointer">
                     Согласен с обработкой персональных данных *
                   </label>
                 </div>

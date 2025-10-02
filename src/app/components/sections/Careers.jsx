@@ -76,7 +76,7 @@ const Careers = () => {
           <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Наши вакансии
           </h3>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto">
             Присоединяйтесь к команде профессионалов в сфере транспортной безопасности
           </p>
         </motion.div>
@@ -145,7 +145,7 @@ const Careers = () => {
                     Подробности вакансии: {job.title}
                   </h5>
 
-                  <p className="text-gray-600 my-2 text-xs md:text-base">{job.description}</p>
+                  <p className="text-gray-700 my-2 text-xs md:text-base">{job.description}</p>
 
                   <div className="grid md:grid-cols-2 gap-3">
                     <div>
@@ -156,7 +156,7 @@ const Careers = () => {
                         {job.responsibilities.map((resp, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="w-2 h-2 bg-red-500 rounded-full mr-2 mt-2 flex-shrink-0" aria-hidden="true"></span>
-                            <span className="text-gray-600 text-xs md:text-base">{resp}</span>
+                            <span className="text-gray-700 text-xs md:text-base">{resp}</span>
                           </li>
                         ))}
                       </ul>
@@ -170,7 +170,7 @@ const Careers = () => {
                         {job.requirements.map((req, idx) => (
                           <li key={idx} className="flex items-start">
                             <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 mt-2 flex-shrink-0" aria-hidden="true"></span>
-                            <span className="text-gray-600 text-xs md:text-base">{req}</span>
+                            <span className="text-gray-700 text-xs md:text-base">{req}</span>
                           </li>
                         ))}
                       </ul>
@@ -205,7 +205,7 @@ const Careers = () => {
           <h4 className="text-lg md:text-2xl font-bold text-gray-800 mb-2">
             Не нашли подходящую вакансию?
           </h4>
-          <p className="text-gray-600 mb-4 text-xs md:text-base">
+          <p className="text-gray-700 mb-4 text-xs md:text-base">
             Присылайте ваше резюме, мы свяжемся с вами при появлении подходящих предложений
           </p>
           <GlassmorphicButton

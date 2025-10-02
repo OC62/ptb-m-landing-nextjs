@@ -85,7 +85,7 @@ const Partners = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
             Наши партнеры
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
             С нами сотрудничают ведущие компании и организации России
           </p>
         </motion.div>

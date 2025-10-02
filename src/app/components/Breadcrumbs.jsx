@@ -170,7 +170,7 @@ const Breadcrumbs = () => {
               ) : (
                 <button
                   onClick={() => scrollToSection(section.id)}
-                  className="text-gray-600 hover:text-blue-800 transition-colors px-2 py-1 rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  className="text-gray-700 hover:text-blue-800 transition-colors px-2 py-1 rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   aria-label={`Перейти к разделу: ${section.name}`}
                 >
                   {section.name}
