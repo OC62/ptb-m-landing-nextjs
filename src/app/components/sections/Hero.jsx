@@ -17,8 +17,8 @@ const Hero = ({ onLoadComplete }) => {
   };
 
   useEffect(() => {
-    const totalTime = 2000;
-    const steps = 10;
+    const totalTime = 1500; // Уменьшено время загрузки
+    const steps = 8;
     const stepTime = totalTime / steps;
     
     let currentStep = 0;
@@ -32,7 +32,7 @@ const Hero = ({ onLoadComplete }) => {
         if (onLoadComplete) {
           setTimeout(() => {
             onLoadComplete();
-          }, 300);
+          }, 200);
         }
       }
     }, stepTime);
@@ -63,9 +63,9 @@ const Hero = ({ onLoadComplete }) => {
           alt="Фон: дорожный объект, мост"
           fill
           priority
-          quality={75}
+          quality={80}
           className="object-cover"
-          sizes="100vw"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
           width={1920}
@@ -81,7 +81,7 @@ const Hero = ({ onLoadComplete }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5 }}
           className="max-w-3xl"
         >
           <motion.h2
@@ -96,7 +96,7 @@ const Hero = ({ onLoadComplete }) => {
             className="text-lg md:text-xl mb-8 text-blue-100 text-left"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
           >
             ООО "Подразделение транспортной безопасности -М" – профессионалы,
             которым можно доверять
@@ -105,7 +105,7 @@ const Hero = ({ onLoadComplete }) => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
           >
             <GlassmorphicButton
               variant="primary"

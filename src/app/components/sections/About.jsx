@@ -1,9 +1,8 @@
-// nextjs/src/app/components/sections/About.jsx
 "use client";
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
-import Image from 'next/image'; // Импортируем next/image
+import Image from 'next/image';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -38,41 +37,57 @@ const About = () => {
       src: '/images/team1.webp',
       name: 'Группа быстрого реагирования',
       position: 'Автомобиль ГБР в режиме ожидания',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team2.webp',
       name: 'Дежурная смена',
       position: 'Коллектив перед заступлением на дежурство',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team3.webp',
       name: 'Группа быстрого реагирования',
       position: 'Инструктаж перед выездом на объект',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team4.webp',
       name: 'Группа быстрого реагирования',
       position: 'Выезд на проверку объекта транспортной безопасности',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team5.webp',
       name: 'Сотрудники дежурной смены',
       position: 'В полной экипировке перед началом дежурства',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team6.webp',
       name: 'Специалисты ТСО',
       position: 'Настройка и диагностика технических средств охраны',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team7.webp',
       name: 'Группа быстрого реагирования',
       position: 'Проверка объекта транспортной безопасности',
+      width: 600,
+      height: 400
     },
     {
       src: '/images/team8.webp',
       name: 'Дежурная смена',
       position: 'Тренировка и инструктаж перед заступлением на дежурство',
+      width: 600,
+      height: 400
     },
   ];
 
@@ -153,8 +168,7 @@ const About = () => {
             Фото из архива ООО "ПТБ-М"
           </p>
 
-          {/* Контейнер для слайдера с навигацией и классами для hover-эффекта кнопок */}
-          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group slider-container"> {/* !! ДОБАВЛЕНЫ КЛАССЫ 'group slider-container' !! */}
+          <div className="relative mx-auto w-full max-w-4xl rounded-xl overflow-hidden group slider-container">
             <Swiper
               modules={[Autoplay, Navigation]}
               spaceBetween={0}
@@ -177,37 +191,32 @@ const About = () => {
                   key={index}
                   className="flex items-center justify-center"
                 >
-                  {/* Внешний контейнер слайда - обновленная структура для адаптивности */}
-                  <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col items-center justify-center"> {/* h-full и flex-col */}
-                    {/* Контейнер с изображением - занимает 80% высоты слайда */}
-                    <div className="w-full h-[80%] relative"> {/* h-[80%] */}
+                  <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col items-center justify-center">
+                    <div className="w-full h-[80%] relative">
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
-                        width={600}
-                        height={400}
-                        quality={70}
+                        width={member.width}
+                        height={member.height}
+                        quality={75}
                         className="w-full h-full object-cover rounded-t-xl"
                         style={{ objectPosition: 'top' }}
-                        loading="lazy"
+                        loading={index < 2 ? "eager" : "lazy"}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
                       />
                     </div>
                     
-                    {/* Текстовый блок - обновлен для адаптивности и прозрачности, занимает 20% высоты слайда */}
-                    <div
-                      className="bg-black/50 text-white rounded-b-xl w-full h-[20%] flex items-center justify-center" // h-[20%], bg-black/50
-                    >
+                    <div className="bg-black/50 text-white rounded-b-xl w-full h-[20%] flex items-center justify-center">
                       <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center">
                         <p
-                          className="font-semibold text-xs sm:text-xs md:text-sm xs:text-[0.65rem] xxs:text-[0.7rem] xxxs:text-[0.6rem] xxxxs:text-[0.5rem] mb-0.5" // Уменьшен размер шрифта
+                          className="font-semibold text-xs sm:text-xs md:text-sm xs:text-[0.65rem] xxs:text-[0.7rem] xxxs:text-[0.6rem] xxxxs:text-[0.5rem] mb-0.5"
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.name}
                         </p>
                         <p
-                          className="text-xs sm:text-xs md:text-sm xs:text-[0.55rem] xxs:text-[0.6rem] xxxs:text-[0.5rem] xxxxs:text-[0.4rem]" // Уменьшен размер шрифта
+                          className="text-xs sm:text-xs md:text-sm xs:text-[0.55rem] xxs:text-[0.6rem] xxxs:text-[0.5rem] xxxxs:text-[0.4rem]"
                           style={{ lineHeight: '1.1' }}
                         >
                           {member.position}
@@ -219,9 +228,8 @@ const About = () => {
               ))}
             </Swiper>
             
-            {/* Кнопки навигации - обновленные стили, появление при hover на .slider-container на десктопе */}
             <button 
-              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // Убраны: opacity-0 pointer-events-none visibility-hidden invisible
+              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
               aria-label="Предыдущее фото"
             >
               <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,7 +237,7 @@ const About = () => {
               </svg>
             </button>
             <button 
-              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // Убраны: opacity-0 pointer-events-none visibility-hidden invisible
+              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
               aria-label="Следующее фото"
             >
               <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

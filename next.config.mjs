@@ -10,11 +10,11 @@ const nextConfig = {
     },
   },
 
-  // Оптимизированные заголовки безопасности и кэширования
+  // 🔒 ИСПРАВЛЕННЫЕ заголовки безопасности
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/:path*',
         headers: [
           {
             key: 'X-Frame-Options',
@@ -25,37 +25,33 @@ const nextConfig = {
             value: 'nosniff'
           },
           {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin'
+          },
+          {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload'
           },
-          // 🔒 CSP заголовки против XSS
+        ],
+      },
+      // 🔒 CSP для HTML страниц
+      {
+        source: '/:path*',
+        headers: [
           {
             key: 'Content-Security-Policy',
-            value: `
-              default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net;
-              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-              img-src 'self' data: blob: https:;
-              font-src 'self' https://fonts.gstatic.com;
-              connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru;
-              frame-src 'self' https://smartcaptcha.yandexcloud.net;
-              worker-src 'self' blob:;
-              base-uri 'self';
-              form-action 'self';
-            `.replace(/\s+/g, ' ').trim()
-          },
-          // 🔒 COOP для изоляции источников
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin'
-          },
-          {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp'
-          },
-          {
-            key: 'Cross-Origin-Resource-Policy',
-            value: 'same-origin'
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru https://yastatic.net",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https:",
+              "font-src 'self' https://fonts.gstatic.com",
+              "connect-src 'self' https://smartcaptcha.yandexcloud.net https://mc.yandex.ru",
+              "frame-src 'self' https://smartcaptcha.yandexcloud.net",
+              "worker-src 'self' blob:",
+              "base-uri 'self'",
+              "form-action 'self'"
+            ].join('; ')
           }
         ],
       },
@@ -69,11 +65,20 @@ const nextConfig = {
         ],
       },
       {
-        source: '/(.*).(jpg|jpeg|png|gif|ico|webp|avif|svg)$',
+        source: '/(.*)\\.(jpg|jpeg|png|gif|ico|webp|avif|svg)$',
         headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=86400, must-revalidate',
+          }
+        ],
+      },
+      {
+        source: '/(.*)\\.(js|css)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           }
         ],
       },
@@ -126,10 +131,10 @@ const nextConfig = {
   images: {
     domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'],
     formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2560],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
-    minimumCacheTTL: 3600,
-    dangerouslyAllowSVG: false,
+    minimumCacheTTL: 86400,
+    dangerouslyAllowSVG: true,
   },
 
   // Включение компрессии
