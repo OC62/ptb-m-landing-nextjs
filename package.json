@@ -10,24 +10,32 @@
     "optimize:images": "node scripts/optimize-images.js",
     "fix-image-sizes": "node scripts/fix-image-sizes.js",
     "optimize:all": "npm run optimize:images && npm run fix-image-sizes",
-    "build:optimized": "npm run optimize:all && npm run build",
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^6.5.1",
+    "howler": "^2.2.4",
     "next": "15.5.3",
+    "next-sitemap": "^4.2.3",
+    "nodemailer": "^7.0.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sharp": "^0.32.6"
+    "react-hook-form": "^7.62.0",
+    "swiper": "^11.0.5",
+    "yup": "^1.7.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^15.5.4",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.6.0",
     "eslint-config-next": "15.5.3",
     "postcss": "^8.5.6",
+    "sharp": "^0.32.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.9.3"
   },
