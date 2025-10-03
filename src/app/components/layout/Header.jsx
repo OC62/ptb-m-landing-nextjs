@@ -205,7 +205,7 @@ const Header = () => {
             aria-label="Перейти на главную страницу"
           >
             <Image  src="/images/preloader.png"  alt="Логотип ООО ПТБ-М"   className="h-8" />
-            <span className="header-company-name">
+            <span className="header-company-name text-gray-700">
               ООО "ПТБ-М"
             </span>
           </div>
