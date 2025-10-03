@@ -79,8 +79,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru" className="scroll-smooth">
       <head>
-        {/* Убрали все предзагрузки изображений чтобы избежать warning */}
-        
         {/* Предподключение шрифтов */}
         <link 
           rel="preconnect" 
@@ -96,8 +94,6 @@ export default function RootLayout({ children }) {
         {/* DNS prefetch для сторонних ресурсов */}
         <link rel="dns-prefetch" href="https://captcha-api.yandex.ru" />
         <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
-        <link rel="dns-prefetch" href="https://mc.yandex.ru" />
-        <link rel="dns-prefetch" href="https://yastatic.net" />
 
         <meta name="yandex-verification" content="6c8d32099a45287d" />
         <meta name="yandex-verification" content="f5bc48680f827787" />
@@ -143,7 +139,6 @@ export default function RootLayout({ children }) {
                     }
                   }
                   
-                  // Глобальная функция для колбэка загрузки
                   window.onYandexCaptchaLoad = function() {
                     console.log('Yandex Captcha loaded successfully');
                   };
@@ -158,35 +153,7 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          {/* Улучшенная Яндекс.Метрика без конфликтов */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function(m,e,t,r,i,k,a){
-                  if (document.querySelector('script[src="' + r + '"]')) return;
-                  
-                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                  m[i].l=1*new Date();
-                  k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-                  k.async=1;k.src=r;
-                  k.onload=function(){console.log('Yandex Metrika loaded')};
-                  a.parentNode.insertBefore(k,a);
-                })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-                
-                setTimeout(function() {
-                  if (typeof ym === 'function') {
-                    ym(103534344, "init", {
-                      defer: true,
-                      clickmap: true,
-                      trackLinks: true,
-                      accurateTrackBounce: true,
-                      webvisor: true
-                    });
-                  }
-                }, 1000);
-              `,
-            }}
-          />
+          {/* УБРАН Яндекс.Метрика - используем только Vercel Analytics */}
 
           <SpeedInsights />
           <Analytics />

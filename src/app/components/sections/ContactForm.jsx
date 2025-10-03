@@ -39,18 +39,18 @@ const ContactForm = () => {
     resolver: yupResolver(schema),
   });
 
-  // Безопасная отправка целей в аналитику
+  // Безопасная отправка целей
   const sendGoal = useCallback((goalName) => {
     if (typeof window !== 'undefined') {
       setTimeout(() => {
         try {
-          // Яндекс.Метрика
-          if (window.ym && typeof window.ym.reachGoal === 'function') {
-            window.ym.reachGoal(goalName);
-          }
-          // Vercel Analytics (если используется)
+          // Только Vercel Analytics
           if (window.gtag) {
             window.gtag('event', goalName);
+          }
+          // Безопасный вызов Яндекс.Метрики если она загружена безопасно
+          if (window.ym && typeof window.ym.reachGoal === 'function') {
+            window.ym.reachGoal(goalName);
           }
         } catch (e) {
           console.warn('Analytics goal error:', e);
@@ -119,7 +119,6 @@ const ContactForm = () => {
     }
 
     try {
-      console.log('Инициализируем Яндекс Капчу...');
       widgetId.current = window.smartCaptcha.render(captchaContainerRef.current, {
         sitekey: CAPTCHA_SITE_KEY,
         hl: 'ru',
@@ -183,7 +182,7 @@ const ContactForm = () => {
       if (!response.ok) throw new Error(result.message || `Ошибка ${response.status}`);
 
       if (result.status === 'success') {
-        // Отправка цели в аналитику
+        // Отправка цели
         sendGoal('FORM_SUBMIT');
 
         setSubmitSuccess(true);

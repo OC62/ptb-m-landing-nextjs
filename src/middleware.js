@@ -9,16 +9,16 @@ export function middleware(request) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
-  // Упрощенные CSP заголовки
+  // Упрощенные CSP заголовки без конфликтующих политик
   response.headers.set(
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru https://yastatic.net https://www.googletagmanager.com https://www.google-analytics.com",
+      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://yastatic.net",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://smartcaptcha.yandexcloud.net",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru wss://mc.yandex.ru https://va.vercel-scripts.com https://www.google-analytics.com",
+      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://va.vercel-scripts.com",
       "frame-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru",
       "worker-src 'self' blob:",
       "base-uri 'self'",
