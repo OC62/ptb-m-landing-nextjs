@@ -39,26 +39,6 @@ const ContactForm = () => {
     resolver: yupResolver(schema),
   });
 
-  // Безопасная отправка целей
-  const sendGoal = useCallback((goalName) => {
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        try {
-          // Только Vercel Analytics
-          if (window.gtag) {
-            window.gtag('event', goalName);
-          }
-          // Безопасный вызов Яндекс.Метрики если она загружена безопасно
-          if (window.ym && typeof window.ym.reachGoal === 'function') {
-            window.ym.reachGoal(goalName);
-          }
-        } catch (e) {
-          console.warn('Analytics goal error:', e);
-        }
-      }, 100);
-    }
-  }, []);
-
   // Безопасное управление капчей
   const reloadCaptcha = useCallback(() => {
     if (widgetId.current && window.smartCaptcha) {
@@ -182,9 +162,6 @@ const ContactForm = () => {
       if (!response.ok) throw new Error(result.message || `Ошибка ${response.status}`);
 
       if (result.status === 'success') {
-        // Отправка цели
-        sendGoal('FORM_SUBMIT');
-
         setSubmitSuccess(true);
         reset();
         setTimeout(() => setSubmitSuccess(false), 5000);

@@ -153,7 +153,7 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          {/* УБРАН Яндекс.Метрика - используем только Vercel Analytics */}
+          {/* УДАЛЕНА Яндекс.Метрика - используем только Vercel Analytics */}
 
           <SpeedInsights />
           <Analytics />

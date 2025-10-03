@@ -22,14 +22,8 @@ class ErrorBoundary extends Component {
       errorInfo: errorInfo,
     });
 
-    // Можно добавить отправку ошибки в сервис мониторинга
-    if (typeof window !== 'undefined' && window.ym) {
-      try {
-        window.ym(103534344, 'reachGoal', 'ERROR_BOUNDARY_TRIGGERED');
-      } catch (e) {
-        console.warn('Failed to send error to Yandex.Metrica:', e);
-      }
-    }
+    // УДАЛЕНО: отправка ошибки в Яндекс.Метрику
+    // Используем только console.error для логирования ошибок
   }
 
   handleReload = () => {

@@ -9,12 +9,12 @@ export function middleware(request) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
-  // Упрощенные CSP заголовки без конфликтующих политик
+  // Строгие CSP заголовки - полностью блокируем Яндекс.Метрику
   response.headers.set(
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://yastatic.net",
+      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://smartcaptcha.yandexcloud.net",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
