@@ -16,7 +16,7 @@ export default function ContactsPage() {
     <div className="min-h-screen bg-white">
       <Breadcrumbs />
       <main role="main">
-        <ContactForm />
+        <SimpleContactForm />
       </main>
     </div>
   );
