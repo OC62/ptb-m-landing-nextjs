@@ -1,5 +1,7 @@
-// nextjs/src/app/components/sections/CommunitySupport.jsx
 'use client';
+import Image from 'next/image';
+// nextjs/src/app/components/sections/CommunitySupport.jsx
+
 
 import { motion } from 'framer-motion';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
@@ -35,10 +37,7 @@ const CommunitySupport = () => {
 
       {/* Скрытый img для SEO */}
       <div className="sr-only" aria-hidden="true">
-        <img 
-          src="/images/team-football.webp" 
-          alt="Футбольная команда юных спортсменов, поддерживаемая ООО ПТБ-М" 
-        />
+        <Image  src="/images/team-football.webp"  alt="Футбольная команда юных спортсменов, поддерживаемая ООО ПТБ-М"  width={1200}  height={800} />
       </div>
 
       {/* Контент с улучшенным контрастом */}

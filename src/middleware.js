@@ -3,10 +3,7 @@ import { NextResponse } from 'next/server';
 export function middleware(request) {
   const response = NextResponse.next();
 
-  // Безопасные заголовки
-  response.headers.set('X-Frame-Options', 'DENY');
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // Безопасные заголовки (только те, что не дублируются в vercel.json)
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
   // CSP заголовки
@@ -41,7 +38,9 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
+     * - robots.txt
+     * - sitemap.xml
      */
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|yandex_.*\\.html).*)',
   ],
 };

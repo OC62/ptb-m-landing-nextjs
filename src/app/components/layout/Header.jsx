@@ -1,5 +1,7 @@
-// nextjs/src/app/components/layout/Header.jsx
 'use client';
+import Image from 'next/image';
+// nextjs/src/app/components/layout/Header.jsx
+
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -202,13 +204,7 @@ const Header = () => {
             role="button"
             aria-label="Перейти на главную страницу"
           >
-            <img
-              src="/images/preloader.png"
-              alt="Логотип ООО ПТБ-М"
-              className="h-8"
-              width={32}
-              height={32}
-            />
+            <Image  src="/images/preloader.png"  alt="Логотип ООО ПТБ-М"  width={800}  height={894} className="h-8" />
             <span className="header-company-name">
               ООО "ПТБ-М"
             </span>

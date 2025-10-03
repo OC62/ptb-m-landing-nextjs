@@ -1,5 +1,7 @@
-// nextjs/src/app/components/layout/Footer.jsx
 'use client';
+import Image from 'next/image';
+// nextjs/src/app/components/layout/Footer.jsx
+
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -143,11 +145,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <img
-                src="/images/logo.webp"
-                alt="Логотип ООО ПТБ-М"
-                className="h-8"
-              />
+              <Image  src="/images/logo.webp"  alt="Логотип ООО ПТБ-М"  width={35}  height={47} className="h-8" />
               <span className="text-2xl lg:text-base font-bold text-primary">
                 ООО "ПТБ-М"
               </span>

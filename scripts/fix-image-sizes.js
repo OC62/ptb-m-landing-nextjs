@@ -4,13 +4,16 @@ const sharp = require('sharp');
 
 // Директории для поиска компонентов
 const COMPONENT_DIRS = [
-  'src/app/components/sections',
-  'src/app/components/ui',
-  'src/app/components/layout'
+  'src/app/components',
+  'src/app/about',
+  'src/app/careers', 
+  'src/app/cases',
+  'src/app/community',
+  'src/app/contacts',
+  'src/app/licenses',
+  'src/app/partners',
+  'src/app/services'
 ];
-
-// Файлы изображений для анализа размеров
-const IMAGE_SIZES = {};
 
 async function getImageDimensions(imagePath) {
   try {
@@ -19,7 +22,7 @@ async function getImageDimensions(imagePath) {
     return { width: metadata.width, height: metadata.height };
   } catch (error) {
     console.warn(`❌ Не удалось получить размеры для ${imagePath}:`, error.message);
-    return { width: 800, height: 600 }; // fallback размеры
+    return null;
   }
 }
 
@@ -27,6 +30,10 @@ async function processComponentFile(filePath) {
   try {
     let content = await fs.promises.readFile(filePath, 'utf8');
     let modified = false;
+
+    // Проверяем, есть ли импорт Next.js Image
+    const hasImageImport = content.includes("next/image");
+    let needsImageImport = false;
 
     // Регулярное выражение для поиска компонентов Image
     const imageRegex = /<Image[^>]*src=["']([^"']+)["'][^>]*>/g;
@@ -45,31 +52,42 @@ async function processComponentFile(filePath) {
       let imagePath;
       if (src.startsWith('/')) {
         imagePath = path.join('public', src);
+      } else if (src.startsWith('.')) {
+        // Относительный путь - вычисляем от расположения компонента
+        const componentDir = path.dirname(filePath);
+        imagePath = path.join(componentDir, src);
       } else {
         imagePath = path.join('public', 'images', src);
       }
 
       if (fs.existsSync(imagePath)) {
         const dimensions = await getImageDimensions(imagePath);
-        
-        // Заменяем тег Image с добавлением width/height
-        const newTag = fullTag.replace(
-          /<Image([^>]*)>/,
-          `<Image$1 width={${dimensions.width}} height={${dimensions.height}}>`
-        );
-        
-        content = content.replace(fullTag, newTag);
-        modified = true;
-        
-        console.log(`✅ Добавлены размеры для ${path.basename(src)}: ${dimensions.width}x${dimensions.height}`);
+        if (dimensions) {
+          // Заменяем тег Image с добавлением width/height
+          const newTag = `<Image
+            src="${src}"
+            width={${dimensions.width}}
+            height={${dimensions.height}}
+            ${fullTag.includes('alt=') ? '' : 'alt="Изображение"'}
+            ${fullTag.match(/className=["']([^"']*)["']/)?.[0] || ''}
+            ${fullTag.includes('priority') ? 'priority' : ''}
+          />`.replace(/\n\s+/g, ' ');
+          
+          content = content.replace(fullTag, newTag);
+          modified = true;
+          
+          console.log(`✅ Добавлены размеры для ${path.basename(src)}: ${dimensions.width}x${dimensions.height}`);
+        }
       } else {
         console.warn(`⚠️  Изображение не найдено: ${imagePath}`);
       }
     }
 
-    // Заменяем обычные img на Image компоненты
+    // Заменяем обычные img на Image компоненты (только если безопасно)
     const imgRegex = /<img[^>]*src=["']([^"']+)["'][^>]*>/g;
-    while ((match = imgRegex.exec(content)) !== null) {
+    const imgMatches = [...content.matchAll(imgRegex)];
+    
+    for (const match of imgMatches) {
       const fullTag = match[0];
       const src = match[1];
       
@@ -79,24 +97,42 @@ async function processComponentFile(filePath) {
       let imagePath;
       if (src.startsWith('/')) {
         imagePath = path.join('public', src);
+      } else if (src.startsWith('.')) {
+        const componentDir = path.dirname(filePath);
+        imagePath = path.join(componentDir, src);
       } else {
         imagePath = path.join('public', 'images', src);
       }
 
       if (fs.existsSync(imagePath)) {
         const dimensions = await getImageDimensions(imagePath);
-        const altMatch = fullTag.match(/alt=["']([^"']*)["']/);
-        const alt = altMatch ? altMatch[1] : 'Изображение';
-        const classNameMatch = fullTag.match(/class(Name)?=["']([^"']*)["']/);
-        const className = classNameMatch ? classNameMatch[2] : '';
-        
-        const newTag = `<Image src="${src}" alt="${alt}" width={${dimensions.width}} height={${dimensions.height}} className="${className}" />`;
-        
-        content = content.replace(fullTag, newTag);
-        modified = true;
-        
-        console.log(`✅ Заменен img на Image: ${path.basename(src)}`);
+        if (dimensions) {
+          const altMatch = fullTag.match(/alt=["']([^"']*)["']/);
+          const alt = altMatch ? altMatch[1] : 'Изображение';
+          const classNameMatch = fullTag.match(/class(Name)?=["']([^"']*)["']/);
+          const className = classNameMatch ? classNameMatch[2] : '';
+          
+          const newTag = `<Image 
+            src="${src}" 
+            alt="${alt}" 
+            width={${dimensions.width}} 
+            height={${dimensions.height}}
+            ${className ? `className="${className}"` : ''}
+          />`.replace(/\n\s+/g, ' ');
+          
+          content = content.replace(fullTag, newTag);
+          modified = true;
+          needsImageImport = true;
+          
+          console.log(`✅ Заменен img на Image: ${path.basename(src)}`);
+        }
       }
+    }
+
+    // Добавляем импорт если нужен
+    if (needsImageImport && !hasImageImport) {
+      content = `import Image from 'next/image';\n${content}`;
+      console.log(`✅ Добавлен импорт Image в: ${filePath}`);
     }
 
     if (modified) {
@@ -142,10 +178,11 @@ async function main() {
     if (fs.existsSync(dir)) {
       const components = await findAllComponents(dir);
       allComponents.push(...components);
+      console.log(`📁 ${dir}: ${components.length} файлов`);
     }
   }
   
-  console.log(`📁 Найдено компонентов: ${allComponents.length}\n`);
+  console.log(`\n📁 Всего найдено компонентов: ${allComponents.length}\n`);
   
   let modifiedCount = 0;
   
@@ -158,14 +195,14 @@ async function main() {
   console.log('═'.repeat(50));
   console.log(`✅ Обновлено файлов: ${modifiedCount}`);
   console.log(`📁 Всего обработано: ${allComponents.length}`);
-  console.log('🎯 Ожидаемое улучшение Lighthouse: +15-20 баллов');
+  console.log('🎯 Ожидаемое улучшение Lighthouse: +10-15 баллов');
   console.log('═'.repeat(50));
   
   if (modifiedCount > 0) {
     console.log('\n💡 ДАЛЬНЕЙШИЕ ДЕЙСТВИЯ:');
-    console.log('1. Проверьте обновленные файлы');
-    console.log('2. Добавьте import Image from "next/image" в файлы где его нет');
-    console.log('3. Запустите сборку: npm run build');
+    console.log('1. Проверьте обновленные файлы в git');
+    console.log('2. Запустите сборку: npm run build');
+    console.log('3. Исправьте ошибки если есть');
   }
 }
 
