@@ -122,5 +122,4 @@ const Hero = ({ onLoadComplete }) => {
     </section>
   );
 };
-
 export default Hero;
