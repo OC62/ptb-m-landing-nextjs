@@ -17,7 +17,7 @@ const Careers = dynamic(() => import('@/app/components/sections/Careers'));
 const Licenses = dynamic(() => import('@/app/components/sections/Licenses'));
 const Partners = dynamic(() => import('@/app/components/sections/Partners'));
 const CommunitySupport = dynamic(() => import('@/app/components/sections/CommunitySupport'));
-const SimpleContactForm = dynamic(() => import('@/app/components/sections/SimpleContactForm'));
+const ContactForm = dynamic(() => import('@/app/components/sections/ContactForm'));
 
 // Простой fallback для секций
 const SectionFallback = () => (
@@ -78,7 +78,7 @@ export default function HomePageContent() {
               <CommunitySupport />
             </Suspense>
             <Suspense fallback={<SectionFallback />}>
-              <SimpleContactForm />
+              <ContactForm />
             </Suspense>
           </>
         )}

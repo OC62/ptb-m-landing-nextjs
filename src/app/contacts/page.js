@@ -1,5 +1,5 @@
 // src/app/contacts/page.js
-import SimpleContactForm from '@/components/sections/SimpleContactForm';
+import ContactForm from '@/components/sections/ContactForm';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
@@ -16,7 +16,7 @@ export default function ContactsPage() {
     <div className="min-h-screen bg-white">
       <Breadcrumbs />
       <main role="main">
-        <SimpleContactForm />
+        <ContactForm />
       </main>
     </div>
   );
