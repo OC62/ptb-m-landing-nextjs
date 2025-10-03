@@ -1,20 +1,19 @@
-// nextjs/src/app/components/sections/CasesSlider.jsx
 "use client";
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation, Keyboard, A11y } from 'swiper/modules';
+import { Autoplay, Keyboard, A11y } from 'swiper/modules';
 import Image from 'next/image';
 
 import 'swiper/css';
 import 'swiper/css/autoplay';
-import 'swiper/css/navigation';
 import 'swiper/css/a11y';
 
 const CasesSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoplayPaused, setIsAutoplayPaused] = useState(false);
   const sliderRef = useRef(null);
+  const isMounted = useRef(true);
 
   const cases = [
     {
@@ -44,15 +43,29 @@ const CasesSlider = () => {
   ];
 
   const handleSlideChange = useCallback((swiper) => {
-    setCurrentSlide(swiper.realIndex);
+    if (isMounted.current) {
+      setCurrentSlide(swiper.realIndex);
+    }
   }, []);
 
   const handleAutoplayPause = useCallback(() => {
-    setIsAutoplayPaused(true);
+    if (isMounted.current) {
+      setIsAutoplayPaused(true);
+    }
   }, []);
 
   const handleAutoplayResume = useCallback(() => {
-    setIsAutoplayPaused(false);
+    if (isMounted.current) {
+      setIsAutoplayPaused(false);
+    }
+  }, []);
+
+  // Безопасное управление состоянием
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
   }, []);
 
   return (
@@ -73,9 +86,8 @@ const CasesSlider = () => {
           </p>
         </div>
 
-        {/* Контейнер для слайдера с индикаторами */}
         <div 
-          className="max-w-6xl mx-auto bg-gray-800 rounded-xl overflow-hidden relative group" // Добавлен класс group и relative
+          className="max-w-6xl mx-auto bg-gray-800 rounded-xl overflow-hidden relative group"
           onMouseEnter={handleAutoplayPause}
           onMouseLeave={handleAutoplayResume}
           onFocus={handleAutoplayPause}
@@ -83,7 +95,7 @@ const CasesSlider = () => {
         >
           <Swiper
             ref={sliderRef}
-            modules={[Autoplay, Navigation, Keyboard, A11y]} // Navigation оставлен, но кнопки не подключены
+            modules={[Autoplay, Keyboard, A11y]}
             spaceBetween={0}
             slidesPerView={1}
             loop={true}
@@ -92,10 +104,6 @@ const CasesSlider = () => {
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             }}
-            // navigation={{ // <-- Закомментирован/удалён блок navigation
-            //   nextEl: '.cases-swiper-next', // Указываем селекторы кнопок
-            //   prevEl: '.cases-swiper-prev',
-            // }}
             keyboard={{
               enabled: true,
               onlyInViewport: true,
@@ -147,8 +155,6 @@ const CasesSlider = () => {
             ))}
           </Swiper>
 
-          {/* <!-- Навигационные кнопки УДАЛЕНЫ --> */}
-
           {/* Индикаторы прогресса */}
           <div className="flex justify-center mt-4 pb-6" role="tablist" aria-label="Выбор слайда">
             {cases.map((_, index) => (
@@ -169,7 +175,6 @@ const CasesSlider = () => {
             ))}
           </div>
 
-          {/* Индикатор автовоспроизведения */}
           <div className="text-center pb-2">
             <span className="text-xs text-gray-400">
               {isAutoplayPaused ? 'Наведите курсор для продолжения' : 'Автовоспроизведение включено'}
