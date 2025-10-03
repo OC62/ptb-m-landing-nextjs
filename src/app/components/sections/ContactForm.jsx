@@ -15,8 +15,9 @@ const schema = yup
   .required();
 
 const BACKEND_ENDPOINT = '/api/send';
-const CAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SITE_KEY;
-const IS_CAPTCHA_DISABLED_FOR_DEV = process.env.NEXT_PUBLIC_DISABLE_CAPTCHA_FOR_LOCAL_DEV === 'true';
+// Используем хардкодированный ключ для тестирования, замените на ваш реальный
+const CAPTCHA_SITE_KEY = 'ysc1_681R2JVIY5o2ATwA42ZLkMeQdsQFKMu1eVaFX7Zm00b26bf0';
+const IS_CAPTCHA_DISABLED_FOR_DEV = false; // Включите капчу для продакшена
 const YANDEX_METRIKA_COUNTER = 103534344;
 
 const ContactForm = () => {
@@ -25,6 +26,7 @@ const ContactForm = () => {
   const [submitError, setSubmitError] = useState('');
   const [captchaToken, setCaptchaToken] = useState('');
   const [captchaError, setCaptchaError] = useState('');
+  const [captchaLoaded, setCaptchaLoaded] = useState(false);
   const [formWorker, setFormWorker] = useState(null);
   const captchaContainerRef = useRef(null);
   const widgetId = useRef(null);
@@ -95,90 +97,94 @@ const ContactForm = () => {
     widgetId.current = null;
     setCaptchaToken('');
     setCaptchaError('');
+    setCaptchaLoaded(false);
   }, []);
 
   const initializeCaptcha = useCallback(() => {
-    if (IS_CAPTCHA_DISABLED_FOR_DEV) return;
+    if (IS_CAPTCHA_DISABLED_FOR_DEV) {
+      setCaptchaLoaded(true);
+      return;
+    }
 
     if (!captchaContainerRef.current) {
+      console.log('Контейнер капчи еще не готов');
       setTimeout(initializeCaptcha, 100);
       return;
     }
 
     if (!window.smartCaptcha) {
-      setCaptchaError('Скрипт капчи не загрузился');
+      console.log('SmartCaptcha еще не загружен, ждем...');
+      setCaptchaError('Капча загружается...');
+      
+      // Ждем загрузки smartCaptcha
+      const checkCaptcha = setInterval(() => {
+        if (window.smartCaptcha) {
+          clearInterval(checkCaptcha);
+          initializeCaptcha();
+        }
+      }, 100);
+
+      // Таймаут через 10 секунд
+      setTimeout(() => {
+        clearInterval(checkCaptcha);
+        if (!window.smartCaptcha) {
+          setCaptchaError('Не удалось загрузить капчу. Обновите страницу.');
+        }
+      }, 10000);
+      
       return;
     }
 
     if (!CAPTCHA_SITE_KEY) {
-      setCaptchaError('Ключ sitekey не задан');
+      setCaptchaError('Ключ капчи не настроен');
       return;
     }
 
     reloadCaptcha();
 
     try {
+      console.log('Инициализируем Яндекс Капчу...');
       widgetId.current = window.smartCaptcha.render(captchaContainerRef.current, {
         sitekey: CAPTCHA_SITE_KEY,
         hl: 'ru',
         callback: (token) => {
+          console.log('Капча пройдена, токен:', token);
           setCaptchaToken(token);
           setCaptchaError('');
+          setCaptchaLoaded(true);
         },
         'error-callback': (error) => {
           console.error('Yandex SmartCaptcha error:', error);
           setCaptchaError('Ошибка капчи. Попробуйте ещё раз.');
+          setCaptchaLoaded(false);
         },
       });
+      setCaptchaLoaded(true);
+      console.log('Капча инициализирована с ID:', widgetId.current);
     } catch (error) {
       console.error('Ошибка инициализации капчи:', error);
       setCaptchaError('Не удалось загрузить капчу');
+      setCaptchaLoaded(false);
     }
   }, [reloadCaptcha]);
 
+  // Инициализация капчи при монтировании компонента
   useEffect(() => {
-    if (IS_CAPTCHA_DISABLED_FOR_DEV) return;
-
-    let attempts = 0;
-    const maxAttempts = 15;
-
-    const init = () => {
-      if (captchaContainerRef.current) {
-        if (window.smartCaptcha) {
-          initializeCaptcha();
-        } else {
-          const onReady = () => {
-            window.removeEventListener('smartcaptcha-ready', onReady);
-            initializeCaptcha();
-          };
-          window.addEventListener('smartcaptcha-ready', onReady);
-
-          const interval = setInterval(() => {
-            if (window.smartCaptcha || attempts >= maxAttempts) {
-              clearInterval(interval);
-              if (window.smartCaptcha) initializeCaptcha();
-              else setCaptchaError('Не удалось загрузить скрипт капчи');
-            }
-            attempts++;
-          }, 100);
-        }
-      } else if (attempts < maxAttempts) {
-        attempts++;
-        setTimeout(init, 100);
-      } else {
-        setCaptchaError('Контейнер капчи не найден');
-      }
-    };
-
-    init();
+    initializeCaptcha();
 
     return () => {
       if (!IS_CAPTCHA_DISABLED_FOR_DEV) {
-        window.removeEventListener('smartcaptcha-ready', initializeCaptcha);
         reloadCaptcha();
       }
     };
   }, [initializeCaptcha, reloadCaptcha]);
+
+  // Также переинициализируем капчу если контейнер изменился
+  useEffect(() => {
+    if (captchaContainerRef.current) {
+      initializeCaptcha();
+    }
+  }, [captchaContainerRef.current]);
 
   const sendFormData = async (formData) => {
     try {
@@ -211,7 +217,7 @@ const ContactForm = () => {
 
         if (!IS_CAPTCHA_DISABLED_FOR_DEV) {
           reloadCaptcha();
-          setTimeout(initializeCaptcha, 150);
+          setTimeout(initializeCaptcha, 500);
         }
 
         return true;
@@ -257,7 +263,7 @@ const ContactForm = () => {
     }
 
     if (!IS_CAPTCHA_DISABLED_FOR_DEV) processedData.smartcaptcha_token = captchaToken;
-    else processedData.smartcaptcha_token = '';
+    else processedData.smartcaptcha_token = 'test_token_disabled';
 
     await sendFormData(processedData);
     setIsSubmitting(false);
@@ -398,11 +404,17 @@ const ContactForm = () => {
                   <div className="mt-4 w-full">
                     <div
                       ref={captchaContainerRef}
-                      className="captcha-container w-full h-20 relative bg-transparent flex items-center justify-center"
+                      className="captcha-container w-full h-20 relative bg-transparent flex items-center justify-center border border-gray-300 rounded-lg"
                       style={{ minHeight: '80px' }}
                       role="region"
                       aria-label="Проверка: я не робот"
-                    ></div>
+                    >
+                      {!captchaLoaded && !captchaError && (
+                        <div className="text-gray-500 text-sm">
+                          Загрузка капчи...
+                        </div>
+                      )}
+                    </div>
                     {captchaError && (
                       <div className="mt-2 text-center">
                         <p className="text-red-500 text-sm mb-2" role="alert">
@@ -410,7 +422,10 @@ const ContactForm = () => {
                         </p>
                         <button
                           type="button"
-                          onClick={() => { reloadCaptcha(); setTimeout(initializeCaptcha, 150); }}
+                          onClick={() => { 
+                            reloadCaptcha(); 
+                            setTimeout(initializeCaptcha, 500); 
+                          }}
                           className="text-blue-500 text-sm underline hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                         >
                           Обновить капчу
