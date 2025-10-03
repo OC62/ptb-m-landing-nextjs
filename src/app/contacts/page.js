@@ -1,5 +1,5 @@
 // src/app/contacts/page.js
-import ContactForm from '@/components/sections/ContactForm';
+import SimpleContactForm from '@/components/sections/SimpleContactForm';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
