@@ -1,51 +1,32 @@
-// src/app/not-found.js
 import Link from 'next/link';
-import Header from '@/app/components/layout/Header';
-import Footer from '@/app/components/layout/Footer';
 
 export default function NotFound() {
   return (
-    <>
-      <Header />
-      <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 p-4">
-        <div className="max-w-2xl w-full text-center">
-          {/* Иконка 404 */}
-          <div className="mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400">
-              <span className="text-5xl font-bold">4</span>
-              <span className="text-5xl font-bold mx-2">0</span>
-              <span className="text-5xl font-bold">4</span>
-            </div>
-          </div>
-
-          {/* Заголовок */}
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 text-center">
+        <div>
+          <h1 className="text-9xl font-bold text-gray-900">404</h1>
+          <h2 className="mt-6 text-3xl font-bold text-gray-900">
             Страница не найдена
-          </h1>
-
-          {/* Описание */}
-          <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
-            Извините, запрашиваемая вами страница не существует или была перемещена.
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Извините, мы не смогли найти страницу, которую вы ищете.
           </p>
-
-          {/* Кнопки навигации */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="/" 
-              className="btn-primary inline-block"
-            >
-              На главную
-            </Link>
-            <Link 
-              href="/contacts" 
-              className="btn-secondary inline-block"
-            >
-              Контакты
-            </Link>
-          </div>
         </div>
-      </main>
-      <Footer />
-    </>
+        <div className="mt-5">
+          <Link
+            href="/"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          >
+            Вернуться на главную
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
+
+export const metadata = {
+  title: 'Страница не найдена | ООО "ПТБ-М"',
+  description: 'Страница не найдена - ООО ПТБ-М',
+};

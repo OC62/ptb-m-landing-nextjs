@@ -13,12 +13,8 @@ const nextConfig = {
       exclude: ['error', 'warn'],
     } : false,
   },
-  experimental: {
-    optimizeCss: true,
-  },
-  // Добавляем настройки для предотвращения конфликтов
+  // Убрана проблемная экспериментальная опция optimizeCss
   webpack: (config, { dev, isServer }) => {
-    // Убираем конфликтующие плагины
     config.resolve.fallback = {
       ...config.resolve.fallback,
       fs: false,

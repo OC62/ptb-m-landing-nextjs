@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/next';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
 import CookieBanner from '@/app/components/layout/CookieBanner';
+import ErrorBoundary from '@/app/components/ui/ErrorBoundary';
 
 const inter = Inter({ 
   subsets: ['latin', 'cyrillic'],
@@ -119,75 +120,77 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <div className="main-content">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <CookieBanner />
-        </div>
+        <ErrorBoundary>
+          <div className="main-content">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <CookieBanner />
+          </div>
 
-        {/* Улучшенная загрузка Яндекс Капчи */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                function loadCaptcha() {
-                  if (typeof window !== 'undefined' && !window.smartCaptcha) {
-                    var script = document.createElement('script');
-                    script.src = 'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=onYandexCaptchaLoad';
-                    script.async = true;
-                    script.defer = true;
-                    document.head.appendChild(script);
+          {/* Улучшенная загрузка Яндекс Капчи */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  function loadCaptcha() {
+                    if (typeof window !== 'undefined' && !window.smartCaptcha) {
+                      var script = document.createElement('script');
+                      script.src = 'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=onYandexCaptchaLoad';
+                      script.async = true;
+                      script.defer = true;
+                      document.head.appendChild(script);
+                    }
                   }
-                }
-                
-                // Глобальная функция для колбэка загрузки
-                window.onYandexCaptchaLoad = function() {
-                  console.log('Yandex Captcha loaded successfully');
-                };
-                
-                if (document.readyState === 'loading') {
-                  document.addEventListener('DOMContentLoaded', loadCaptcha);
-                } else {
-                  loadCaptcha();
-                }
-              })();
-            `,
-          }}
-        />
+                  
+                  // Глобальная функция для колбэка загрузки
+                  window.onYandexCaptchaLoad = function() {
+                    console.log('Yandex Captcha loaded successfully');
+                  };
+                  
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', loadCaptcha);
+                  } else {
+                    loadCaptcha();
+                  }
+                })();
+              `,
+            }}
+          />
 
-        {/* Улучшенная Яндекс.Метрика без конфликтов */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(m,e,t,r,i,k,a){
-                if (document.querySelector('script[src="' + r + '"]')) return;
+          {/* Улучшенная Яндекс.Метрика без конфликтов */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(m,e,t,r,i,k,a){
+                  if (document.querySelector('script[src="' + r + '"]')) return;
+                  
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  k=e.createElement(t),a=e.getElementsByTagName(t)[0];
+                  k.async=1;k.src=r;
+                  k.onload=function(){console.log('Yandex Metrika loaded')};
+                  a.parentNode.insertBefore(k,a);
+                })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
                 
-                m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                m[i].l=1*new Date();
-                k=e.createElement(t),a=e.getElementsByTagName(t)[0];
-                k.async=1;k.src=r;
-                k.onload=function(){console.log('Yandex Metrika loaded')};
-                a.parentNode.insertBefore(k,a);
-              })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-              
-              setTimeout(function() {
-                if (typeof ym === 'function') {
-                  ym(103534344, "init", {
-                    defer: true,
-                    clickmap: true,
-                    trackLinks: true,
-                    accurateTrackBounce: true,
-                    webvisor: true
-                  });
-                }
-              }, 1000);
-            `,
-          }}
-        />
+                setTimeout(function() {
+                  if (typeof ym === 'function') {
+                    ym(103534344, "init", {
+                      defer: true,
+                      clickmap: true,
+                      trackLinks: true,
+                      accurateTrackBounce: true,
+                      webvisor: true
+                    });
+                  }
+                }, 1000);
+              `,
+            }}
+          />
 
-        <SpeedInsights />
-        <Analytics />
+          <SpeedInsights />
+          <Analytics />
+        </ErrorBoundary>
       </body>
     </html>
   );
