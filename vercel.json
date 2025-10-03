@@ -2,7 +2,6 @@
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
   
@@ -36,39 +35,14 @@
     }
   ],
   
-  "routes": [
+  "redirects": [
     {
-      "src": "/robots.txt",
-      "dest": "/robots.txt",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
+      "source": "/yandex_6c8d32099a45287d.html",
+      "destination": "/yandex_6c8d32099a45287d.html"
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "/sitemap.xml",
-      "headers": {
-        "Cache-Control": "public, max-age=3600",
-        "Content-Type": "application/xml"
-      }
-    },
-    {
-      "src": "/yandex_6c8d32099a45287d.html",
-      "dest": "/yandex_6c8d32099a45287d.html",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
-    },
-    {
-      "src": "/yandex_f5bc48680f827787.html",
-      "dest": "/yandex_f5bc48680f827787.html",
-      "headers": {
-        "Cache-Control": "public, max-age=3600"
-      }
+      "source": "/yandex_f5bc48680f827787.html",
+      "destination": "/yandex_f5bc48680f827787.html"
     }
-  ],
-  
-  "env": {
-    "NEXT_PUBLIC_SITE_URL": "https://www.xn----9sb8ajp.xn--p1ai"
-  }
+  ]
 }
