@@ -78,19 +78,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru" className="scroll-smooth">
       <head>
-        {/* Критические предзагрузки */}
+        {/* Критические предзагрузки - УБРАЛИ logo.webp чтобы избежать warning */}
         <link 
           rel="preload" 
           href="/images/bg_Hero.webp" 
           as="image" 
           type="image/webp"
           media="(min-width: 768px)"
-        />
-        <link 
-          rel="preload" 
-          href="/images/logo.webp" 
-          as="image" 
-          type="image/webp"
         />
         
         {/* Предподключение шрифтов */}

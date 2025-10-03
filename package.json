@@ -12,6 +12,7 @@
     "optimize:all": "npm run optimize:images && npm run fix-image-sizes"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^6.5.1",
@@ -19,7 +20,9 @@
     "nodemailer": "^7.0.6",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "swiper": "^11.0.5"
+    "react-hook-form": "^7.63.0",
+    "swiper": "^11.0.5",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.21",
