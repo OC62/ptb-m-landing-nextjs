@@ -17,7 +17,6 @@ const schema = yup
 const BACKEND_ENDPOINT = '/api/send';
 const CAPTCHA_SITE_KEY = 'ysc1_681R2JVIY5o2ATwA42ZLkMeQdsQFKMu1eVaFX7Zm00b26bf0';
 const IS_CAPTCHA_DISABLED_FOR_DEV = false;
-const YANDEX_METRIKA_COUNTER = 103534344;
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -39,6 +38,26 @@ const ContactForm = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  // Безопасная отправка целей в аналитику
+  const sendGoal = useCallback((goalName) => {
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        try {
+          // Яндекс.Метрика
+          if (window.ym && typeof window.ym.reachGoal === 'function') {
+            window.ym.reachGoal(goalName);
+          }
+          // Vercel Analytics (если используется)
+          if (window.gtag) {
+            window.gtag('event', goalName);
+          }
+        } catch (e) {
+          console.warn('Analytics goal error:', e);
+        }
+      }, 100);
+    }
+  }, []);
 
   // Безопасное управление капчей
   const reloadCaptcha = useCallback(() => {
@@ -164,21 +183,8 @@ const ContactForm = () => {
       if (!response.ok) throw new Error(result.message || `Ошибка ${response.status}`);
 
       if (result.status === 'success') {
-        // Отправка цели в Яндекс.Метрику безопасным способом
-        if (window.ym) {
-          try { 
-            // Используем безопасный вызов без переопределения DOM методов
-            setTimeout(() => {
-              try {
-                window.ym(YANDEX_METRIKA_COUNTER, 'reachGoal', 'FORM_SUBMIT');
-              } catch (e) {
-                console.warn('Yandex Metrika goal error (safe):', e);
-              }
-            }, 100);
-          } catch (e) {
-            console.warn('Yandex Metrika goal error:', e);
-          }
-        }
+        // Отправка цели в аналитику
+        sendGoal('FORM_SUBMIT');
 
         setSubmitSuccess(true);
         reset();
