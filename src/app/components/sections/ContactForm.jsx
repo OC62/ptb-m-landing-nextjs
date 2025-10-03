@@ -26,7 +26,6 @@ const ContactForm = () => {
   const [captchaToken, setCaptchaToken] = useState('');
   const [captchaError, setCaptchaError] = useState('');
   const [captchaLoaded, setCaptchaLoaded] = useState(false);
-  const [formWorker, setFormWorker] = useState(null);
   
   const captchaContainerRef = useRef(null);
   const widgetId = useRef(null);
@@ -37,37 +36,9 @@ const ContactForm = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  // Инициализация Web Worker
-  useEffect(() => {
-    if (typeof window !== 'undefined' && window.Worker) {
-      const worker = new Worker('/form-worker.js');
-      setFormWorker(worker);
-
-      return () => {
-        worker.terminate();
-      };
-    }
-  }, []);
-
-  // Валидация через Web Worker
-  useEffect(() => {
-    const email = watch('email');
-    if (email && formWorker) {
-      formWorker.postMessage({ type: 'VALIDATE_EMAIL', data: { email } });
-    }
-  }, [watch('email'), formWorker]);
-
-  useEffect(() => {
-    const phone = watch('phone');
-    if (phone && formWorker) {
-      formWorker.postMessage({ type: 'VALIDATE_PHONE', data: { phone } });
-    }
-  }, [watch('phone'), formWorker]);
 
   // Безопасное управление капчей
   const reloadCaptcha = useCallback(() => {
@@ -193,9 +164,17 @@ const ContactForm = () => {
       if (!response.ok) throw new Error(result.message || `Ошибка ${response.status}`);
 
       if (result.status === 'success') {
+        // Отправка цели в Яндекс.Метрику безопасным способом
         if (window.ym) {
           try { 
-            window.ym(YANDEX_METRIKA_COUNTER, 'reachGoal', 'FORM_SUBMIT'); 
+            // Используем безопасный вызов без переопределения DOM методов
+            setTimeout(() => {
+              try {
+                window.ym(YANDEX_METRIKA_COUNTER, 'reachGoal', 'FORM_SUBMIT');
+              } catch (e) {
+                console.warn('Yandex Metrika goal error (safe):', e);
+              }
+            }, 100);
           } catch (e) {
             console.warn('Yandex Metrika goal error:', e);
           }
@@ -232,24 +211,7 @@ const ContactForm = () => {
       return;
     }
 
-    let processedData = { ...data };
-    if (formWorker) {
-      try {
-        const processedMessage = await new Promise((resolve) => {
-          const messageHandler = (e) => {
-            if (e.data.type === 'MESSAGE_PROCESSED') {
-              formWorker.removeEventListener('message', messageHandler);
-              resolve(e.data.processedMessage);
-            }
-          };
-          formWorker.addEventListener('message', messageHandler);
-          formWorker.postMessage({ type: 'PROCESS_MESSAGE', data: { message: data.message } });
-        });
-        processedData.message = processedMessage;
-      } catch (error) {
-        console.warn('Web Worker error, using original message:', error);
-      }
-    }
+    const processedData = { ...data };
 
     if (!IS_CAPTCHA_DISABLED_FOR_DEV) processedData.smartcaptcha_token = captchaToken;
     else processedData.smartcaptcha_token = 'test_token_disabled';

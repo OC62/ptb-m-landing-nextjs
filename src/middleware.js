@@ -9,7 +9,7 @@ export function middleware(request) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
-  // Улучшенные CSP заголовки
+  // Улучшенные CSP заголовки с разрешением для WebSocket Яндекс.Метрики
   response.headers.set(
     'Content-Security-Policy',
     [
@@ -18,7 +18,7 @@ export function middleware(request) {
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://smartcaptcha.yandexcloud.net",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru https://va.vercel-scripts.com",
+      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru wss://mc.yandex.ru https://va.vercel-scripts.com",
       "frame-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru",
       "worker-src 'self' blob:",
       "base-uri 'self'",
