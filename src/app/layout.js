@@ -15,105 +15,18 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: {
-    default: 'ПТБ-М - Профессиональные решения в области предоставления услуг в сфере транспортной безопасности',
-    template: `%s | ООО "ПТБ-М"`
-  },
-  description: 'Компания ПТБ-М - лидер в области предоставления услуг в сфере транспортной безопасности. Профессиональный подход, надежность и качество.',
-  keywords: 'Защита объектов транспортной инфраструктуры, аудит, обучение, ПТБ-М',
-  authors: [{ name: 'ООО "ПТБ-М"' }],
-  robots: 'index, follow, max-image-preview:large',
-  verification: {
-    yandex: '6c8d32099a45287d',
-  },
-  openGraph: {
-    title: 'ПТБ-М - Профессиональные решения в области предоставления услуг в сфере транспортной безопасности',
-    description: 'Компания ПТБ-М - лидер в области предоставления услуг в сфере транспортной безопасности',
-    url: 'https://www.xn----9sb8ajp.xn--p1ai',
-    siteName: 'ООО "ПТБ-М"',
-    images: [
-      {
-        url: '/images/og-preview.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'ООО ПТБ-М - Профессиональные решения в области предоставления услуг в сфере транспортной безопасности',
-      },
-    ],
-    locale: 'ru_RU',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ПТБ-М - Профессиональные решения в области предоставления услуг в сфере транспортной безопасности',
-    description: 'Компания ПТБ-М - лидер в области предоставления услуг в сфере транспортной безопасности',
-    images: ['/images/og-preview.jpg'],
-  },
+  // ... остальная metadata без изменений
 };
 
-// Функция для генерации структурированных данных
 function generateSchemaJSONLD() {
-  return JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "ООО ПТБ-М",
-    "description": "Комплексное обеспечение транспортной безопасности для объектов дорожного хозяйства",
-    "url": "https://www.xn----9sb8ajp.xn--p1ai",
-    "logo": "https://www.xn----9sb8ajp.xn--p1ai/images/logo.webp",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "ул. Большая Садовая, 102",
-      "addressLocality": "Ростов-на-Дону",
-      "postalCode": "344019",
-      "addressCountry": "RU"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+7-909-407-23-74",
-      "contactType": "customer service",
-      "email": "dtsm.rnd@gmail.com"
-    }
-  });
+  // ... без изменений
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className="scroll-smooth">
       <head>
-        {/* Предподключение шрифтов */}
-        <link 
-          rel="preconnect" 
-          href="https://fonts.googleapis.com" 
-          crossOrigin="anonymous"
-        />
-        <link 
-          rel="preconnect" 
-          href="https://fonts.gstatic.com" 
-          crossOrigin="anonymous"
-        />
-        
-        {/* DNS prefetch для сторонних ресурсов */}
-        <link rel="dns-prefetch" href="https://captcha-api.yandex.ru" />
-        <link rel="dns-prefetch" href="https://smartcaptcha.yandexcloud.net" />
-
-        <meta name="yandex-verification" content="6c8d32099a45287d" />
-        <meta name="yandex-verification" content="f5bc48680f827787" />
-        <meta name="google" content="notranslate" />
-        
-        {/* Favicon */}
-        <link rel="icon" type="image/webp" href="/images/logo.webp" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#3b82f6" />
-
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: generateSchemaJSONLD(),
-          }}
-        />
+        {/* ... head без изменений */}
       </head>
       <body className={`${inter.className} antialiased`}>
         <ErrorBoundary>
@@ -124,7 +37,7 @@ export default function RootLayout({ children }) {
             <CookieBanner />
           </div>
 
-          {/* Улучшенная загрузка Яндекс Капчи */}
+          {/* Улучшенная загрузка Яндекс Капчи (оставьте на будущее) */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -153,7 +66,47 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          {/* УДАЛЕНА Яндекс.Метрика - используем только Vercel Analytics */}
+          {/* Безопасная версия Яндекс.Метрики */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(m,e,t,r,i,k,a){
+                  // Проверяем, не загружен ли уже скрипт
+                  if (document.querySelector('script[src="' + r + '"]')) return;
+                  
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  
+                  // Создаем и настраиваем script элемент
+                  k=e.createElement(t);
+                  a=e.getElementsByTagName(t)[0];
+                  k.async=1;
+                  k.src=r;
+                  k.onload=function(){
+                    console.log('Yandex Metrika loaded successfully');
+                    
+                    // Инициализируем счетчик после загрузки
+                    setTimeout(function() {
+                      if (typeof ym === 'function') {
+                        ym(103534344, "init", {
+                          defer: true,
+                          clickmap: true,
+                          trackLinks: true,
+                          accurateTrackBounce: true,
+                          webvisor: true,
+                          // Отключаем опасные функции, которые могут конфликтовать с React
+                          trackForms: false, // Отключаем отслеживание форм чтобы избежать конфликтов
+                          triggerEvent: false
+                        });
+                      }
+                    }, 500);
+                  };
+                  
+                  a.parentNode.insertBefore(k,a);
+                })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+              `,
+            }}
+          />
 
           <SpeedInsights />
           <Analytics />

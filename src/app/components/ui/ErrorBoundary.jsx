@@ -1,109 +1,117 @@
-'use client';
-import { Component } from 'react';
+import './globals.css';
+import { Inter } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/next';
 
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      hasError: false, 
-      error: null, 
-      errorInfo: null,
-      showDetails: false 
-    };
-  }
+// Импорты с использованием алиасов из jsconfig.json
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import CookieBanner from '@/components/layout/CookieBanner';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 
-  static getDerivedStateFromError(error) {
-    return { hasError: true, error };
-  }
+const inter = Inter({ 
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+});
 
-  componentDidCatch(error, errorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
-    this.setState({
-      errorInfo: errorInfo,
-    });
+export const metadata = {
+  // ... остальная metadata без изменений
+};
 
-    // УДАЛЕНО: отправка ошибки в Яндекс.Метрику
-    // Используем только console.error для логирования ошибок
-  }
-
-  handleReload = () => {
-    window.location.reload();
-  };
-
-  handleGoHome = () => {
-    window.location.href = '/';
-  };
-
-  toggleDetails = () => {
-    this.setState(prevState => ({ showDetails: !prevState.showDetails }));
-  };
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div 
-          className="min-h-screen flex items-center justify-center bg-gray-50 p-4"
-          role="alert"
-          aria-live="assertive"
-        >
-          <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg text-center">
-            <div className="mb-4" aria-hidden="true">
-              <svg className="w-16 h-16 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-            </div>
-            
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              Что-то пошло не так
-            </h2>
-            <p className="text-gray-700 mb-6">
-              Приносим извинения за неудобства. Пожалуйста, попробуйте обновить страницу или вернуться на главную.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-4">
-              <button
-                onClick={this.handleReload}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              >
-                Обновить страницу
-              </button>
-              <button
-                onClick={this.handleGoHome}
-                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-              >
-                На главную
-              </button>
-            </div>
-
-            {this.state.errorInfo && (
-              <div className="mt-4 text-left">
-                <button
-                  onClick={this.toggleDetails}
-                  className="text-sm text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
-                  aria-expanded={this.state.showDetails}
-                >
-                  {this.state.showDetails ? 'Скрыть детали' : 'Показать детали ошибки'}
-                </button>
-                
-                {this.state.showDetails && (
-                  <div className="mt-2 p-3 bg-gray-100 rounded text-xs">
-                    <p className="font-mono text-red-600 mb-2">
-                      {this.state.error?.toString() || 'Неизвестная ошибка'}
-                    </p>
-                    <pre className="overflow-auto max-h-32">
-                      {this.state.errorInfo.componentStack || 'Нет дополнительной информации'}
-                    </pre>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
+function generateSchemaJSONLD() {
+  // ... без изменений
 }
 
-export default ErrorBoundary;
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ru" className="scroll-smooth">
+      <head>
+        {/* ... head без изменений */}
+      </head>
+      <body className={`${inter.className} antialiased`}>
+        <ErrorBoundary>
+          <div className="main-content">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <CookieBanner />
+          </div>
+
+          {/* Улучшенная загрузка Яндекс Капчи (оставьте на будущее) */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function() {
+                  function loadCaptcha() {
+                    if (typeof window !== 'undefined' && !window.smartCaptcha) {
+                      var script = document.createElement('script');
+                      script.src = 'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=onYandexCaptchaLoad';
+                      script.async = true;
+                      script.defer = true;
+                      document.head.appendChild(script);
+                    }
+                  }
+                  
+                  window.onYandexCaptchaLoad = function() {
+                    console.log('Yandex Captcha loaded successfully');
+                  };
+                  
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', loadCaptcha);
+                  } else {
+                    loadCaptcha();
+                  }
+                })();
+              `,
+            }}
+          />
+
+          {/* Безопасная версия Яндекс.Метрики */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                (function(m,e,t,r,i,k,a){
+                  // Проверяем, не загружен ли уже скрипт
+                  if (document.querySelector('script[src="' + r + '"]')) return;
+                  
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  
+                  // Создаем и настраиваем script элемент
+                  k=e.createElement(t);
+                  a=e.getElementsByTagName(t)[0];
+                  k.async=1;
+                  k.src=r;
+                  k.onload=function(){
+                    console.log('Yandex Metrika loaded successfully');
+                    
+                    // Инициализируем счетчик после загрузки
+                    setTimeout(function() {
+                      if (typeof ym === 'function') {
+                        ym(103534344, "init", {
+                          defer: true,
+                          clickmap: true,
+                          trackLinks: true,
+                          accurateTrackBounce: true,
+                          webvisor: true,
+                          // Отключаем опасные функции, которые могут конфликтовать с React
+                          trackForms: false, // Отключаем отслеживание форм чтобы избежать конфликтов
+                          triggerEvent: false
+                        });
+                      }
+                    }, 500);
+                  };
+                  
+                  a.parentNode.insertBefore(k,a);
+                })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+              `,
+            }}
+          />
+
+          <SpeedInsights />
+          <Analytics />
+        </ErrorBoundary>
+      </body>
+    </html>
+  );
+}
