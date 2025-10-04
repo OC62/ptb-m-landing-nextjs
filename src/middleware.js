@@ -9,7 +9,7 @@ export function middleware(request) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
-  // Обновленные CSP заголовки с разрешением для Яндекс.Метрики
+  // Обновленные CSP заголовки с разрешением для Яндекс.Капчи
   response.headers.set(
     'Content-Security-Policy',
     [
