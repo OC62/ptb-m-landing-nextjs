@@ -1,6 +1,7 @@
-"use client";
+'use client';
 import React, { useState, useRef, useCallback } from 'react';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import LazyYandexCaptcha from '../ui/LazyYandexCaptcha';
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,9 +14,11 @@ const ContactForm = () => {
     message: ''
   });
   const [errors, setErrors] = useState({});
+  const [captchaToken, setCaptchaToken] = useState('');
+  const [captchaError, setCaptchaError] = useState('');
   
-  // Упрощенная капча - временно отключаем
-  const IS_CAPTCHA_DISABLED = true;
+  // Включена капча
+  const IS_CAPTCHA_ENABLED = true;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -31,6 +34,17 @@ const ContactForm = () => {
         [name]: ''
       }));
     }
+  };
+
+  const handleCaptchaLoad = (token) => {
+    setCaptchaToken(token);
+    setCaptchaError('');
+  };
+
+  const handleCaptchaError = (error) => {
+    console.error('Captcha error:', error);
+    setCaptchaError('Ошибка загрузки проверки безопасности. Пожалуйста, обновите страницу.');
+    setCaptchaToken('');
   };
 
   const validateForm = () => {
@@ -53,9 +67,13 @@ const ContactForm = () => {
     if (!formData.message.trim()) {
       newErrors.message = 'Сообщение обязательно';
     }
+
+    if (IS_CAPTCHA_ENABLED && !captchaToken) {
+      setCaptchaError('Пожалуйста, пройдите проверку безопасности');
+    }
     
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0 && !(IS_CAPTCHA_ENABLED && !captchaToken);
   };
 
   const sendFormData = async (data) => {
@@ -65,7 +83,7 @@ const ContactForm = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
-          smartcaptcha_token: IS_CAPTCHA_DISABLED ? 'test_token_disabled' : ''
+          smartcaptcha_token: IS_CAPTCHA_ENABLED ? captchaToken : 'test_token_disabled'
         }),
       });
 
@@ -83,6 +101,7 @@ const ContactForm = () => {
       if (result.status === 'success') {
         setSubmitSuccess(true);
         setFormData({ name: '', email: '', phone: '', message: '' });
+        setCaptchaToken('');
         setTimeout(() => setSubmitSuccess(false), 5000);
         return true;
       } else throw new Error(result.message || 'Ошибка сервера');
@@ -100,6 +119,7 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitError('');
     setSubmitSuccess(false);
+    setCaptchaError('');
 
     if (!validateForm()) {
       setIsSubmitting(false);
@@ -249,22 +269,21 @@ const ContactForm = () => {
                   </label>
                 </div>
 
-                {!IS_CAPTCHA_DISABLED ? (
-                  <div className="mt-4 w-full">
-                    <div
-                      className="captcha-container w-full h-20 relative bg-transparent flex items-center justify-center border border-gray-300 rounded-lg"
-                      style={{ minHeight: '80px' }}
-                      role="region"
-                      aria-label="Проверка: я не робот"
-                    >
-                      <div className="text-gray-500 text-sm">
-                        Капча временно отключена
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mt-4 p-2 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 text-sm">
-                    <p>Капча временно отключена для стабильности работы.</p>
+                {IS_CAPTCHA_ENABLED && (
+                  <div className="mt-4">
+                    <label className="block text-gray-700 font-medium mb-2">
+                      Проверка безопасности *
+                    </label>
+                    <LazyYandexCaptcha 
+                      onLoad={handleCaptchaLoad}
+                      onError={handleCaptchaError}
+                      sitekey="ysc1_681R2JVIY5o2ATwA42ZLkMeQdsQFKMu1eVaFX7Zm00b26bf0"
+                    />
+                    {captchaError && (
+                      <p className="mt-1 text-red-500 text-sm" role="alert">
+                        {captchaError}
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -272,7 +291,7 @@ const ContactForm = () => {
                   type="submit"
                   variant="onLight"
                   size="large"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || (IS_CAPTCHA_ENABLED && !captchaToken)}
                   className="w-full flex items-center justify-center mt-6 focus-visible"
                 >
                   {isSubmitting ? (
