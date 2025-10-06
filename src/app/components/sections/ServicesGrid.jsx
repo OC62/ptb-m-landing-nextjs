@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useRouter, usePathname } from 'next/navigation';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import { useNavigation } from '@/app/hooks/useNavigation';
 
 const services = [
   {
@@ -50,28 +50,7 @@ const services = [
 ];
 
 const ServicesGrid = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const scrollToContact = () => {
-    if (pathname === '/') {
-      // На главной странице - скроллим к форме
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        const headerHeight = 80;
-        const elementPosition = contactSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    } else {
-      // На других страницах - переходим на страницу контактов
-      router.push('/contacts');
-    }
-  };
+  const { navigateToContact } = useNavigation();
 
   return (
     <section id="services" className="py-20 bg-white" aria-labelledby="services-heading">
@@ -125,7 +104,7 @@ const ServicesGrid = () => {
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={scrollToContact}
+                onClick={navigateToContact}
                 className="w-full mt-auto focus-visible"
                 aria-label={`Узнать больше об услуге: ${service.title}`}
               >

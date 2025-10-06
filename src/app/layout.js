@@ -1,6 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import YandexMetrika from "./components/analytics/YandexMetrika"; // Добавьте этот импорт
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
+import CookieBanner from "./components/layout/CookieBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,9 +44,6 @@ export const metadata = {
       'max-snippet': -1,
     },
   },
-  other: {
-    'referrer': 'strict-origin-when-cross-origin'
-  }
 };
 
 export default function RootLayout({ children }) {
@@ -59,8 +58,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <YandexMetrika />
+        <Header />
+        <main className="min-h-screen">
+          {children}
+        </main>
+        <Footer />
+        <CookieBanner />
       </body>
     </html>
   );

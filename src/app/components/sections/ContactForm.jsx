@@ -161,7 +161,7 @@ const ContactForm = ({ isStandalone = false }) => {
   const captchaMessage = getCaptchaMessage();
 
   return (
-    <div className={`${isStandalone ? 'min-h-screen pt-20' : 'py-16'} bg-transparent`}>
+    <div id={isStandalone ? "contact-form" : "contact"} className={`${isStandalone ? 'min-h-screen pt-20' : 'py-16'} bg-transparent`}>
       <div className="container mx-auto px-4 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

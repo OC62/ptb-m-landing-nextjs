@@ -4,33 +4,12 @@ import { useState, useEffect } from "react";
 import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
 import HeroPreloader from "../ui/HeroPreloader";
-import { useRouter, usePathname } from "next/navigation";
+import { useNavigation } from "@/app/hooks/useNavigation";
 
 const Hero = ({ onLoadComplete }) => {
   const [isHeroLoading, setIsHeroLoading] = useState(true);
   const [heroProgress, setHeroProgress] = useState(0);
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const scrollToContact = () => {
-    if (pathname === '/') {
-      // На главной странице - скроллим к форме
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        const headerHeight = 80; // Высота хедера
-        const elementPosition = contactSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    } else {
-      // На других страницах - переходим на страницу контактов
-      router.push('/contacts');
-    }
-  };
+  const { navigateToContact } = useNavigation();
 
   useEffect(() => {
     const totalTime = 1500;
@@ -124,7 +103,7 @@ const Hero = ({ onLoadComplete }) => {
             <GlassmorphicButton
               variant="primary"
               size="large"
-              onClick={scrollToContact}
+              onClick={navigateToContact}
               aria-label="Получить консультацию по транспортной безопасности"
               className="focus-visible"
             >

@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import { useNavigation } from '@/app/hooks/useNavigation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,6 +13,7 @@ const Header = () => {
   const headerRef = useRef(null);
   const pathname = usePathname();
   const router = useRouter();
+  const { navigateToContact } = useNavigation();
 
   useEffect(() => {
     const checkMobileView = () => {
@@ -33,29 +35,6 @@ const Header = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen, isMobileView]);
-
-  const scrollToContact = () => {
-    setIsMenuOpen(false);
-    
-    if (pathname === '/') {
-      // На главной странице - скроллим к форме
-      setTimeout(() => {
-        const contactSection = document.getElementById('contact');
-        if (contactSection) {
-          const headerHeight = headerRef.current?.offsetHeight || 0;
-          const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset;
-          const offsetPosition = elementPosition - headerHeight;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-        }
-      }, 100);
-    } else {
-      // На других страницах - переходим на страницу контактов
-      router.push('/contacts');
-    }
-  };
 
   const navItems = [
     { name: 'Главная', href: '/', aria: 'Перейти на главную страницу' },
@@ -247,7 +226,7 @@ const Header = () => {
           <GlassmorphicButton
             variant="onWhite"
             size="large"
-            onClick={scrollToContact}
+            onClick={navigateToContact}
             className={`${isMobileView ? 'hidden' : 'block'} text-xs focus-visible`}
             aria-label="Получить консультацию"
           >
@@ -352,7 +331,7 @@ const Header = () => {
               <GlassmorphicButton
                 variant="onWhite"
                 size="large"
-                onClick={scrollToContact}
+                onClick={navigateToContact}
                 className="w-full mt-4 focus-visible"
                 aria-label="Получить консультацию"
               >

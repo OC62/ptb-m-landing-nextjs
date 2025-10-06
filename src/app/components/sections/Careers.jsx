@@ -2,33 +2,12 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useRouter, usePathname } from 'next/navigation';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
+import { useNavigation } from '@/app/hooks/useNavigation';
 
 const Careers = () => {
   const [openJobId, setOpenJobId] = useState(null);
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const scrollToContact = () => {
-    if (pathname === '/') {
-      // На главной странице - скроллим к форме
-      const contactSection = document.getElementById("contact");
-      if (contactSection) {
-        const headerHeight = 80;
-        const elementPosition = contactSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
-        
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth"
-        });
-      }
-    } else {
-      // На других страницах - переходим на страницу контактов
-      router.push('/contacts');
-    }
-  };
+  const { navigateToContact } = useNavigation();
 
   const toggleJob = (id) => {
     setOpenJobId(openJobId === id ? null : id);
@@ -196,7 +175,7 @@ const Careers = () => {
                     <GlassmorphicButton
                       variant="onWhite"
                       size="large"
-                      onClick={scrollToContact}
+                      onClick={navigateToContact}
                       className="focus-visible w-full md:w-auto text-xs md:text-base p-3"
                       aria-label={`Откликнуться на вакансию: ${job.title}`}
                     >
@@ -226,7 +205,7 @@ const Careers = () => {
           <GlassmorphicButton
             variant="onWhite"
             size="large"
-            onClick={scrollToContact}
+            onClick={navigateToContact}
             className="focus-visible w-full md:w-auto text-xs md:text-base p-3"
             aria-label="Отправить резюме в компанию"
           >
