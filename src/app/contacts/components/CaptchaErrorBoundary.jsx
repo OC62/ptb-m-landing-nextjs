@@ -1,3 +1,4 @@
+// src/app/contacts/components/CaptchaErrorBoundary.jsx
 'use client';
 
 import { Component } from 'react';
@@ -13,16 +14,14 @@ class CaptchaErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
-    console.log('Captcha error:', error, errorInfo);
+    console.warn('Captcha failed to load:', error);
   }
 
   render() {
     if (this.state.hasError) {
       return (
         <div className="p-4 border border-yellow-300 bg-yellow-50 rounded-lg">
-          <p className="text-yellow-800 text-sm">
-            Проверка безопасности временно недоступна. Вы можете отправить форму без проверки.
-          </p>
+          <p className="text-yellow-800">Капча временно недоступна. Пожалуйста, попробуйте отправить форму позже.</p>
         </div>
       );
     }

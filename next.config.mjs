@@ -9,24 +9,7 @@ const nextConfig = {
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
   
-  async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()'
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin'
-          }
-          // УБЕРИТЕ Content-Security-Policy отсюда полностью
-        ],
-      },
-    ];
-  },
+  // УБЕРИТЕ ВСЕ headers() - они создают проблемы
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error'],

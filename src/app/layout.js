@@ -22,13 +22,12 @@ export const metadata = {
     template: "%s | ООО 'ПТБ-М'"
   },
   description: "ООО 'Подразделение транспортной безопасности -М' - обеспечение транспортной безопасности объектов дорожного хозяйства с 2017 года в Ростове-на-Дону и других регионах РФ.",
-  // ... остальные метаданные
+  // ... остальные метаданные без изменений
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
-      {/* УБЕРИТЕ meta тег с Permissions-Policy отсюда */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
         <main className="min-h-screen">
