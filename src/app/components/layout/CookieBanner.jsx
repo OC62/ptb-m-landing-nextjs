@@ -9,13 +9,21 @@ const CookieBanner = () => {
   useEffect(() => {
     const cookieDecision = localStorage.getItem('cookie_decision');
     if (!cookieDecision) {
-      setIsVisible(true);
+      // Ждем немного перед показом баннера
+      const timer = setTimeout(() => setIsVisible(true), 1000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
   const acceptCookies = () => {
     localStorage.setItem('cookie_decision', 'accepted');
+    localStorage.removeItem('ym_disable');
     setIsVisible(false);
+    
+    // Перезагружаем для применения метрики
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const rejectCookies = () => {

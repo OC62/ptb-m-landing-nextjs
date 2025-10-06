@@ -28,12 +28,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
-      <head>
-        <meta 
-          httpEquiv="Permissions-Policy" 
-          content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" 
-        />
-      </head>
+      {/* УБЕРИТЕ meta тег с Permissions-Policy отсюда */}
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
         <main className="min-h-screen">
@@ -41,8 +36,6 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <CookieBanner />
-        
-        {/* Яндекс.Метрика */}
         <YandexMetrika />
       </body>
     </html>
