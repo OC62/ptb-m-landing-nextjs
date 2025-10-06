@@ -70,9 +70,7 @@ export const metadata = {
     images: ['/og-preview.jpg'],
   },
   verification: {
-    // Яндекс.Вебмастер
     yandex: 'your-yandex-verification-code',
-    // Google Search Console
     google: 'your-google-verification-code',
   },
 };
@@ -100,9 +98,7 @@ function generateSchemaJSONLD() {
       areaServed: 'RU',
       availableLanguage: 'Russian',
     },
-    sameAs: [
-      // Добавьте ссылки на соцсети при наличии
-    ]
+    sameAs: []
   };
 }
 
@@ -110,7 +106,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ru" className="scroll-smooth">
       <head>
-        {/* Базовые мета-теги */}
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         
@@ -120,13 +115,6 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        
-        {/* Предзагрузка только критических изображений */}
-        <link 
-          rel="preload" 
-          href="/images/bg_Hero.webp" 
-          as="image" 
-        />
         
         {/* JSON-LD структурированные данные */}
         <script
@@ -148,7 +136,6 @@ export default function RootLayout({ children }) {
             dangerouslySetInnerHTML={{
               __html: `
                 (function() {
-                  // Ждем полной загрузки страницы
                   if (document.readyState === 'loading') {
                     document.addEventListener('DOMContentLoaded', initMetrika);
                   } else {
@@ -156,7 +143,6 @@ export default function RootLayout({ children }) {
                   }
                   
                   function initMetrika() {
-                    // Проверяем, не загружена ли уже метрика
                     if (window.ym || document.querySelector('script[src*="mc.yandex.ru"]')) {
                       return;
                     }
@@ -168,16 +154,14 @@ export default function RootLayout({ children }) {
                     
                     script.onload = function() {
                       console.log('Yandex Metrika loaded safely');
-                      
-                      // Минимальная инициализация чтобы избежать конфликтов
                       if (typeof ym === 'function') {
                         ym(103534344, 'init', {
                           defer: true,
                           clickmap: true,
                           trackLinks: true,
                           accurateTrackBounce: true,
-                          webvisor: false, // Отключаем вебвизор для уменьшения конфликтов
-                          trackForms: false, // Полностью отключаем отслеживание форм
+                          webvisor: false,
+                          trackForms: false,
                           triggerEvent: false,
                           trackHash: false,
                           ecommerce: false
