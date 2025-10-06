@@ -1,9 +1,8 @@
+// src/app/HomePageContent.js
 'use client';
 
 import { useState, useEffect, Suspense } from 'react';
 import dynamic from 'next/dynamic';
-
-// Импортируем улучшенный Skeleton
 import Skeleton from './components/ui/Skeleton';
 
 // Динамический импорт компонентов
@@ -19,28 +18,24 @@ const Partners = dynamic(() => import('@/app/components/sections/Partners'));
 const CommunitySupport = dynamic(() => import('@/app/components/sections/CommunitySupport'));
 const ContactForm = dynamic(() => import('@/app/components/sections/ContactForm'));
 
-// Простой fallback для секций
 const SectionFallback = () => (
-  <div className="h-20 bg-gray-100 animate-pulse rounded-lg my-4"></div>
+  <div className="h-32 bg-gray-100 animate-pulse rounded-lg my-4"></div>
 );
 
 export default function HomePageContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [heroLoaded, setHeroLoaded] = useState(false);
 
-  // Ускоренная загрузка Skeleton
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 800);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
 
-  // Callback когда Hero завершил свою анимацию
   const handleHeroLoadComplete = () => {
     setHeroLoaded(true);
-    document.body.classList.add('content-loaded');
   };
 
   if (isLoading) {
@@ -50,10 +45,8 @@ export default function HomePageContent() {
   return (
     <div className="min-h-screen bg-white">
       <main role="main">
-        {/* Hero с локальным Preloader */}
         <Hero onLoadComplete={handleHeroLoadComplete} />
         
-        {/* Остальные компоненты загружаются после Hero */}
         {heroLoaded && (
           <>
             <Suspense fallback={<SectionFallback />}>
