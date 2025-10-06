@@ -14,10 +14,19 @@ const StandaloneCaptcha = () => {
       }
 
       try {
-        // Очищаем контейнер
+        // Создаем отдельный div для капчи внутри контейнера
+        const captchaDiv = document.createElement('div');
+        captchaDiv.className = 'yandex-captcha-wrapper';
+        captchaDiv.style.width = '100%';
+        captchaDiv.style.minHeight = '140px';
+        captchaDiv.style.display = 'flex';
+        captchaDiv.style.alignItems = 'center';
+        captchaDiv.style.justifyContent = 'center';
+        
         captchaContainerRef.current.innerHTML = '';
+        captchaContainerRef.current.appendChild(captchaDiv);
 
-        window.smartCaptcha.render(captchaContainerRef.current, {
+        window.smartCaptcha.render(captchaDiv, {
           sitekey: 'ysc1_681R2JVIY5o2ATwA42ZLkMeQdsQFKMu1eVaFX7Zm00b26bf0',
           callback: (token) => {
             localStorage.setItem('yandex_captcha_token', token);
@@ -31,20 +40,19 @@ const StandaloneCaptcha = () => {
       }
     };
 
-    // Если скрипт уже загружен
+    // Проверяем, не загружен ли уже скрипт
     if (window.smartCaptcha) {
       initCaptcha();
       return;
     }
 
+    // Создаем глобальную функцию обратного вызова
+    window.onYandexCaptchaLoad = initCaptcha;
+
     // Загружаем скрипт
     const script = document.createElement('script');
-    script.src = 'https://captcha-api.yandex.ru/captcha.js';
+    script.src = 'https://captcha-api.yandex.ru/captcha.js?render=onload&onload=onYandexCaptchaLoad';
     script.async = true;
-    
-    script.onload = () => {
-      setTimeout(initCaptcha, 100);
-    };
 
     script.onerror = () => {
       console.error('Failed to load captcha script');
@@ -54,6 +62,9 @@ const StandaloneCaptcha = () => {
 
     // Очистка
     return () => {
+      if (window.onYandexCaptchaLoad) {
+        delete window.onYandexCaptchaLoad;
+      }
       if (captchaContainerRef.current) {
         captchaContainerRef.current.innerHTML = '';
       }
@@ -61,18 +72,25 @@ const StandaloneCaptcha = () => {
   }, []);
 
   return (
-    <div className="standalone-captcha">
+    <div className="standalone-captcha w-full">
+      <div className="mb-2 text-sm text-gray-600">
+        Подтвердите, что вы не робот
+      </div>
+      
       <div 
         ref={captchaContainerRef}
-        className="captcha-container min-h-[140px] w-full flex items-center justify-center border border-gray-300 rounded-lg bg-white overflow-hidden"
-        style={{ minWidth: '300px' }}
-      />
+        className="captcha-container w-full min-h-[160px] border border-gray-300 rounded-lg bg-white flex items-center justify-center p-4"
+      >
+        {!isLoaded && (
+          <div className="text-gray-500 text-sm">
+            Загрузка проверки безопасности...
+          </div>
+        )}
+      </div>
       
-      {!isLoaded && (
-        <div className="text-blue-600 text-sm text-center mt-2">
-          Загрузка проверки безопасности...
-        </div>
-      )}
+      <div className="mt-2 text-xs text-gray-500">
+        Нажимая на кнопку, вы соглашаетесь с политикой конфиденциальности
+      </div>
     </div>
   );
 };
