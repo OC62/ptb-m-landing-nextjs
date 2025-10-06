@@ -1,6 +1,7 @@
 import ContactForm from '@/components/sections/ContactForm';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import StandaloneCaptcha from './components/StandaloneCaptcha';
+import CaptchaErrorBoundary from './components/CaptchaErrorBoundary';
 import { generateMetadataForPage } from '../lib/generateMetadata';
 
 export const metadata = generateMetadataForPage('contacts', {
@@ -42,7 +43,9 @@ export default function ContactsPage() {
                 Для защиты от автоматических отправок, пожалуйста, пройдите проверку безопасности ниже.
               </p>
               
-              <StandaloneCaptcha />
+              <CaptchaErrorBoundary>
+                <StandaloneCaptcha />
+              </CaptchaErrorBoundary>
             </div>
 
             {/* Contact Form */}

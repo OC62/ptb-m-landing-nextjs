@@ -9,20 +9,27 @@ export function middleware(request) {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
   
-  // Обновленные CSP заголовки с разрешением для Яндекс.Капчи
+  // Расширенные политики разрешений для Яндекс Капчи
+  response.headers.set(
+    'Permissions-Policy',
+    'accelerometer=*, gyroscope=*, magnetometer=*, camera=*, microphone=*'
+  );
+  
+  // Обновленные CSP заголовки с расширенными разрешениями для Яндекс.Капчи
   response.headers.set(
     'Content-Security-Policy',
     [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru https://yastatic.net",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://smartcaptcha.yandexcloud.net",
+      "script-src 'self' 'unsafe-inline' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru https://yastatic.net https://yastatic.net",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://smartcaptcha.yandexcloud.net https://yastatic.net",
       "img-src 'self' data: blob: https:",
-      "font-src 'self' data: https://fonts.gstatic.com",
-      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru wss://mc.yandex.ru https://va.vercel-scripts.com",
-      "frame-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru",
+      "font-src 'self' data: https://fonts.gstatic.com https://yastatic.net",
+      "connect-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru wss://mc.yandex.ru https://va.vercel-scripts.com https://yastatic.net",
+      "frame-src 'self' https://smartcaptcha.yandexcloud.net https://captcha-api.yandex.ru https://mc.yandex.ru https://yastatic.net",
       "worker-src 'self' blob:",
       "base-uri 'self'",
-      "form-action 'self'"
+      "form-action 'self'",
+      "media-src 'self' https://mc.yandex.ru"
     ].join('; ')
   );
 

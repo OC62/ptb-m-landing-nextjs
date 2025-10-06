@@ -131,18 +131,20 @@ export default function RootLayout({ children }) {
             <CookieBanner />
           </div>
 
-          {/* Безопасная Яндекс.Метрика с отложенной загрузкой */}
+                  {/* Безопасная Яндекс.Метрика с улучшенной обработкой */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
                 (function() {
+                  // Ждем полной загрузки страницы
                   if (document.readyState === 'loading') {
                     document.addEventListener('DOMContentLoaded', initMetrika);
                   } else {
-                    setTimeout(initMetrika, 3000);
+                    setTimeout(initMetrika, 5000); // Увеличили задержку до 5 секунд
                   }
                   
                   function initMetrika() {
+                    // Проверяем, не загружена ли уже метрика
                     if (window.ym || document.querySelector('script[src*="mc.yandex.ru"]')) {
                       return;
                     }
@@ -154,6 +156,8 @@ export default function RootLayout({ children }) {
                     
                     script.onload = function() {
                       console.log('Yandex Metrika loaded safely');
+                      
+                      // Минимальная инициализация чтобы избежать конфликтов
                       if (typeof ym === 'function') {
                         ym(103534344, 'init', {
                           defer: true,
@@ -164,7 +168,9 @@ export default function RootLayout({ children }) {
                           trackForms: false,
                           triggerEvent: false,
                           trackHash: false,
-                          ecommerce: false
+                          ecommerce: false,
+                          // Отключаем рекламные функции
+                          ut: 'noindex'
                         });
                       }
                     };

@@ -143,3 +143,31 @@ body {
     min-height: 120px !important;
   }
 }
+/* Стили для Яндекс Капчи */
+.smart-captcha {
+  width: 100% !important;
+  min-height: 85px !important;
+}
+
+@media (max-width: 768px) {
+  .smart-captcha {
+    transform: scale(0.9);
+    transform-origin: left top;
+  }
+  
+  .captcha-container {
+    min-height: 120px !important;
+  }
+}
+
+/* Улучшение для медленных сетей */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Предзагрузка критических шрифтов */
+@font-face {
+  font-family: 'YS Text';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff2') format('woff2');
+}
