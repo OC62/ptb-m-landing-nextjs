@@ -1,10 +1,9 @@
+// next.config.js
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['smartcaptcha.yandexcloud.net', 'mc.yandex.ru', 'yastatic.net'],
+    domains: ['smartcaptcha.yandexcloud.net'],
     formats: ['image/avif', 'image/webp'],
-    dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   compress: true,
   poweredByHeader: false,
@@ -17,7 +16,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Permissions-Policy',
-            value: 'accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()'
+            value: 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()'
           },
           {
             key: 'Referrer-Policy',
@@ -25,7 +24,18 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://mc.yandex.ru; frame-src 'self' https://smartcaptcha.yandexcloud.net;"
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru https://yastatic.net;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data: https: blob:;
+              font-src 'self' data:;
+              connect-src 'self' https://mc.yandex.ru;
+              frame-src 'self' https://smartcaptcha.yandexcloud.net;
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
+            `.replace(/\s+/g, ' ').trim()
           }
         ],
       },
@@ -35,14 +45,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error'],
     } : false,
-  },
-  webpack: (config, { dev, isServer }) => {
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-    };
-
-    return config;
   },
 };
 

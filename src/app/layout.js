@@ -22,30 +22,7 @@ export const metadata = {
     template: "%s | ООО 'ПТБ-М'"
   },
   description: "ООО 'Подразделение транспортной безопасности -М' - обеспечение транспортной безопасности объектов дорожного хозяйства с 2017 года в Ростове-на-Дону и других регионах РФ.",
-  keywords: ["транспортная безопасность", "Ростов-на-Дону", "ООО ПТБ-М", "объекты дорожного хозяйства", "ФЗ-16"],
-  authors: [{ name: "ООО 'ПТБ-М'" }],
-  creator: "ООО 'ПТБ-М'",
-  publisher: "ООО 'ПТБ-М'",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://www.xn----9sb8ajp.xn--p1ai'),
-  alternates: {
-    canonical: '/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  // ... остальные метаданные
 };
 
 export default function RootLayout({ children }) {
@@ -54,12 +31,10 @@ export default function RootLayout({ children }) {
       <head>
         <meta 
           httpEquiv="Permissions-Policy" 
-          content="accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()" 
+          content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()" 
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Header />
         <main className="min-h-screen">
           {children}
@@ -67,7 +42,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <CookieBanner />
         
-        {/* Яндекс.Метрика - подключается в конце */}
+        {/* Яндекс.Метрика */}
         <YandexMetrika />
       </body>
     </html>

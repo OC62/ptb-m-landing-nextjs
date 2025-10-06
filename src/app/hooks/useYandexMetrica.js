@@ -3,7 +3,7 @@
 
 import { useCallback } from 'react';
 
-const YANDEX_METRIKA_ID = 97540185;
+const YANDEX_METRIKA_ID = 103534344;
 
 export const useYandexMetrica = () => {
   const sendEvent = useCallback((eventName, eventParams = {}) => {

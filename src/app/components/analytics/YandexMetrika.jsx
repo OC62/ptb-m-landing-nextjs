@@ -4,57 +4,57 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 
-const YANDEX_METRIKA_ID = 97540185;
+const YANDEX_METRIKA_ID = 103534344; // Используйте правильный ID
 
 const YandexMetrika = () => {
   useEffect(() => {
-    // Проверяем, не заблокирована ли метрика пользователем
+    if (typeof window === 'undefined') return;
+
+    // Проверяем блокировку
     const isBlockedByUser = 
       localStorage?.getItem('ym_disable') === '1' ||
       navigator.doNotTrack === '1' ||
       navigator.globalPrivacyControl;
 
     if (isBlockedByUser) {
-      console.log('Yandex Metrika blocked by user preferences');
       return;
     }
 
-    // Инициализируем только один раз
-    if (window.ym && window.ym.a && window.ym.a.length > 0) {
-      console.log('Yandex Metrika already initialized');
+    // Проверяем существующую инициализацию
+    if (window.ym && window.ym._isInitialized) {
       return;
     }
 
-    // Создаем глобальную функцию ym
     window.ym = window.ym || function() {
       (window.ym.a = window.ym.a || []).push(arguments);
     };
     window.ym.l = Date.now();
+    window.ym._isInitialized = true;
 
-    // Инициализируем счетчик
+    // Минимальная конфигурация
     try {
       window.ym(YANDEX_METRIKA_ID, 'init', {
         clickmap: true,
         trackLinks: true,
         accurateTrackBounce: true,
-        webvisor: true,
-        trackHash: true,
+        webvisor: false, // Отключаем вебвизор для уменьшения ошибок
+        trackHash: false,
         ecommerce: false,
-        ut: 'noindex' // Отключаем рекламные функции
+        ut: 'noindex'
       });
     } catch (error) {
-      console.error('Yandex Metrika init error:', error);
+      console.warn('Yandex Metrika init error:', error);
     }
   }, []);
 
   return (
     <>
       <Script
-        id="yandex-metrika-script"
+        id="yandex-metrika"
         strategy="afterInteractive"
         src="https://mc.yandex.ru/metrika/tag.js"
+        onError={(e) => console.warn('Yandex Metrika script failed to load:', e)}
       />
-      
       <noscript>
         <div>
           <img 

@@ -2,13 +2,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { disableYandexMetrika } from '@/app/utils/yandexMetrikaHelper';
 
 const CookieBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Проверяем, было ли уже принято решение о cookies
     const cookieDecision = localStorage.getItem('cookie_decision');
     if (!cookieDecision) {
       setIsVisible(true);
@@ -22,8 +20,7 @@ const CookieBanner = () => {
 
   const rejectCookies = () => {
     localStorage.setItem('cookie_decision', 'rejected');
-    // Отключаем Яндекс.Метрику при отказе
-    disableYandexMetrika();
+    localStorage.setItem('ym_disable', '1');
     setIsVisible(false);
   };
 
@@ -37,7 +34,7 @@ const CookieBanner = () => {
         </h3>
         <p className="text-sm text-gray-600">
           Мы используем Яндекс.Метрику для анализа посещаемости сайта. 
-          Это помогает нам улучшать наш сервис. Вы можете отказаться от сбора данных.
+          Вы можете отказаться от сбора данных.
         </p>
         <div className="flex space-x-3">
           <button
