@@ -9,17 +9,25 @@ const CookieBanner = () => {
   useEffect(() => {
     const cookieDecision = localStorage.getItem('cookie_decision');
     if (!cookieDecision) {
-      setTimeout(() => setIsVisible(true), 2000);
+      const timer = setTimeout(() => setIsVisible(true), 3000);
+      return () => clearTimeout(timer);
     }
   }, []);
 
   const acceptCookies = () => {
     localStorage.setItem('cookie_decision', 'accepted');
+    localStorage.removeItem('ym_disable');
     setIsVisible(false);
+    
+    // Перезагружаем для применения метрики
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const rejectCookies = () => {
     localStorage.setItem('cookie_decision', 'rejected');
+    localStorage.setItem('ym_disable', '1');
     setIsVisible(false);
   };
 
@@ -32,7 +40,8 @@ const CookieBanner = () => {
           Использование cookies
         </h3>
         <p className="text-sm text-gray-600">
-          Мы используем Яндекс.Метрику для анализа посещаемости сайта.
+          Мы используем Яндекс.Метрику для анализа посещаемости сайта. 
+          Вы можете отказаться от сбора данных.
         </p>
         <div className="flex space-x-3">
           <button
