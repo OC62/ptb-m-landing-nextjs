@@ -64,7 +64,7 @@ const StandaloneCaptcha = () => {
     <div className="standalone-captcha">
       <div 
         ref={captchaContainerRef}
-        className="captcha-container min-h-[85px] w-full flex items-center justify-center border border-gray-300 rounded-lg bg-white"
+        className="captcha-container min-h-[140px] w-full flex items-center justify-center border border-gray-300 rounded-lg bg-white overflow-hidden"
         style={{ minWidth: '300px' }}
       />
       

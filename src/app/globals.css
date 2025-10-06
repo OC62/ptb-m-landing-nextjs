@@ -122,22 +122,52 @@ body {
 /* Адаптация Яндекс Капчи для мобильных */
 @media (max-width: 768px) {
   .smart-captcha {
-    transform: scale(0.9);
+    transform: scale(0.85);
     transform-origin: left top;
   }
   
   .captcha-container {
-    min-height: 100px !important;
-    overflow-x: auto;
+    min-height: 160px !important;
+    padding: 10px;
+    overflow: visible !important;
+  }
+  
+  /* Стили для сообщения Яндекс Капчи */
+  .smart-captcha__message {
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: 5px !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
   }
 }
 
 @media (max-width: 480px) {
   .smart-captcha {
-    transform: scale(0.8);
+    transform: scale(0.75);
   }
   
   .captcha-container {
-    min-height: 120px !important;
+    min-height: 180px !important;
+    padding: 15px;
   }
+  
+  .smart-captcha__message {
+    font-size: 11px !important;
+    margin-top: 8px !important;
+  }
+}
+
+/* Общие стили для контейнера капчи */
+.captcha-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Гарантируем, что iframe капчи будет виден */
+.smart-captcha iframe {
+  position: relative !important;
+  z-index: 5 !important;
 }
