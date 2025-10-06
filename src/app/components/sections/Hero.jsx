@@ -4,20 +4,36 @@ import { useState, useEffect } from "react";
 import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
 import HeroPreloader from "../ui/HeroPreloader";
+import { useRouter, usePathname } from "next/navigation";
 
 const Hero = ({ onLoadComplete }) => {
   const [isHeroLoading, setIsHeroLoading] = useState(true);
   const [heroProgress, setHeroProgress] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const scrollToContact = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
+    if (pathname === '/') {
+      // На главной странице - скроллим к форме
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        const headerHeight = 80; // Высота хедера
+        const elementPosition = contactSection.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerHeight;
+        
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    } else {
+      // На других страницах - переходим на страницу контактов
+      router.push('/contacts');
     }
   };
 
   useEffect(() => {
-    const totalTime = 1500; // Уменьшено время загрузки
+    const totalTime = 1500;
     const steps = 8;
     const stepTime = totalTime / steps;
     
@@ -68,8 +84,6 @@ const Hero = ({ onLoadComplete }) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
-          width={1920}
-          height={1080}
         />
         <div
           className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/85 to-transparent"

@@ -1,65 +1,64 @@
-// nextjs/src/app/components/sections/Partners.jsx
 "use client";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
-import Image from 'next/image'; // Импортируем next/image
+import Image from 'next/image';
 
 // Импорт стилей Swiper
 import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/navigation';
 
-// Массив с партнерами (вынесен за пределы компонента)
+// Массив с партнерами
 const partners = [
   {
     id: 1,
     name: "ООО 'Ростдонавтовокзал'",
     logo: '/images/logo_rda.webp',
-    url: 'https://rostdonavtokozal.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://rostdonavtokozal.ru',
   },
   {
     id: 2,
     name: 'ФКУ УПРДОР МОСКВА-ВОЛГОГРАД',
     logo: '/images/fkuLogo.svg',
-    url: 'https://mv.rosavtodor.gov.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://mv.rosavtodor.gov.ru',
   },
   {
     id: 3,
     name: 'ГБУ Вокзал-Авто',
     logo: '/images/GBUVolgograd.webp',
-    url: 'https://vokzal-avto.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://vokzal-avto.ru',
   },
   {
     id: 4,
     name: 'ООО Т-Транс',
     logo: '/images/Ttrans.webp',
-    url: 'https://t-trans61.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://t-trans61.ru',
   },
   {
     id: 5,
     name: 'ГКУ Транспортная дирекция РБ',
     logo: '/images/logoBashkiria.webp',
-    url: 'https://tdrb.bashkortostan.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://tdrb.bashkortostan.ru',
   },
   {
     id: 6,
     name: "МКУ 'Комитет внешнего благоустройства Казани'",
     logo: '/images/logoKazan.webp',
-    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva', // !! ИСПРАВЛЕН URL !!
+    url: 'https://kzn.ru/meriya/ispolnitelnyy-komitet/komitet-vneshnego-blagoustroystva',
   },
   {
     id: 7,
     name: 'СК Автодор-Казань',
     logo: '/images/logoAvtodor.webp',
-    url: 'https://skavtodor.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://skavtodor.ru',
   },
   {
     id: 8,
     name: 'АО Донавтовокзал',
     logo: '/images/LogoDonavto.webp',
-    url: 'https://donavto.ru', // !! ИСПРАВЛЕН URL !!
+    url: 'https://donavto.ru',
   },
   {
     id: 9,
@@ -90,9 +89,8 @@ const Partners = () => {
           </p>
         </motion.div>
 
-        {/* !! КОНТЕЙНЕР СЛАЙДЕРА: ДОБАВЛЕНЫ КЛАССЫ 'slider-container group' !! */}
         <div
-          className="relative h-[256px] md:h-[288px] slider-container group" // !! Добавлены 'slider-container group' !!
+          className="relative h-[256px] md:h-[288px] slider-container group"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -109,32 +107,32 @@ const Partners = () => {
                 pauseOnMouseEnter: true,
               }}
               navigation={{
-                nextEl: '.partners-swiper-next', // Обновлен селектор
-                prevEl: '.partners-swiper-prev', // Обновлен селектор
+                nextEl: '.partners-swiper-next',
+                prevEl: '.partners-swiper-prev',
               }}
               breakpoints={{
                 320: {
                   slidesPerView: 2,
                   spaceBetween: 15,
-                  navigation: { enabled: false }, // Кнопки скрыты на мобильных
+                  navigation: { enabled: false },
                 },
                 480: {
                   slidesPerView: 3,
                   spaceBetween: 20,
-                  navigation: { enabled: false }, // Кнопки скрыты на мобильных
+                  navigation: { enabled: false },
                 },
                 768: {
                   slidesPerView: 4,
                   spaceBetween: 24,
-                  navigation: { enabled: false }, // Кнопки скрыты на планшетах
+                  navigation: { enabled: false },
                 },
                 1024: {
                   slidesPerView: 5,
-                  navigation: { enabled: true }, // Кнопки доступны на десктопе
+                  navigation: { enabled: true },
                 },
                 1280: {
                   slidesPerView: 6,
-                  navigation: { enabled: true }, // Кнопки доступны на десктопе
+                  navigation: { enabled: true },
                 },
               }}
               className="h-full"
@@ -180,16 +178,15 @@ const Partners = () => {
                         }}
                       >
                         <div className="flex items-center justify-center w-full h-16 sm:h-20 mb-2">
-                          <Image // Используем next/image
+                          <Image
                             src={partner.logo}
                             alt={`${partner.name} логотип`}
-                            width={partner.logo.endsWith('.svg') ? 100 : 192} // Примерная ширина для SVG, или 192 для webp
-                            height={48} // Примерная высота
+                            width={120}
+                            height={60}
                             className="max-h-12 sm:max-h-16 w-auto object-contain"
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                            }}
                             loading="lazy"
+                            placeholder="blur"
+                            blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjYwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmM2Y0ZjYiLz48L3N2Zz4="
                           />
                         </div>
                         <p className="text-xs sm:text-sm font-medium text-gray-700 leading-tight px-1 w-full">
@@ -203,10 +200,8 @@ const Partners = () => {
             </Swiper>
           </div>
 
-          {/* !! КНОПКИ НАВИГАЦИИ: ОБНОВЛЕНЫ СТИЛИ !! */}
-          {/* !! opacity-0 и transition по-прежнему в глобальных стилях, появляются при hover на .slider-container !! */}
           <button
-            className="partners-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // !! УБРАНЫ: opacity-0 group-hover:opacity-100 !!
+            className="partners-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
             aria-label="Предыдущий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +209,7 @@ const Partners = () => {
             </svg>
           </button>
           <button
-            className="partners-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300" // !! УБРАНЫ: opacity-0 group-hover:opacity-100 !!
+            className="partners-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
             aria-label="Следующий слайд"
           >
             <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">

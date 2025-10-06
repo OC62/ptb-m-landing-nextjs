@@ -1,12 +1,9 @@
 'use client';
-import Image from 'next/image';
-// nextjs/src/app/components/layout/Header.jsx
-
-
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 
 const Header = () => {
@@ -37,25 +34,27 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
-  const scrollToSection = (sectionId) => {
-    setIsMenuOpen(false);
-    setTimeout(() => {
-      const id = sectionId.startsWith('#') ? sectionId.slice(1) : sectionId;
-      const element = document.getElementById(id);
-      if (element) {
-        const headerHeight = headerRef.current?.offsetHeight || 0;
-        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerHeight;
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        });
-      }
-    }, 100);
-  };
-
   const scrollToContact = () => {
-    router.push('/#contact');
+    setIsMenuOpen(false);
+    
+    if (pathname === '/') {
+      // На главной странице - скроллим к форме
+      setTimeout(() => {
+        const contactSection = document.getElementById('contact');
+        if (contactSection) {
+          const headerHeight = headerRef.current?.offsetHeight || 0;
+          const elementPosition = contactSection.getBoundingClientRect().top + window.pageYOffset;
+          const offsetPosition = elementPosition - headerHeight;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      }, 100);
+    } else {
+      // На других страницах - переходим на страницу контактов
+      router.push('/contacts');
+    }
   };
 
   const navItems = [
@@ -204,7 +203,13 @@ const Header = () => {
             role="button"
             aria-label="Перейти на главную страницу"
           >
-            <Image  src="/images/preloader.png"  alt="Логотип ООО ПТБ-М"   className="h-8" />
+            <Image  
+              src="/images/preloader.png"  
+              alt="Логотип ООО ПТБ-М"   
+              width={32}
+              height={32}
+              className="h-8 w-auto"
+            />
             <span className="header-company-name text-gray-700">
               ООО "ПТБ-М"
             </span>

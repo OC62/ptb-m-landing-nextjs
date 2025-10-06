@@ -120,7 +120,7 @@ const About = () => {
         >
           <h4 className="text-2xl font-bold text-gray-800 mb-4">Наша задача</h4>
           <p className="text-gray-700 mb-6">
-            Обеспечение транспортой безопасности объектов дорожного хозяйства.
+            Обеспечение транспортной безопасности объектов дорожного хозяйства.
             Для этого мы сочетаем строгое соблюдение закона № 16-ФЗ с
             современными технологиями и экспертным подходом. Наша работа — это
             ваше спокойствие и защита от рисков.
@@ -159,7 +159,7 @@ const About = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          className="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto"
+          className="bg-white p-6 md:p-8 rounded-xl shadow-lg max-w-4xl mx-auto"
         >
           <h4 className="text-2xl font-bold text-gray-800 text-center mb-6">
             Наша команда в действии
@@ -182,8 +182,7 @@ const About = () => {
                 nextEl: '.about-swiper-next',
                 prevEl: '.about-swiper-prev',
               }}
-              className="w-full"
-              style={{ height: '60vh' }} 
+              className="w-full h-[300px] sm:h-[400px] md:h-[500px]"
               aria-label="Галерея фотографий команды"
             >
               {teamPhotos.map((member, index) => (
@@ -191,34 +190,28 @@ const About = () => {
                   key={index}
                   className="flex items-center justify-center"
                 >
-                  <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col items-center justify-center">
-                    <div className="w-full h-[80%] relative">
+                  <div className="relative w-full h-full rounded-xl overflow-hidden flex flex-col">
+                    <div className="w-full h-[70%] sm:h-[75%] md:h-[80%] relative">
                       <Image
                         src={member.src}
                         alt={`${member.name} - ${member.position}`}
-                        width={member.width}
-                        height={member.height}
+                        fill
                         quality={75}
-                        className="w-full h-full object-cover rounded-t-xl"
-                        style={{ objectPosition: 'top' }}
+                        className="object-cover rounded-t-xl"
+                        style={{ objectPosition: 'center top' }}
                         loading={index < 2 ? "eager" : "lazy"}
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                       />
                     </div>
                     
-                    <div className="bg-black/50 text-white rounded-b-xl w-full h-[20%] flex items-center justify-center">
-                      <div className="p-2 h-full w-full flex flex-col justify-center items-center text-center">
-                        <p
-                          className="font-semibold text-xs sm:text-xs md:text-sm xs:text-[0.65rem] xxs:text-[0.7rem] xxxs:text-[0.6rem] xxxxs:text-[0.5rem] mb-0.5"
-                          style={{ lineHeight: '1.1' }}
-                        >
+                    <div className="bg-black/70 text-white w-full h-[30%] sm:h-[25%] md:h-[20%] flex items-center justify-center p-3 sm:p-4">
+                      <div className="text-center w-full">
+                        <p className="font-semibold text-sm sm:text-base md:text-lg mb-1">
                           {member.name}
                         </p>
-                        <p
-                          className="text-xs sm:text-xs md:text-sm xs:text-[0.55rem] xxs:text-[0.6rem] xxxs:text-[0.5rem] xxxxs:text-[0.4rem]"
-                          style={{ lineHeight: '1.1' }}
-                        >
+                        <p className="text-xs sm:text-sm md:text-base text-gray-300">
                           {member.position}
                         </p>
                       </div>
@@ -229,18 +222,18 @@ const About = () => {
             </Swiper>
             
             <button 
-              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
+              className="about-swiper-prev absolute top-1/2 left-4 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
               aria-label="Предыдущее фото"
             >
-              <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <button 
-              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
+              className="about-swiper-next absolute top-1/2 right-4 transform -translate-y-1/2 z-10 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-white transition-opacity duration-300"
               aria-label="Следующее фото"
             >
-              <svg className="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -250,4 +243,5 @@ const About = () => {
     </section>
   );
 };
+
 export default About;

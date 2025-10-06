@@ -171,3 +171,38 @@ body {
   font-display: swap;
   src: url('https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff2') format('woff2');
 }
+/* Улучшение для кнопок навигации слайдеров */
+@media (min-width: 1024px) {
+  .slider-container:hover .partners-swiper-prev,
+  .slider-container:hover .partners-swiper-next,
+  .slider-container:hover .about-swiper-prev,
+  .slider-container:hover .about-swiper-next {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* Улучшение адаптивности для мобильных */
+@media (max-width: 768px) {
+  .slider-container {
+    padding: 0 10px;
+  }
+  
+  .about-swiper-prev,
+  .about-swiper-next {
+    display: none; /* Скрываем кнопки на мобильных */
+  }
+}
+
+/* Плавный скролл для всех браузеров */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Улучшение доступности для фокуса */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
