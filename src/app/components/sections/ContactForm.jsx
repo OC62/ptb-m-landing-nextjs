@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion'; // Добавлен импорт motion
 import GlassmorphicButton from '../ui/GlassmorphicButton';
 import StandaloneCaptcha from '../../contacts/components/StandaloneCaptcha';
 
