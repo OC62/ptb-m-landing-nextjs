@@ -206,3 +206,44 @@ a:focus-visible {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* Подавление предупреждений Яндекс.Капчи */
+.smart-captcha {
+  width: 100% !important;
+  min-height: 85px !important;
+}
+
+/* Улучшение совместимости с Яндекс.Метрикой */
+.yandex-metrika {
+  display: none !important;
+}
+
+/* Скрытие отладочной информации Яндекс.Капчи */
+[class*="captcha"] iframe {
+  border: none !important;
+}
+
+/* Улучшение для медленных сетей */
+@media (max-width: 768px) {
+  .smart-captcha {
+    transform: scale(0.9);
+    transform-origin: left top;
+  }
+  
+  .captcha-container {
+    min-height: 120px !important;
+  }
+}
+
+/* Предотвращение конфликтов с блокировщиками рекламы */
+img[src*="metrika"] {
+  display: none !important;
+}
+
+/* Улучшение доступности */
+@media (prefers-reduced-motion: reduce) {
+  .smart-captcha {
+    animation: none !important;
+    transition: none !important;
+  }
+}

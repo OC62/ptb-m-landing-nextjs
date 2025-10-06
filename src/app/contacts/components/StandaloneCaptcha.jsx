@@ -23,10 +23,13 @@ const StandaloneCaptcha = () => {
             localStorage.setItem('yandex_captcha_token', token);
             localStorage.setItem('yandex_captcha_timestamp', Date.now().toString());
           },
-          // Явно указываем уровень надежности и отключаем проблемные функции
+          // Указываем уровень надежности и отключаем проблемные функции
           robustnessLevel: 'easy',
           webview: false,
-          hideChallengeContainer: false
+          hideChallengeContainer: false,
+          // Добавляем параметры для подавления предупреждений
+          suppressConsole: true,
+          disableSensors: true, // Отключаем датчики, которые вызывают ошибки политики
         });
 
         setIsLoaded(true);
