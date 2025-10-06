@@ -8,56 +8,77 @@ const YANDEX_METRIKA_ID = 103534344;
 
 export default function YandexMetrika() {
   useEffect(() => {
-    // Ждем немного перед инициализацией
-    const timer = setTimeout(() => {
+    // Ждем полной загрузки страницы
+    const initMetrika = () => {
       if (typeof window === 'undefined') return;
-
+      
       // Проверяем блокировку
       const isBlocked = 
         localStorage?.getItem('ym_disable') === '1' ||
         localStorage?.getItem('cookie_decision') === 'rejected';
 
       if (isBlocked) {
-        console.log('Yandex Metrika disabled by user');
+        console.log('🔴 Яндекс.Метрика отключена пользователем');
         return;
       }
 
-      // Инициализация
-      if (!window.ym) {
-        window.ym = function() {
-          (window.ym.a = window.ym.a || []).push(arguments);
-        };
-        window.ym.l = Date.now();
-      }
-
-      // Инициализация счетчика
+      // Защищенная инициализация
       try {
+        if (!window.ym) {
+          window.ym = function() {
+            (window.ym.a = window.ym.a || []).push(arguments);
+          };
+          window.ym.l = Date.now();
+        }
+
+        // Минимальная конфигурация
         window.ym(YANDEX_METRIKA_ID, 'init', {
-          clickmap: true,
-          trackLinks: true,
-          accurateTrackBounce: true,
-          webvisor: false, // Отключаем вебвизор для уменьшения ошибок
+          clickmap: false,
+          trackLinks: false,
+          accurateTrackBounce: false,
+          webvisor: false,
           trackHash: false,
           ecommerce: false,
           ut: 'noindex'
         });
-        
-        console.log('Yandex Metrika initialized with ID:', YANDEX_METRIKA_ID);
-      } catch (error) {
-        console.warn('Yandex Metrika init error:', error);
-      }
-    }, 1000);
 
-    return () => clearTimeout(timer);
+        console.log('🟢 Яндекс.Метрика инициализирована, ID:', YANDEX_METRIKA_ID);
+        
+        // Принудительно отправляем pageview
+        setTimeout(() => {
+          if (window.ym) {
+            window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href);
+            console.log('📊 PageView отправлен в Яндекс.Метрику');
+          }
+        }, 2000);
+        
+      } catch (error) {
+        console.warn('⚠️ Ошибка инициализации Яндекс.Метрики:', error);
+      }
+    };
+
+    // Запускаем после полной загрузки
+    if (document.readyState === 'complete') {
+      initMetrika();
+    } else {
+      window.addEventListener('load', initMetrika);
+    }
+
+    return () => {
+      window.removeEventListener('load', initMetrika);
+    };
   }, []);
 
-  // Не загружаем если пользователь отказался
+  // Не рендерим если пользователь отказался
   if (typeof window !== 'undefined') {
     const isBlocked = 
       localStorage?.getItem('ym_disable') === '1' ||
       localStorage?.getItem('cookie_decision') === 'rejected';
     
-    if (isBlocked) return null;
+    if (isBlocked) {
+      console.log('🔴 Яндекс.Метрика не загружена - пользователь отказался');
+      return null;
+    }
   }
 
   return (
@@ -66,8 +87,12 @@ export default function YandexMetrika() {
         id="yandex-metrika"
         strategy="afterInteractive"
         src="https://mc.yandex.ru/metrika/tag.js"
-        onLoad={() => console.log('Yandex Metrika script loaded')}
-        onError={() => console.warn('Yandex Metrika script failed to load')}
+        onLoad={() => {
+          console.log('🟢 Скрипт Яндекс.Метрики загружен');
+        }}
+        onError={(e) => {
+          console.warn('🔴 Ошибка загрузки скрипта Яндекс.Метрики:', e);
+        }}
       />
       
       <noscript>
