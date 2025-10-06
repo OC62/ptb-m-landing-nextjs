@@ -119,25 +119,97 @@ body {
   }
 }
 
-/* Адаптация Яндекс Капчи для мобильных */
+/* Фикс высоты для Яндекс Капчи на мобильных */
 @media (max-width: 768px) {
   .smart-captcha {
-    transform: scale(0.9);
-    transform-origin: left top;
+    width: 100% !important;
+    min-height: 180px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   
   .captcha-container {
-    min-height: 100px !important;
-    overflow-x: auto;
+    min-height: 200px !important;
+    padding: 15px 10px !important;
+    overflow: visible !important;
+  }
+  
+  /* Фикс для сообщения об ограничении - размещаем его внизу */
+  .smart-captcha__message {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+    padding: 8px 5px !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    background: #f8f9fa !important;
+    border-top: 1px solid #e9ecef !important;
+    color: #6c757d !important;
+    order: 999 !important; /* Всегда в конце */
+  }
+  
+  /* Основной контент капчи занимает доступное пространство */
+  .smart-captcha > div:first-child {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 120px !important;
+  }
+  
+  /* Гарантируем, что iframe капчи будет виден */
+  .smart-captcha iframe {
+    position: relative !important;
+    z-index: 10 !important;
+    min-height: 120px !important;
   }
 }
 
 @media (max-width: 480px) {
   .smart-captcha {
-    transform: scale(0.8);
+    min-height: 200px !important;
   }
   
   .captcha-container {
-    min-height: 120px !important;
+    min-height: 220px !important;
+    padding: 20px 10px !important;
   }
+  
+  .smart-captcha > div:first-child {
+    min-height: 140px !important;
+  }
+  
+  .smart-captcha iframe {
+    min-height: 140px !important;
+  }
+  
+  .smart-captcha__message {
+    font-size: 9px !important;
+    padding: 6px 4px !important;
+  }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 360px) {
+  .smart-captcha {
+    min-height: 220px !important;
+  }
+  
+  .captcha-container {
+    min-height: 240px !important;
+  }
+}
+
+/* Общие стили для контейнера капчи */
+.captcha-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
