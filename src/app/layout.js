@@ -15,18 +15,121 @@ const inter = Inter({
 });
 
 export const metadata = {
-  // ... остальная metadata без изменений
+  title: {
+    default: 'ООО "ПТБ-М" - Профессиональная транспортная безопасность',
+    template: '%s | ООО "ПТБ-М"'
+  },
+  description: 'Комплексные решения по обеспечению транспортной безопасности. Аудит, мониторинг, обучение персонала, техническое оснащение объектов транспортной инфраструктуры.',
+  keywords: ['транспортная безопасность', 'ПТБ', 'ОТИ', 'аудит безопасности', 'мониторинг', 'обучение персонала', 'техническое оснащение'],
+  authors: [{ name: 'ООО "ПТБ-М"' }],
+  creator: 'ООО "ПТБ-М"',
+  publisher: 'ООО "ПТБ-М"',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://ptb-m.ru'),
+  alternates: {
+    canonical: '/',
+    languages: {
+      'ru-RU': '/',
+    },
+  },
+  openGraph: {
+    title: 'ООО "ПТБ-М" - Профессиональная транспортная безопасность',
+    description: 'Комплексные решения по обеспечению транспортной безопасности',
+    url: 'https://ptb-m.ru',
+    siteName: 'ООО "ПТБ-М"',
+    images: [
+      {
+        url: '/og-preview.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ООО "ПТБ-М" - Профессиональная транспортная безопасность',
+      },
+    ],
+    locale: 'ru_RU',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ООО "ПТБ-М" - Профессиональная транспортная безопасность',
+    description: 'Комплексные решения по обеспечению транспортной безопасности',
+    images: ['/og-preview.jpg'],
+  },
+  verification: {
+    // Яндекс.Вебмастер
+    yandex: 'your-yandex-verification-code',
+    // Google Search Console
+    google: 'your-google-verification-code',
+  },
 };
 
 function generateSchemaJSONLD() {
-  // ... без изменений
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ООО "ПТБ-М"',
+    description: 'Профессиональная транспортная безопасность',
+    url: 'https://ptb-m.ru',
+    logo: 'https://ptb-m.ru/logo.webp',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'ул. Большая Садовая, 102, офис 15',
+      addressLocality: 'Ростов-на-Дону',
+      postalCode: '344019',
+      addressCountry: 'RU',
+    },
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: '+7 (909) 407-23-74',
+      contactType: 'customer service',
+      email: 'info@ptb-m.ru',
+      areaServed: 'RU',
+      availableLanguage: 'Russian',
+    },
+    sameAs: [
+      // Добавьте ссылки на соцсети при наличии
+    ]
+  };
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ru" className="scroll-smooth">
       <head>
-        {/* ... head без изменений */}
+        {/* Базовые мета-теги */}
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {/* Фавиконки */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+        <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        
+        {/* Предзагрузка критических ресурсов */}
+        <link rel="preload" href="/images/bg_Hero.webp" as="image" />
+        <link rel="preload" href="/videos/backgroundanime.webm" as="video" type="video/webm" />
+        
+        {/* JSON-LD структурированные данные */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSchemaJSONLD()) }}
+        />
       </head>
       <body className={`${inter.className} antialiased`}>
         <ErrorBoundary>
@@ -37,36 +140,7 @@ export default function RootLayout({ children }) {
             <CookieBanner />
           </div>
 
-          {/* Улучшенная загрузка Яндекс Капчи (оставьте на будущее) */}
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function() {
-                  function loadCaptcha() {
-                    if (typeof window !== 'undefined' && !window.smartCaptcha) {
-                      var script = document.createElement('script');
-                      script.src = 'https://smartcaptcha.yandexcloud.net/captcha.js?render=onload&onload=onYandexCaptchaLoad';
-                      script.async = true;
-                      script.defer = true;
-                      document.head.appendChild(script);
-                    }
-                  }
-                  
-                  window.onYandexCaptchaLoad = function() {
-                    console.log('Yandex Captcha loaded successfully');
-                  };
-                  
-                  if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', loadCaptcha);
-                  } else {
-                    loadCaptcha();
-                  }
-                })();
-              `,
-            }}
-          />
-
-                  {/* Безопасная Яндекс.Метрика с отложенной загрузкой */}
+          {/* Безопасная Яндекс.Метрика с отложенной загрузкой */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
