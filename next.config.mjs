@@ -1,3 +1,4 @@
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -8,7 +9,8 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-  // Добавляем заголовки безопасности для разрешения Яндекс.Капчи
+  productionBrowserSourceMaps: false,
+  
   async headers() {
     return [
       {
@@ -21,15 +23,17 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://mc.yandex.ru; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://mc.yandex.ru;"
           }
         ],
       },
     ];
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production' ? {
-      exclude: ['error', 'warn'],
-    } : false,
+    removeConsole: process.env.NODE_ENV === 'production',
   },
   webpack: (config, { dev, isServer }) => {
     config.resolve.fallback = {

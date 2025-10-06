@@ -1,59 +1,87 @@
+// src/app/components/analytics/YandexMetrika.jsx
 'use client';
 
 import { useEffect } from 'react';
+import Script from 'next/script';
+
+const YANDEX_METRIKA_ID = 97540185;
 
 const YandexMetrika = () => {
   useEffect(() => {
-    // Проверяем, не заблокирована ли Метрика
-    const isMetrikaBlocked = () => {
-      return typeof window === 'undefined' || 
-             window.ym === undefined || 
-             navigator.doNotTrack === '1' ||
-             navigator.globalPrivacyControl;
+    // Функция для безопасной инициализации
+    const initMetrika = () => {
+      if (typeof window === 'undefined' || !window.ym) return;
+
+      try {
+        window.ym(YANDEX_METRIKA_ID, 'init', {
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+          trackHash: true,
+          ecommerce: false,
+        });
+        
+        console.log('Yandex Metrika initialized successfully');
+      } catch (error) {
+        console.error('Yandex Metrika initialization error:', error);
+      }
     };
 
-    if (isMetrikaBlocked()) {
-      console.log('Yandex Metrika blocked by user preferences');
-      return;
-    }
-
-    try {
-      // Создаем скрипт Метрики
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.innerHTML = `
-        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-        
-        ym(97540185, "init", {
-          clickmap:true,
-          trackLinks:true,
-          accurateTrackBounce:true,
-          webvisor:true,
-          ecommerce:"dataLayer",
-          defer: true
-        });
-      `;
-      
-      document.head.appendChild(script);
-      
-      // Добавляем noscript для случаев, когда JavaScript отключен
-      const noscript = document.createElement('noscript');
-      noscript.innerHTML = `
-        <div><img src="https://mc.yandex.ru/watch/97540185" style="position:absolute; left:-9999px;" alt="" /></div>
-      `;
-      document.body.appendChild(noscript);
-
-      console.log('Yandex Metrika loaded safely');
-    } catch (error) {
-      console.error('Yandex Metrika loading error:', error);
+    // Инициализируем после загрузки скрипта
+    if (window.ym) {
+      initMetrika();
+    } else {
+      window.ym = window.ym || function() {
+        (window.ym.a = window.ym.a || []).push(arguments);
+      };
+      window.ym.l = Date.now();
     }
   }, []);
 
-  return null;
+  return (
+    <>
+      <Script
+        id="yandex-metrika"
+        strategy="afterInteractive"
+        src="https://mc.yandex.ru/metrika/tag.js"
+        onLoad={() => {
+          if (window.ym && YANDEX_METRIKA_ID) {
+            window.ym(YANDEX_METRIKA_ID, 'init', {
+              clickmap: true,
+              trackLinks: true,
+              accurateTrackBounce: true,
+              webvisor: true,
+              trackHash: true
+            });
+          }
+        }}
+        onError={(e) => {
+          console.error('Yandex Metrika script failed to load', e);
+        }}
+      />
+      
+      <noscript>
+        <div>
+          <img 
+            src={`https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}`} 
+            style={{ position: 'absolute', left: '-9999px' }} 
+            alt="" 
+          />
+        </div>
+      </noscript>
+    </>
+  );
+};
+
+export const sendYandexMetricaEvent = (eventName, eventParams = {}) => {
+  if (typeof window !== 'undefined' && window.ym && YANDEX_METRIKA_ID) {
+    try {
+      window.ym(YANDEX_METRIKA_ID, 'reachGoal', eventName, eventParams);
+    } catch (error) {
+      console.error('Yandex Metrika event error:', error);
+    }
+  }
 };
 
 export default YandexMetrika;

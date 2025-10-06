@@ -1,8 +1,10 @@
+// src/app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import CookieBanner from "./components/layout/CookieBanner";
+import YandexMetrika from "./components/analytics/YandexMetrika";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,6 +66,8 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <CookieBanner />
+        
+        <YandexMetrika />
       </body>
     </html>
   );
