@@ -67,7 +67,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <CookieBanner />
         
-        {/* Яндекс.Метрика */}
+        {/* Яндекс.Метрика - подключается в конце */}
         <YandexMetrika />
       </body>
     </html>
