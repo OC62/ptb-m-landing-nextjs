@@ -7,36 +7,45 @@ import { useRef, useEffect, useState } from 'react';
 const HeroPreloader = ({ progress }) => {
   const videoRef = useRef(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
-    // Попытка воспроизвести видео после загрузки
-    const playVideo = async () => {
-      if (videoRef.current) {
-        try {
-          await videoRef.current.play();
-          setVideoLoaded(true);
-        } catch (error) {
-          console.log('Autoplay blocked, using fallback:', error);
-          setVideoLoaded(true); // Все равно продолжаем без видео
-        }
-      }
+    const videoElement = videoRef.current;
+    
+    const handleVideoLoad = () => {
+      setVideoLoaded(true);
+      // Попытка воспроизвести видео
+      videoElement.play().catch(error => {
+        console.log('Autoplay was prevented:', error);
+        // Продолжаем без автовоспроизведения
+      });
     };
 
-    if (videoRef.current) {
-      videoRef.current.addEventListener('loadeddata', playVideo);
-      // Fallback: если видео не загрузилось за 2 секунды, продолжаем без него
+    const handleVideoError = () => {
+      console.log('Video failed to load');
+      setVideoError(true);
+      setVideoLoaded(true); // Все равно продолжаем
+    };
+
+    if (videoElement) {
+      videoElement.addEventListener('loadeddata', handleVideoLoad);
+      videoElement.addEventListener('error', handleVideoError);
+      
+      // Fallback: если видео не загрузилось за 3 секунды, продолжаем без него
       const timeout = setTimeout(() => {
-        setVideoLoaded(true);
-      }, 2000);
+        if (!videoLoaded) {
+          console.log('Video loading timeout');
+          setVideoLoaded(true);
+        }
+      }, 3000);
 
       return () => {
-        if (videoRef.current) {
-          videoRef.current.removeEventListener('loadeddata', playVideo);
-        }
+        videoElement.removeEventListener('loadeddata', handleVideoLoad);
+        videoElement.removeEventListener('error', handleVideoError);
         clearTimeout(timeout);
       };
     }
-  }, []);
+  }, [videoLoaded]);
 
   return (
     <div 
@@ -45,7 +54,7 @@ const HeroPreloader = ({ progress }) => {
       aria-live="polite"
       aria-label="Загрузка главного раздела"
     >
-      {/* Фоновое видео с улучшенной загрузкой */}
+      {/* Фоновое видео с улучшенной обработкой ошибок */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video 
           ref={videoRef}
@@ -53,19 +62,18 @@ const HeroPreloader = ({ progress }) => {
           loop 
           muted 
           playsInline
-          preload="metadata" // Изменено с "auto" на "metadata" для оптимизации
-          className={`w-full h-full object-cover transition-opacity duration-500 ${
-            videoLoaded ? 'opacity-60' : 'opacity-0'
+          preload="metadata"
+          className={`w-full h-full object-cover transition-opacity duration-700 ${
+            videoLoaded && !videoError ? 'opacity-60' : 'opacity-0'
           }`}
           aria-hidden="true"
         >
           <source src="/videos/backgroundanime.webm" type="video/webm" />
-          {/* Fallback для браузеров без поддержки webm */}
           Ваш браузер не поддерживает видео в формате WebM.
         </video>
         
-        {/* Fallback градиент если видео не загрузилось */}
-        <div className={`absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 transition-opacity duration-500 ${
+        {/* Fallback градиент */}
+        <div className={`absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 transition-opacity duration-700 ${
           videoLoaded ? 'opacity-80' : 'opacity-100'
         }`}></div>
       </div>
