@@ -119,5 +119,25 @@ body {
   }
 }
 
-/* Удаляем старые стили прелоадера */
-/* .animation-preloader и связанные стили УДАЛЕНЫ */
+/* Адаптация Яндекс Капчи для мобильных */
+@media (max-width: 768px) {
+  .smart-captcha {
+    transform: scale(0.9);
+    transform-origin: left top;
+  }
+  
+  .captcha-container {
+    min-height: 100px !important;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .smart-captcha {
+    transform: scale(0.8);
+  }
+  
+  .captcha-container {
+    min-height: 120px !important;
+  }
+}
