@@ -66,44 +66,55 @@ export default function RootLayout({ children }) {
             }}
           />
 
-          {/* Безопасная версия Яндекс.Метрики */}
+                  {/* Безопасная Яндекс.Метрика с отложенной загрузкой */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
-                (function(m,e,t,r,i,k,a){
-                  // Проверяем, не загружен ли уже скрипт
-                  if (document.querySelector('script[src="' + r + '"]')) return;
+                (function() {
+                  // Ждем полной загрузки страницы
+                  if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initMetrika);
+                  } else {
+                    setTimeout(initMetrika, 3000);
+                  }
                   
-                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-                  m[i].l=1*new Date();
-                  
-                  // Создаем и настраиваем script элемент
-                  k=e.createElement(t);
-                  a=e.getElementsByTagName(t)[0];
-                  k.async=1;
-                  k.src=r;
-                  k.onload=function(){
-                    console.log('Yandex Metrika loaded successfully');
+                  function initMetrika() {
+                    // Проверяем, не загружена ли уже метрика
+                    if (window.ym || document.querySelector('script[src*="mc.yandex.ru"]')) {
+                      return;
+                    }
                     
-                    // Инициализируем счетчик после загрузки
-                    setTimeout(function() {
+                    var script = document.createElement('script');
+                    script.src = 'https://mc.yandex.ru/metrika/tag.js';
+                    script.async = true;
+                    script.defer = true;
+                    
+                    script.onload = function() {
+                      console.log('Yandex Metrika loaded safely');
+                      
+                      // Минимальная инициализация чтобы избежать конфликтов
                       if (typeof ym === 'function') {
-                        ym(103534344, "init", {
+                        ym(103534344, 'init', {
                           defer: true,
                           clickmap: true,
                           trackLinks: true,
                           accurateTrackBounce: true,
-                          webvisor: true,
-                          // Отключаем опасные функции, которые могут конфликтовать с React
-                          trackForms: false, // Отключаем отслеживание форм чтобы избежать конфликтов
-                          triggerEvent: false
+                          webvisor: false, // Отключаем вебвизор для уменьшения конфликтов
+                          trackForms: false, // Полностью отключаем отслеживание форм
+                          triggerEvent: false,
+                          trackHash: false,
+                          ecommerce: false
                         });
                       }
-                    }, 500);
-                  };
-                  
-                  a.parentNode.insertBefore(k,a);
-                })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+                    };
+                    
+                    script.onerror = function() {
+                      console.warn('Yandex Metrika failed to load');
+                    };
+                    
+                    document.head.appendChild(script);
+                  }
+                })();
               `,
             }}
           />
