@@ -119,77 +119,25 @@ body {
   }
 }
 
-/* Фикс для Яндекс Капчи на мобильных */
+/* Адаптация Яндекс Капчи для мобильных */
 @media (max-width: 768px) {
   .smart-captcha {
-    width: 100% !important;
-    min-width: 320px !important;
-    transform: none !important;
+    transform: scale(0.9);
+    transform-origin: left top;
   }
   
   .captcha-container {
-    min-height: 160px !important;
-    padding: 10px 5px !important;
-    overflow: visible !important;
-  }
-  
-  /* Фикс для сообщения об ограничении */
-  .smart-captcha__message {
-    position: static !important;
-    display: block !important;
-    width: 100% !important;
-    margin-top: 8px !important;
-    margin-bottom: 0 !important;
-    padding: 5px !important;
-    font-size: 11px !important;
-    line-height: 1.3 !important;
-    text-align: center !important;
-    background: #f8f9fa !important;
-    border-top: 1px solid #e9ecef !important;
-    color: #6c757d !important;
-    order: 2; /* Помещаем сообщение после капчи */
-  }
-  
-  /* Гарантируем, что iframe капчи будет выше */
-  .smart-captcha iframe {
-    position: relative !important;
-    z-index: 10 !important;
-    order: 1; /* Капча идет первой */
-  }
-  
-  /* Контейнер для flex-позиционирования */
-  .smart-captcha > div {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
+    min-height: 100px !important;
+    overflow-x: auto;
   }
 }
 
 @media (max-width: 480px) {
-  .captcha-container {
-    min-height: 180px !important;
-    padding: 15px 8px !important;
+  .smart-captcha {
+    transform: scale(0.8);
   }
   
-  .smart-captcha__message {
-    font-size: 10px !important;
-    padding: 8px 5px !important;
+  .captcha-container {
+    min-height: 120px !important;
   }
 }
-
-/* Общие стили для контейнера капчи */
-.captcha-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
-/* Альтернативное решение - скрыть сообщение об ограничении */
-/* Раскомментируйте если предыдущее решение не помогает */
-/*
-.smart-captcha__message {
-  display: none !important;
-}
-*/
