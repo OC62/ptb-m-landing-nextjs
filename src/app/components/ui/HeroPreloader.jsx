@@ -2,8 +2,42 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useRef, useEffect, useState } from 'react';
 
 const HeroPreloader = ({ progress }) => {
+  const videoRef = useRef(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  useEffect(() => {
+    // Попытка воспроизвести видео после загрузки
+    const playVideo = async () => {
+      if (videoRef.current) {
+        try {
+          await videoRef.current.play();
+          setVideoLoaded(true);
+        } catch (error) {
+          console.log('Autoplay blocked, using fallback:', error);
+          setVideoLoaded(true); // Все равно продолжаем без видео
+        }
+      }
+    };
+
+    if (videoRef.current) {
+      videoRef.current.addEventListener('loadeddata', playVideo);
+      // Fallback: если видео не загрузилось за 2 секунды, продолжаем без него
+      const timeout = setTimeout(() => {
+        setVideoLoaded(true);
+      }, 2000);
+
+      return () => {
+        if (videoRef.current) {
+          videoRef.current.removeEventListener('loadeddata', playVideo);
+        }
+        clearTimeout(timeout);
+      };
+    }
+  }, []);
+
   return (
     <div 
       className="relative min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900"
@@ -11,21 +45,29 @@ const HeroPreloader = ({ progress }) => {
       aria-live="polite"
       aria-label="Загрузка главного раздела"
     >
-      {/* Фоновое видео */}
+      {/* Фоновое видео с улучшенной загрузкой */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video 
+          ref={videoRef}
           autoPlay 
           loop 
           muted 
           playsInline
-          preload="auto"
-          className="w-full h-full object-cover opacity-60"
+          preload="metadata" // Изменено с "auto" на "metadata" для оптимизации
+          className={`w-full h-full object-cover transition-opacity duration-500 ${
+            videoLoaded ? 'opacity-60' : 'opacity-0'
+          }`}
           aria-hidden="true"
         >
           <source src="/videos/backgroundanime.webm" type="video/webm" />
+          {/* Fallback для браузеров без поддержки webm */}
+          Ваш браузер не поддерживает видео в формате WebM.
         </video>
+        
         {/* Fallback градиент если видео не загрузилось */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 opacity-80"></div>
+        <div className={`absolute inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 transition-opacity duration-500 ${
+          videoLoaded ? 'opacity-80' : 'opacity-100'
+        }`}></div>
       </div>
       
       {/* Основной контент прелоадера */}

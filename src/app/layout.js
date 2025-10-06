@@ -121,9 +121,12 @@ export default function RootLayout({ children }) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         
-        {/* Предзагрузка критических ресурсов */}
-        <link rel="preload" href="/images/bg_Hero.webp" as="image" />
-        <link rel="preload" href="/videos/backgroundanime.webm" as="video" type="video/webm" />
+        {/* Предзагрузка только критических изображений */}
+        <link 
+          rel="preload" 
+          href="/images/bg_Hero.webp" 
+          as="image" 
+        />
         
         {/* JSON-LD структурированные данные */}
         <script
