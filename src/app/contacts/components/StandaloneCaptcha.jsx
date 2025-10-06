@@ -61,20 +61,18 @@ const StandaloneCaptcha = () => {
   }, []);
 
   return (
-    <div className="standalone-captcha w-full">
-      <div className="mb-3 text-sm text-gray-600 text-center">
-        Подтвердите, что вы не робот
-      </div>
-      
-      {/* Увеличиваем высоту контейнера для мобильных */}
+    <div className="standalone-captcha">
       <div 
         ref={captchaContainerRef}
-        className="captcha-container w-full min-h-[180px] md:min-h-[140px] border border-gray-300 rounded-lg bg-white flex items-center justify-center overflow-visible"
+        className="captcha-container min-h-[85px] w-full flex items-center justify-center border border-gray-300 rounded-lg bg-white"
+        style={{ minWidth: '300px' }}
       />
       
-      <div className="mt-3 text-xs text-gray-500 text-center">
-        Нажимая на кнопку, вы соглашаетесь с политикой конфиденциальности
-      </div>
+      {!isLoaded && (
+        <div className="text-blue-600 text-sm text-center mt-2">
+          Загрузка проверки безопасности...
+        </div>
+      )}
     </div>
   );
 };
