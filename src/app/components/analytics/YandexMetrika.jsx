@@ -8,10 +8,30 @@ const YANDEX_METRIKA_ID = 97540185;
 
 const YandexMetrika = () => {
   useEffect(() => {
-    // Функция для безопасной инициализации
-    const initMetrika = () => {
-      if (typeof window === 'undefined' || !window.ym) return;
+    // Безопасная инициализация Яндекс.Метрики
+    const initYandexMetrika = () => {
+      if (typeof window === 'undefined') return;
 
+      // Проверяем, не заблокирована ли метрика
+      const isBlocked = 
+        window.localStorage?.getItem('ym_disable') === '1' ||
+        navigator.doNotTrack === '1' ||
+        navigator.globalPrivacyControl;
+
+      if (isBlocked) {
+        console.log('Yandex Metrika blocked by user preferences');
+        return;
+      }
+
+      // Создаем глобальную функцию ym если ее нет
+      if (!window.ym) {
+        window.ym = function() {
+          (window.ym.a = window.ym.a || []).push(arguments);
+        };
+        window.ym.l = Date.now();
+      }
+
+      // Инициализируем счетчик
       try {
         window.ym(YANDEX_METRIKA_ID, 'init', {
           clickmap: true,
@@ -20,6 +40,8 @@ const YandexMetrika = () => {
           webvisor: true,
           trackHash: true,
           ecommerce: false,
+          // Отключаем рекламные функции чтобы избежать блокировки
+          ut: 'noindex'
         });
         
         console.log('Yandex Metrika initialized successfully');
@@ -28,15 +50,8 @@ const YandexMetrika = () => {
       }
     };
 
-    // Инициализируем после загрузки скрипта
-    if (window.ym) {
-      initMetrika();
-    } else {
-      window.ym = window.ym || function() {
-        (window.ym.a = window.ym.a || []).push(arguments);
-      };
-      window.ym.l = Date.now();
-    }
+    // Запускаем инициализацию
+    initYandexMetrika();
   }, []);
 
   return (
@@ -46,14 +61,21 @@ const YandexMetrika = () => {
         strategy="afterInteractive"
         src="https://mc.yandex.ru/metrika/tag.js"
         onLoad={() => {
-          if (window.ym && YANDEX_METRIKA_ID) {
-            window.ym(YANDEX_METRIKA_ID, 'init', {
-              clickmap: true,
-              trackLinks: true,
-              accurateTrackBounce: true,
-              webvisor: true,
-              trackHash: true
-            });
+          // Дополнительная инициализация после загрузки скрипта
+          if (typeof window !== 'undefined' && window.ym && YANDEX_METRIKA_ID) {
+            try {
+              window.ym(YANDEX_METRIKA_ID, 'init', {
+                clickmap: true,
+                trackLinks: true,
+                accurateTrackBounce: true,
+                webvisor: true,
+                trackHash: true,
+                ecommerce: false,
+                ut: 'noindex'
+              });
+            } catch (error) {
+              console.error('Yandex Metrika onLoad error:', error);
+            }
           }
         }}
         onError={(e) => {
@@ -61,12 +83,19 @@ const YandexMetrika = () => {
         }}
       />
       
+      {/* Noscript для случаев с отключенным JavaScript */}
       <noscript>
         <div>
           <img 
-            src={`https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}`} 
-            style={{ position: 'absolute', left: '-9999px' }} 
-            alt="" 
+            src={`https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}`}
+            style={{ 
+              position: 'absolute', 
+              left: '-9999px',
+              width: '1px',
+              height: '1px'
+            }} 
+            alt=""
+            loading="lazy"
           />
         </div>
       </noscript>
@@ -74,6 +103,7 @@ const YandexMetrika = () => {
   );
 };
 
+// Вспомогательная функция для отправки событий
 export const sendYandexMetricaEvent = (eventName, eventParams = {}) => {
   if (typeof window !== 'undefined' && window.ym && YANDEX_METRIKA_ID) {
     try {

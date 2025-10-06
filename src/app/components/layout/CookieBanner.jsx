@@ -1,70 +1,57 @@
-// nextjs/src/app/components/layout/CookieBanner.jsx
+// src/app/components/layout/CookieBanner.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
+import { disableYandexMetrika } from '@/app/utils/yandexMetrikaHelper';
 
 const CookieBanner = () => {
-  const [showBanner, setShowBanner] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Проверяем, есть ли consent в localStorage
-    const consent = localStorage.getItem('cookie-consent');
-    
-    // Показываем баннер, только если consent ещё не дан
-    if (!consent) {
-      // Небольшая задержка для лучшего UX
-      const timer = setTimeout(() => setShowBanner(true), 2000);
-      return () => clearTimeout(timer);
+    // Проверяем, было ли уже принято решение о cookies
+    const cookieDecision = localStorage.getItem('cookie_decision');
+    if (!cookieDecision) {
+      setIsVisible(true);
     }
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookie-consent', 'accepted');
-    setShowBanner(false);
+    localStorage.setItem('cookie_decision', 'accepted');
+    setIsVisible(false);
   };
 
-  const declineCookies = () => {
-    localStorage.setItem('cookie-consent', 'declined');
-    setShowBanner(false);
+  const rejectCookies = () => {
+    localStorage.setItem('cookie_decision', 'rejected');
+    // Отключаем Яндекс.Метрику при отказе
+    disableYandexMetrika();
+    setIsVisible(false);
   };
 
-  if (!showBanner) return null;
+  if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-8 md:right-8 z-50">
-      <div className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 md:p-6 max-w-2xl mx-auto">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-          <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              🍪 Мы используем cookies
-            </h3>
-            <p className="text-sm text-gray-700">
-              Этот сайт использует cookies для улучшения работы и анализа трафика. 
-              Продолжая использовать сайт, вы соглашаетесь с нашей{' '}
-              <a 
-                href="/policy" 
-                className="text-blue-600 hover:text-blue-800 underline text-xs"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Политикой конфиденциальности
-              </a>.
-            </p>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-            <button
-              onClick={acceptCookies}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Принять
-            </button>
-            <button
-              onClick={declineCookies}
-              className="border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-md text-sm font-medium transition-colors"
-            >
-              Отклонить
-            </button>
-          </div>
+    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:max-w-md bg-white border border-gray-200 rounded-lg shadow-lg z-50 p-4">
+      <div className="flex flex-col space-y-3">
+        <h3 className="text-lg font-semibold text-gray-800">
+          Использование cookies
+        </h3>
+        <p className="text-sm text-gray-600">
+          Мы используем Яндекс.Метрику для анализа посещаемости сайта. 
+          Это помогает нам улучшать наш сервис. Вы можете отказаться от сбора данных.
+        </p>
+        <div className="flex space-x-3">
+          <button
+            onClick={acceptCookies}
+            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+          >
+            Принять
+          </button>
+          <button
+            onClick={rejectCookies}
+            className="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors text-sm font-medium"
+          >
+            Отклонить
+          </button>
         </div>
       </div>
     </div>
