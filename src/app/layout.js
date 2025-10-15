@@ -6,7 +6,7 @@ import Footer from "./components/layout/Footer";
 import CookieBanner from "./components/layout/CookieBanner";
 import YandexMetrika from "./components/analytics/YandexMetrika";
 import DynamicBreadcrumbSchema from "./components/DynamicBreadcrumbSchema";
-import { generateSchemaJSONLD } from "./seo.config";
+import { generateSchemaJSONLD, generateServiceSchema } from "./seo.config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -106,7 +106,8 @@ export const metadata = {
   manifest: '/site.webmanifest',
 };
 
-const organizationSchema = generateSchemaJSONLD();
+const localBusinessSchema = generateSchemaJSONLD();
+const serviceSchema = generateServiceSchema();
 
 export default function RootLayout({ children }) {
   return (
@@ -115,10 +116,16 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
         
-        {/* Organization Schema */}
+        {/* LocalBusiness Schema */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: organizationSchema }}
+          dangerouslySetInnerHTML={{ __html: localBusinessSchema }}
+        />
+        
+        {/* Service Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serviceSchema }}
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>

@@ -1,6 +1,6 @@
 // src/app/seo.config.js
 
-// !! БАЗОВЫЕ ДАННЫЕ САЙТА - ИСПРАВЛЕНЫ ПРОБЕЛЫ И СДЕЛАН АБСОЛЮТНЫЙ URL ДЛЯ КАРТИНКИ !!
+// !! БАЗОВЫЕ ДАННЫЕ САЙТА !!
 export const SEO_BASE_DATA = {
   siteName: 'ООО "ПТБ-М"',
   siteUrl: 'https://www.xn----9sb8ajp.xn--p1ai',
@@ -74,10 +74,10 @@ export const SEO_PAGE_TEMPLATES = {
   },
 };
 
-// !! СХЕМА Schema.org (Organization) - ИСПРАВЛЕНЫ URL !!
-export const ORGANIZATION_SCHEMA = {
+// !! СХЕМА Schema.org (LocalBusiness) - ДЛЯ ЛОКАЛЬНОГО SEO !!
+export const LOCAL_BUSINESS_SCHEMA = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "LocalBusiness",
   "name": SEO_BASE_DATA.siteName,
   "url": SEO_BASE_DATA.siteUrl,
   "logo": `${SEO_BASE_DATA.siteUrl}/images/logo.webp`,
@@ -110,12 +110,69 @@ export const ORGANIZATION_SCHEMA = {
   "serviceArea": {
     "@type": "AdministrativeArea",
     "name": "Ростов-на-Дону и Ростовская область, Россия"
+  },
+  "openingHours": "Mo-Fr 09:00-18:00",
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "47.222531",
+    "longitude": "39.718879"
+  }
+};
+
+// !! СХЕМА Schema.org (Service) - ДЛЯ УСЛУГ !!
+export const SERVICE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Транспортная безопасность",
+  "provider": {
+    "@type": "Organization",
+    "name": SEO_BASE_DATA.siteName
+  },
+  "description": "Комплексное обеспечение транспортной безопасности объектов дорожного хозяйства",
+  "areaServed": "Российская Федерация",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Услуги по транспортной безопасности",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Аудит транспортной безопасности",
+          "description": "Комплексная проверка объектов транспортной инфраструктуры"
+        }
+      },
+      {
+        "@type": "Offer", 
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Разработка паспортов безопасности",
+          "description": "Создание документации в соответствии с ФЗ-16"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service", 
+          "name": "Обучение персонала",
+          "description": "Подготовка специалистов по транспортной безопасности"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Техническое оснащение",
+          "description": "Установка систем видеонаблюдения и контроля доступа"
+        }
+      }
+    ]
   }
 };
 
 // !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ JSON-LD !!
 export const generateSchemaJSONLD = () => {
-  return JSON.stringify(ORGANIZATION_SCHEMA);
+  return JSON.stringify(LOCAL_BUSINESS_SCHEMA);
 };
 
 // !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ BREADCRUMB SCHEMA - ИСПРАВЛЕНА !!
@@ -132,4 +189,9 @@ export const generateBreadcrumbSchema = (breadcrumbs) => {
     "@type": "BreadcrumbList",
     "itemListElement": itemList
   });
+};
+
+// !! ФУНКЦИЯ ДЛЯ ГЕНЕРАЦИИ SERVICE SCHEMA !!
+export const generateServiceSchema = () => {
+  return JSON.stringify(SERVICE_SCHEMA);
 };
