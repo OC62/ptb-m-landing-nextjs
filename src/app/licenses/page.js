@@ -1,6 +1,6 @@
 // src/app/licenses/page.js
 import Licenses from '@/components/sections/Licenses';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
 // Используем шаблон 'licenses'
@@ -14,7 +14,7 @@ export const metadata = generateMetadataForPage('licenses', {
 export default function LicensesPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <Licenses />
       </main>

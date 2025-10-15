@@ -1,11 +1,11 @@
 // src/app/cases/page.js
 import CasesSlider from '@/components/sections/CasesSlider';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 
 export default function CasesPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <CasesSlider />
       </main>

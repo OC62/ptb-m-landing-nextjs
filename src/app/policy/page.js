@@ -1,5 +1,5 @@
 // nextjs/src/app/policy/page.js
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
 // Используем шаблон 'policy'
@@ -13,7 +13,7 @@ export const metadata = generateMetadataForPage('policy', {
 export default function PolicyPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <article>
           <header className="mb-8">

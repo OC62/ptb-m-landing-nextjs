@@ -1,6 +1,6 @@
 // src/app/partners/page.js
 import Partners from '@/components/sections/Partners';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
 // Используем шаблон 'partners'
@@ -14,7 +14,7 @@ export const metadata = generateMetadataForPage('partners', {
 export default function PartnersPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <Partners />
       </main>

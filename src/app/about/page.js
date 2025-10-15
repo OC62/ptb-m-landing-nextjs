@@ -1,6 +1,6 @@
 // src/app/about/page.js
 import About from '@/components/sections/About';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Убедитесь в правильности пути
 
 // Используем шаблон 'about'
@@ -14,7 +14,7 @@ export const metadata = generateMetadataForPage('about', {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <About />
       </main>

@@ -1,6 +1,6 @@
 // src/app/services/page.js
 import ServicesGrid from '@/components/sections/ServicesGrid';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 
 // !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Было '../../lib/generateMetadata' или '../lib/generateMetadata'
@@ -17,7 +17,7 @@ export const metadata = generateMetadataForPage('services', { // Использ�
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <ServicesGrid />
       </main>

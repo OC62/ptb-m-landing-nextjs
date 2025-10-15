@@ -1,6 +1,6 @@
 // src/app/careers/page.js
 import Careers from '@/components/sections/Careers';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import SectionNavigation from '@/components/SectionNavigation';
 
 // !! ИМПОРТ ИЗ НОВОЙ СИСТЕМЫ SEO - !! ИСПРАВЛЕН ПУТЬ !! 
 import { generateMetadataForPage } from '../lib/generateMetadata'; // Было '../../lib/generateMetadata' или '../lib/generateMetadata'
@@ -17,7 +17,7 @@ export const metadata = generateMetadataForPage('careers', { // Использу
 export default function CareersPage() {
   return (
     <div className="min-h-screen bg-white">
-      <Breadcrumbs />
+      <SectionNavigation />
       <main role="main">
         <Careers />
       </main>
