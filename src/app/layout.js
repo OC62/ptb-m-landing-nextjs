@@ -6,7 +6,10 @@ import Footer from "./components/layout/Footer";
 import CookieBanner from "./components/layout/CookieBanner";
 import YandexMetrika from "./components/analytics/YandexMetrika";
 import DynamicBreadcrumbSchema from "./components/DynamicBreadcrumbSchema";
+import PermissionsPolicy from "./components/PermissionsPolicy";
 import { generateSchemaJSONLD, generateServiceSchema } from "./seo.config";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -116,6 +119,9 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
         
+        {/* Политика разрешений */}
+        <PermissionsPolicy />
+        
         {/* LocalBusiness Schema */}
         <script
           type="application/ld+json"
@@ -138,6 +144,11 @@ export default function RootLayout({ children }) {
         </main>
         <Footer />
         <CookieBanner />
+        
+        {/* Vercel Analytics и Speed Insights */}
+        <Analytics />
+        <SpeedInsights />
+        
         <YandexMetrika />
       </body>
     </html>
