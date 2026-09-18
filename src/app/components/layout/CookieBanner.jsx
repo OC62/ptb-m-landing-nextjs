@@ -1,33 +1,73 @@
 // src/app/components/layout/CookieBanner.jsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  COOKIE_CONSENT_EVENT,
+  COOKIE_DECISION_KEY,
+  getYandexDisableFlagName,
+  LEGACY_YM_DISABLE_KEY,
+  resolveAnalyticsConsent,
+} from '../analytics/consent.mjs';
 
 const CookieBanner = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const cookieDecision = localStorage.getItem('cookie_decision');
-    if (!cookieDecision) {
+    let cookieDecision = null;
+    let legacyYandexDisabled = null;
+
+    try {
+      cookieDecision = localStorage.getItem(COOKIE_DECISION_KEY);
+      legacyYandexDisabled = localStorage.getItem(LEGACY_YM_DISABLE_KEY);
+    } catch {
+      // If storage is unavailable, stay privacy-conservative and ask again.
+    }
+
+    const decision = resolveAnalyticsConsent(
+      cookieDecision,
+      legacyYandexDisabled,
+    );
+
+    if (!decision) {
       const timer = setTimeout(() => setIsVisible(true), 3000);
       return () => clearTimeout(timer);
     }
+
+    return undefined;
   }, []);
 
+  const broadcastDecision = (decision) => {
+    window.dispatchEvent(
+      new CustomEvent(COOKIE_CONSENT_EVENT, {
+        detail: { decision },
+      }),
+    );
+  };
+
   const acceptCookies = () => {
-    localStorage.setItem('cookie_decision', 'accepted');
-    localStorage.removeItem('ym_disable');
+    try {
+      localStorage.setItem(COOKIE_DECISION_KEY, 'accepted');
+      localStorage.removeItem(LEGACY_YM_DISABLE_KEY);
+    } catch {
+      // Consent still applies for this page even if persistence is unavailable.
+    }
+
+    window[getYandexDisableFlagName()] = false;
+    broadcastDecision('accepted');
     setIsVisible(false);
-    
-    // Перезагружаем для применения метрики
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   const rejectCookies = () => {
-    localStorage.setItem('cookie_decision', 'rejected');
-    localStorage.setItem('ym_disable', '1');
+    try {
+      localStorage.setItem(COOKIE_DECISION_KEY, 'rejected');
+      localStorage.setItem(LEGACY_YM_DISABLE_KEY, '1');
+    } catch {
+      // Rejection still applies for this page even if persistence is unavailable.
+    }
+
+    window[getYandexDisableFlagName()] = true;
+    broadcastDecision('rejected');
     setIsVisible(false);
   };
 
@@ -40,7 +80,7 @@ const CookieBanner = () => {
           Использование cookies
         </h3>
         <p className="text-sm text-gray-600">
-          Мы используем Яндекс.Метрику для анализа посещаемости сайта. 
+          Мы используем Яндекс.Метрику для анализа посещаемости сайта.
           Вы можете отказаться от сбора данных.
         </p>
         <div className="flex space-x-3">
