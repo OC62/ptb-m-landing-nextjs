@@ -1,45 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
-import HeroPreloader from "../ui/HeroPreloader";
 import { useNavigation } from "@/app/hooks/useNavigation";
 
-const Hero = ({ onLoadComplete }) => {
-  const [isHeroLoading, setIsHeroLoading] = useState(true);
-  const [heroProgress, setHeroProgress] = useState(0);
+const Hero = () => {
   const { navigateToContact } = useNavigation();
-
-  useEffect(() => {
-    const totalTime = 1500;
-    const steps = 8;
-    const stepTime = totalTime / steps;
-    
-    let currentStep = 0;
-    const progressTimer = setInterval(() => {
-      currentStep++;
-      setHeroProgress((currentStep / steps) * 100);
-      
-      if (currentStep >= steps) {
-        clearInterval(progressTimer);
-        setIsHeroLoading(false);
-        if (onLoadComplete) {
-          setTimeout(() => {
-            onLoadComplete();
-          }, 200);
-        }
-      }
-    }, stepTime);
-
-    return () => {
-      clearInterval(progressTimer);
-    };
-  }, [onLoadComplete]);
-
-  if (isHeroLoading) {
-    return <HeroPreloader progress={heroProgress} />;
-  }
 
   return (
     <section
@@ -72,13 +38,15 @@ const Hero = ({ onLoadComplete }) => {
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="max-w-3xl"
         >
           <motion.h2
             id="hero-heading"
+            initial={false}
+            animate={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left"
           >
             Комплексное обеспечение транспортной безопасности для объектов
@@ -87,7 +55,7 @@ const Hero = ({ onLoadComplete }) => {
 
           <motion.p
             className="text-lg md:text-xl mb-8 text-blue-100 text-left"
-            initial={{ opacity: 0 }}
+            initial={false}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
@@ -96,7 +64,7 @@ const Hero = ({ onLoadComplete }) => {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.4 }}
           >

@@ -1,9 +1,8 @@
 // src/app/HomePageContent.js
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import Skeleton from './components/ui/Skeleton';
 
 // Динамический импорт компонентов
 const Hero = dynamic(() => import('@/app/components/sections/Hero'), {
@@ -23,58 +22,35 @@ const SectionFallback = () => (
 );
 
 export default function HomePageContent() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [heroLoaded, setHeroLoaded] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleHeroLoadComplete = () => {
-    setHeroLoaded(true);
-  };
-
-  if (isLoading) {
-    return <Skeleton />;
-  }
-
   return (
     <div className="min-h-screen bg-white">
       <main role="main">
-        <Hero onLoadComplete={handleHeroLoadComplete} />
-        
-        {heroLoaded && (
-          <>
-            <Suspense fallback={<SectionFallback />}>
-              <About />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <ServicesGrid />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <CasesSlider />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <Careers />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <Licenses />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <Partners />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <CommunitySupport />
-            </Suspense>
-            <Suspense fallback={<SectionFallback />}>
-              <ContactForm />
-            </Suspense>
-          </>
-        )}
+        <Hero />
+
+        <Suspense fallback={<SectionFallback />}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ServicesGrid />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CasesSlider />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Careers />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Licenses />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Partners />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CommunitySupport />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <ContactForm />
+        </Suspense>
       </main>
     </div>
   );
