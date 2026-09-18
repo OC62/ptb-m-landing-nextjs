@@ -1,6 +1,7 @@
 // nextjs/src/app/api/send/route.js
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { getClientIp, validateSmartCaptcha } from './captcha.mjs';
 
 // --- Секретный ключ капчи из .env ---
 const CAPTCHA_SECRET = process.env.CAPTCHA_SECRET;
@@ -59,58 +60,52 @@ export async function POST(request) {
     }
 
     // --- 3. Проверка капчи ---
-    if (!IS_CAPTCHA_DISABLED && CAPTCHA_SECRET) {
-      if (!smartcaptcha_token && smartcaptcha_token !== '') {
+    const captchaResult = await validateSmartCaptcha({
+      secret: CAPTCHA_SECRET,
+      token: smartcaptcha_token,
+      ip: getClientIp(request.headers),
+    });
+
+    if (!captchaResult.ok) {
+      if (captchaResult.reason === 'configuration') {
+        logError(new Error('CAPTCHA_SECRET is missing'), 'Ошибка конфигурации капчи');
         return NextResponse.json(
-          { 
+          {
             status: 'error',
-            message: 'Не передан токен капчи.' 
+            message: 'Сервис проверки безопасности временно недоступен. Попробуйте позже.',
+          },
+          { status: 503 }
+        );
+      }
+
+      if (captchaResult.reason === 'missing-token') {
+        return NextResponse.json(
+          {
+            status: 'error',
+            message: 'Не передан токен капчи.',
           },
           { status: 400 }
         );
       }
 
-      if (smartcaptcha_token === '') {
-        console.log('Пустой токен капчи, проверка пропущена (локальная разработка).');
-      } else {
-        try {
-          const captchaResponse = await fetch(
-            `https://smartcaptcha.yandexcloud.net/validate?secret=${CAPTCHA_SECRET}&token=${smartcaptcha_token}&ip=${request.ip || ''}`,
-            { 
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-              },
-            }
-          );
-
-          if (!captchaResponse.ok) {
-            throw new Error(`HTTP error! status: ${captchaResponse.status}`);
-          }
-
-          const captchaData = await captchaResponse.json();
-
-          if (!captchaData || captchaData.status !== 'ok') {
-            const errorCodes = captchaData.error_codes ? captchaData.error_codes.join(', ') : 'Неизвестная ошибка';
-            return NextResponse.json(
-              { 
-                status: 'error',
-                message: `Проверка "Я не робот" не пройдена. Коды ошибок: ${errorCodes}` 
-              },
-              { status: 400 }
-            );
-          }
-        } catch (captchaError) {
-          logError(captchaError, 'Ошибка проверки капчи');
-          return NextResponse.json(
-            { 
-              status: 'error',
-              message: 'Ошибка при проверке капчи. Попробуйте позже.' 
-            },
-            { status: 500 }
-          );
-        }
+      if (captchaResult.reason === 'rejected') {
+        return NextResponse.json(
+          {
+            status: 'error',
+            message: 'Проверка "Я не робот" не пройдена.',
+          },
+          { status: 400 }
+        );
       }
+
+      logError(new Error('SmartCaptcha validation unavailable'), 'Ошибка проверки капчи');
+      return NextResponse.json(
+        {
+          status: 'error',
+          message: 'Ошибка при проверке капчи. Попробуйте позже.',
+        },
+        { status: 503 }
+      );
     }
 
     // --- 4. Настройка Nodemailer ---
