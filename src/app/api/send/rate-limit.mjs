@@ -16,8 +16,14 @@ return count
 `.trim();
 
 function getRateLimitConfig(env) {
-  const endpointValue = env?.UPSTASH_REDIS_REST_URL?.trim();
-  const token = env?.UPSTASH_REDIS_REST_TOKEN?.trim();
+  const endpointValue = (
+    env?.UPSTASH_REDIS_REST_URL?.trim()
+    || env?.KV_REST_API_URL?.trim()
+  );
+  const token = (
+    env?.UPSTASH_REDIS_REST_TOKEN?.trim()
+    || env?.KV_REST_API_TOKEN?.trim()
+  );
   const hmacSecret = env?.RATE_LIMIT_HMAC_SECRET?.trim();
 
   if (!endpointValue || !token || !hmacSecret || hmacSecret.length < 32) {

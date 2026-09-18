@@ -214,3 +214,24 @@ test('fails closed when Redis exceeds the timeout', async () => {
     reason: 'timeout',
   });
 });
+
+
+test('supports Vercel Marketplace KV REST environment variables', async () => {
+  const result = await checkContactRateLimit({
+    ip: '203.0.113.10',
+    env: {
+      KV_REST_API_URL: 'https://example.upstash.io',
+      KV_REST_API_TOKEN: 'redis-token',
+      RATE_LIMIT_HMAC_SECRET: 'a'.repeat(64),
+    },
+    now: () => 120_000,
+    fetchImpl: async () => responseWith({ result: 1 }),
+  });
+
+  assert.deepEqual(result, {
+    ok: true,
+    limit: 60,
+    remaining: 59,
+    reset: 180_000,
+  });
+});
