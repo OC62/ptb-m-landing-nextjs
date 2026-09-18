@@ -26,10 +26,11 @@ test('defaults analytics consent to no decision', () => {
 test('preserves legacy Yandex opt-out as rejection', () => {
   assert.equal(resolveAnalyticsConsent(null, '1'), 'rejected');
   assert.equal(resolveAnalyticsConsent('unknown', '1'), 'rejected');
+  assert.equal(resolveAnalyticsConsent('accepted', '1'), 'rejected');
 });
 
-test('explicit cookie decision takes precedence over legacy flag', () => {
-  assert.equal(resolveAnalyticsConsent('accepted', '1'), 'accepted');
+test('uses the explicit cookie decision when no legacy opt-out exists', () => {
+  assert.equal(resolveAnalyticsConsent('accepted', null), 'accepted');
   assert.equal(resolveAnalyticsConsent('rejected', null), 'rejected');
 });
 
