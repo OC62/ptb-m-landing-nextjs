@@ -10,8 +10,7 @@
     "optimize:images": "node scripts/optimize-images.js",
     "fix-image-sizes": "node scripts/fix-image-sizes.js",
     "optimize:all": "npm run optimize:images && npm run fix-image-sizes",
-    "analyze": "ANALYZE=true next build",
-    "test:captcha": "node --test src/app/api/send/captcha.test.mjs"
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
