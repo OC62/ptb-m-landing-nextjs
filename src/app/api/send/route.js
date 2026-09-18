@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { getClientIp, validateSmartCaptcha } from './captcha.mjs';
+import { escapeHtml, messageToHtml, validateAndNormalizeContactInput } from './contact-input.mjs';
 
 // --- Секретный ключ капчи из .env ---
 const CAPTCHA_SECRET = process.env.CAPTCHA_SECRET;
@@ -34,30 +35,22 @@ export async function POST(request) {
       );
     }
 
-    const { name, email, phone, message, smartcaptcha_token } = formData;
+    const { smartcaptcha_token } = formData;
 
-    // --- 1. Проверка обязательных полей ---
-    if (!name || !email || !phone || !message) {
+    // --- 1. Серверная валидация и нормализация пользовательского ввода ---
+    const inputResult = validateAndNormalizeContactInput(formData);
+
+    if (!inputResult.ok) {
       return NextResponse.json(
-        { 
+        {
           status: 'error',
-          message: 'Все поля обязательны для заполнения.' 
+          message: inputResult.message,
         },
         { status: 400 }
       );
     }
 
-    // --- 2. Валидация email ---
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { 
-          status: 'error',
-          message: 'Некорректный формат email адреса.' 
-        },
-        { status: 400 }
-      );
-    }
+    const { name, email, phone, message } = inputResult.values;
 
     // --- 3. Проверка капчи ---
     const captchaResult = await validateSmartCaptcha({
@@ -127,7 +120,7 @@ export async function POST(request) {
     const mailOptions = {
       from: `"${process.env.FROM_NAME || 'Форма обратной связи'}" <${process.env.SMTP_USER}>`,
       to: process.env.TO_EMAIL,
-      replyTo: `${name} <${email}>`,
+      replyTo: { name, address: email },
       subject: `📩 Новое сообщение с сайта от ${name}`,
       text: `
 Имя: ${name}
@@ -141,12 +134,12 @@ ${message}
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #2563eb;">📬 Новое сообщение с сайта</h2>
           <div style="background: #f8fafc; padding: 20px; border-radius: 8px; border-left: 4px solid #2563eb;">
-            <p><strong>👤 Имя:</strong> ${name}</p>
-            <p><strong>📧 Email:</strong> ${email}</p>
-            <p><strong>📞 Телефон:</strong> ${phone}</p>
+            <p><strong>👤 Имя:</strong> ${escapeHtml(name)}</p>
+            <p><strong>📧 Email:</strong> ${escapeHtml(email)}</p>
+            <p><strong>📞 Телефон:</strong> ${escapeHtml(phone)}</p>
             <p><strong>💬 Сообщение:</strong></p>
             <div style="background: white; padding: 15px; border-radius: 4px; border: 1px solid #e2e8f0;">
-              ${message.replace(/\n/g, '<br>')}
+              ${messageToHtml(message)}
             </div>
           </div>
           <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">
