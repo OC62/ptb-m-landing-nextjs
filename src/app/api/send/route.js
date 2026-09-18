@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { getClientIp, validateSmartCaptcha } from './captcha.mjs';
+import { checkContactRateLimit } from './rate-limit.mjs';
 import { escapeHtml, messageToHtml, validateAndNormalizeContactInput } from './contact-input.mjs';
 
 // --- Секретный ключ капчи из .env ---
@@ -21,6 +22,43 @@ const logError = (error, context = '') => {
 
 export async function POST(request) {
   try {
+    const clientIp = getClientIp(request.headers);
+    const rateLimitResult = await checkContactRateLimit({
+      ip: clientIp,
+    });
+
+    if (!rateLimitResult.ok) {
+      if (rateLimitResult.reason === 'limited') {
+        return NextResponse.json(
+          {
+            status: 'error',
+            message: 'Слишком много запросов. Попробуйте позже.',
+          },
+          {
+            status: 429,
+            headers: {
+              'Retry-After': String(rateLimitResult.retryAfterSeconds),
+            },
+          },
+        );
+      }
+
+      logError(
+        new Error(
+          `Contact rate limit unavailable: ${rateLimitResult.reason}`,
+        ),
+        'Ошибка rate limit',
+      );
+
+      return NextResponse.json(
+        {
+          status: 'error',
+          message: 'Сервис защиты формы временно недоступен. Попробуйте позже.',
+        },
+        { status: 503 },
+      );
+    }
+
     let formData;
     try {
       formData = await request.json();
@@ -56,7 +94,7 @@ export async function POST(request) {
     const captchaResult = await validateSmartCaptcha({
       secret: CAPTCHA_SECRET,
       token: smartcaptcha_token,
-      ip: getClientIp(request.headers),
+      ip: clientIp,
     });
 
     if (!captchaResult.ok) {

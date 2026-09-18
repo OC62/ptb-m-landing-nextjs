@@ -37,6 +37,7 @@ jobs:
           node --test
           src/app/api/send/captcha.test.mjs
           src/app/api/send/contact-input.test.mjs
+          src/app/api/send/rate-limit.test.mjs
           src/app/components/analytics/consent.test.mjs
 
       - name: Lint
