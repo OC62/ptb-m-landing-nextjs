@@ -1,109 +1,115 @@
 // src/app/components/analytics/YandexMetrika.jsx
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Script from 'next/script';
-
-const YANDEX_METRIKA_ID = 103534344;
+import {
+  COOKIE_CONSENT_EVENT,
+  COOKIE_DECISION_KEY,
+  getYandexDisableFlagName,
+  isConsentDecision,
+  isYandexMetrikaAllowed,
+  LEGACY_YM_DISABLE_KEY,
+  resolveAnalyticsConsent,
+  YANDEX_METRIKA_ID,
+} from './consent.mjs';
 
 export default function YandexMetrika() {
-  useEffect(() => {
-    // Ждем полной загрузки страницы
-    const initMetrika = () => {
-      if (typeof window === 'undefined') return;
-      
-      // Проверяем блокировку
-      const isBlocked = 
-        localStorage?.getItem('ym_disable') === '1' ||
-        localStorage?.getItem('cookie_decision') === 'rejected';
+  const [consentDecision, setConsentDecision] = useState(null);
 
-      if (isBlocked) {
-        console.log('🔴 Яндекс.Метрика отключена пользователем');
+  useEffect(() => {
+    const disableFlagName = getYandexDisableFlagName();
+
+    const applyDecision = (decision) => {
+      if (!isConsentDecision(decision)) {
+        window[disableFlagName] = true;
+        setConsentDecision(null);
         return;
       }
 
-      // Защищенная инициализация
-      try {
-        if (!window.ym) {
-          window.ym = function() {
-            (window.ym.a = window.ym.a || []).push(arguments);
-          };
-          window.ym.l = Date.now();
-        }
-
-        // Минимальная конфигурация
-        window.ym(YANDEX_METRIKA_ID, 'init', {
-          clickmap: false,
-          trackLinks: false,
-          accurateTrackBounce: false,
-          webvisor: false,
-          trackHash: false,
-          ecommerce: false,
-          ut: 'noindex'
-        });
-
-        console.log('🟢 Яндекс.Метрика инициализирована, ID:', YANDEX_METRIKA_ID);
-        
-        // Принудительно отправляем pageview
-        setTimeout(() => {
-          if (window.ym) {
-            window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href);
-            console.log('📊 PageView отправлен в Яндекс.Метрику');
-          }
-        }, 2000);
-        
-      } catch (error) {
-        console.warn('⚠️ Ошибка инициализации Яндекс.Метрики:', error);
-      }
+      window[disableFlagName] = !isYandexMetrikaAllowed(decision);
+      setConsentDecision(decision);
     };
 
-    // Запускаем после полной загрузки
-    if (document.readyState === 'complete') {
-      initMetrika();
-    } else {
-      window.addEventListener('load', initMetrika);
+    let cookieDecision = null;
+    let legacyYandexDisabled = null;
+
+    try {
+      cookieDecision = localStorage.getItem(COOKIE_DECISION_KEY);
+      legacyYandexDisabled = localStorage.getItem(LEGACY_YM_DISABLE_KEY);
+    } catch {
+      // If storage is unavailable, keep analytics disabled by default.
     }
 
+    applyDecision(
+      resolveAnalyticsConsent(cookieDecision, legacyYandexDisabled),
+    );
+
+    const handleConsentChange = (event) => {
+      applyDecision(event?.detail?.decision);
+    };
+
+    window.addEventListener(COOKIE_CONSENT_EVENT, handleConsentChange);
+
     return () => {
-      window.removeEventListener('load', initMetrika);
+      window.removeEventListener(COOKIE_CONSENT_EVENT, handleConsentChange);
     };
   }, []);
 
-  // Не рендерим если пользователь отказался
-  if (typeof window !== 'undefined') {
-    const isBlocked = 
-      localStorage?.getItem('ym_disable') === '1' ||
-      localStorage?.getItem('cookie_decision') === 'rejected';
-    
-    if (isBlocked) {
-      console.log('🔴 Яндекс.Метрика не загружена - пользователь отказался');
-      return null;
+  const initializeMetrika = useCallback(() => {
+    if (
+      typeof window === 'undefined' ||
+      !isYandexMetrikaAllowed(consentDecision)
+    ) {
+      return;
     }
+
+    window[getYandexDisableFlagName()] = false;
+
+    if (!window.ym) {
+      window.ym = function() {
+        (window.ym.a = window.ym.a || []).push(arguments);
+      };
+      window.ym.l = Date.now();
+    }
+
+    try {
+      window.ym(YANDEX_METRIKA_ID, 'init', {
+        clickmap: false,
+        trackLinks: false,
+        accurateTrackBounce: false,
+        webvisor: false,
+        trackHash: false,
+        ecommerce: false,
+        ut: 'noindex',
+      });
+
+      setTimeout(() => {
+        if (
+          window.ym &&
+          isYandexMetrikaAllowed(consentDecision)
+        ) {
+          window.ym(YANDEX_METRIKA_ID, 'hit', window.location.href);
+        }
+      }, 2000);
+    } catch (error) {
+      console.warn('Ошибка инициализации Яндекс.Метрики:', error);
+    }
+  }, [consentDecision]);
+
+  if (!isYandexMetrikaAllowed(consentDecision)) {
+    return null;
   }
 
   return (
-    <>
-      <Script
-        id="yandex-metrika"
-        strategy="afterInteractive"
-        src="https://mc.yandex.ru/metrika/tag.js"
-        onLoad={() => {
-          console.log('🟢 Скрипт Яндекс.Метрики загружен');
-        }}
-        onError={(e) => {
-          console.warn('🔴 Ошибка загрузки скрипта Яндекс.Метрики:', e);
-        }}
-      />
-      
-      <noscript>
-        <div>
-          <img 
-            src={`https://mc.yandex.ru/watch/${YANDEX_METRIKA_ID}`}
-            style={{ position: 'absolute', left: '-9999px' }} 
-            alt="" 
-          />
-        </div>
-      </noscript>
-    </>
+    <Script
+      id="yandex-metrika"
+      strategy="afterInteractive"
+      src="https://mc.yandex.ru/metrika/tag.js"
+      onReady={initializeMetrika}
+      onError={(error) => {
+        console.warn('Ошибка загрузки скрипта Яндекс.Метрики:', error);
+      }}
+    />
   );
 }
