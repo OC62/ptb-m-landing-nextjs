@@ -8,12 +8,12 @@ export function isConsentDecision(value) {
 }
 
 export function resolveAnalyticsConsent(cookieDecision, legacyYandexDisabled) {
-  if (isConsentDecision(cookieDecision)) {
-    return cookieDecision;
-  }
-
   if (legacyYandexDisabled === '1') {
     return 'rejected';
+  }
+
+  if (isConsentDecision(cookieDecision)) {
+    return cookieDecision;
   }
 
   return null;
