@@ -578,6 +578,10 @@
 }
 
 
+.employeeBrand {
+  display: none;
+}
+
 /* 02 static closeout: exact Leonardo photographic source + live canonical UI. */
 @media (min-width: 1024px) {
   .hero {
