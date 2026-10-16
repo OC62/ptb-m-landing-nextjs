@@ -28,19 +28,19 @@ export default function HomePageContent() {
         <Hero />
 
         <Suspense fallback={<SectionFallback />}>
-          <About />
-        </Suspense>
-        <Suspense fallback={<SectionFallback />}>
           <ServicesGrid />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <CasesSlider />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Careers />
+          <Licenses />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
-          <Licenses />
+          <About />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Careers />
         </Suspense>
         <Suspense fallback={<SectionFallback />}>
           <Partners />
@@ -51,6 +51,15 @@ export default function HomePageContent() {
         <Suspense fallback={<SectionFallback />}>
           <ContactForm />
         </Suspense>
+
+
+
+
+
+
+
+
+
       </main>
     </div>
   );
