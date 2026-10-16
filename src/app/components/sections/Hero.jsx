@@ -1,86 +1,94 @@
-"use client";
-import { motion } from "framer-motion";
-import GlassmorphicButton from "../ui/GlassmorphicButton";
 import Image from "next/image";
-import { useNavigation } from "@/app/hooks/useNavigation";
+import Link from "next/link";
+import styles from "./Hero.module.css";
 
-const Hero = () => {
-  const { navigateToContact } = useNavigation();
+const directions = [
+  ["01", "Защита объектов", "Обеспечение транспортной безопасности"],
+  ["02", "Аудит безопасности", "Оценка системы защиты объекта"],
+  ["03", "Обучение персонала", "Подготовка в сфере транспортной безопасности"],
+  ["04", "Консультации", "Ответы на вопросы о защите объектов"],
+];
 
+const desktopCards = [
+  ["Профильная специализация", "Транспортная безопасность объектов дорожного хозяйства", "M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z M8 12l3 3 5-6"],
+  ["Комплексный подход", "Услуги по защите от актов незаконного вмешательства", "m12 3 10 5-10 5L2 8l10-5Z M2 12l10 5 10-5 M2 16l10 5 10-5"],
+  ["Документы", "Ознакомьтесь с реквизитами и документами компании", "M14 2H5v20h14V7l-5-5Z M14 2v5h5 M8 12h8 M8 16h8"],
+  ["Открытый диалог", "Обсудите задачу со специалистом", "M21 11a9 9 0 0 1-9 9H4l-3 3V11a10 10 0 0 1 20 0Z M7 11h.01 M12 11h.01 M17 11h.01"],
+];
+
+export default function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden pt-16"
-      aria-labelledby="hero-heading"
-    >
-      <h1 className="sr-only">
-        Транспортная безопасность в Ростове-на-Дону | ООО ПТБ-М
-      </h1>
-
-      {/* Оптимизированное фоновое изображение */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <section id="hero" className={styles.hero} aria-labelledby="hero-heading">
+      <div className={styles.image} aria-hidden="true">
         <Image
-          src="/images/bg_Hero.webp"
-          alt="Фон: дорожный объект, мост"
+          src="/images/hero-night-highway-v2.webp"
+          alt=""
           fill
           priority
-          quality={80}
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgDRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaUMk9SQILJdsSDbq6t//Z"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-900/85 to-transparent"
-          aria-hidden="true"
+          quality={85}
+          sizes="100vw"
+          className={styles.photo}
         />
       </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          initial={false}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl"
-        >
-          <motion.h2
-            id="hero-heading"
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 text-white leading-tight text-left"
-          >
-            Комплексное обеспечение транспортной безопасности для объектов
-            дорожного хозяйства с 2017 года в Ростове-на-Дону и других регионах РФ.
-          </motion.h2>
-
-          <motion.p
-            className="text-lg md:text-xl mb-8 text-blue-100 text-left"
-            initial={false}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            ООО "Подразделение транспортной безопасности -М" – профессионалы,
-            которым можно доверять
-          </motion.p>
-
-          <motion.div
-            initial={false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.4 }}
-          >
-            <GlassmorphicButton
-              variant="primary"
-              size="large"
-              onClick={navigateToContact}
-              aria-label="Получить консультацию по транспортной безопасности"
-              className="focus-visible"
-            >
-              Получить консультацию
-            </GlassmorphicButton>
-          </motion.div>
-        </motion.div>
+      <div className={styles.shade} aria-hidden="true" />
+      <div className={styles.diagonal} aria-hidden="true" />
+      <div className={styles.inner}>
+        <div className={styles.content}>
+          <p className={styles.eyebrow}>
+            БЕЗОПАСНЫЕ ДОРОГИ —<br />УСТОЙЧИВАЯ СТРАНА
+          </p>
+          <h1 id="hero-heading" className={styles.heading}>
+            ОБЕСПЕЧЕНИЕ{" "}
+            <span className={styles.accent}>ТРАНСПОРТНОЙ</span>{" "}
+            БЕЗОПАСНОСТИ
+          </h1>
+          <p className={styles.description}>
+            ПТБ-М оказывает комплекс услуг по защите объектов дорожного хозяйства
+            от актов незаконного вмешательства в соответствии с требованиями
+            законодательства.
+          </p>
+          <div className={styles.actions}>
+            <Link href="/contacts" className={`${styles.button} ${styles.primary}`}>
+              Получить консультацию <span aria-hidden="true">→</span>
+            </Link>
+            <Link href="/services" className={`${styles.button} ${styles.secondary}`}>
+              Наши услуги <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+        <p className={styles.aside}>
+          КОНТРОЛЬ<br />ПРОФИЛАКТИКА<br />ЗАЩИТА<br />НАДЁЖНОСТЬ
+        </p>
+        <p className={styles.desktopNote}>
+          ИНФРАСТРУКТУРА<br />В ДВИЖЕНИИ<br />ПОД НАДЁЖНОЙ<br />ЗАЩИТОЙ
+        </p>
+        <ul className={styles.desktopCards} aria-label="О работе с ПТБ-М">
+          {desktopCards.map(([title, description, icon]) => (
+            <li key={title} className={styles.trustCard}>
+              <span className={styles.icon} aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" focusable="false">
+                  <path d={icon} />
+                </svg>
+              </span>
+              <div>
+                <p className={styles.trustTitle}>{title}</p>
+                <p className={styles.trustDescription}>{description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <ul className={`${styles.directions} ${styles.compactDirections}`} aria-label="Направления работы ПТБ-М">
+          {directions.map(([number, title, description]) => (
+            <li key={number} className={styles.card}>
+              <span className={styles.number} aria-hidden="true">{number}</span>
+              <div>
+                <p className={styles.cardTitle}>{title}</p>
+                <p className={styles.cardDescription}>{description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
-};
-export default Hero;
+}
