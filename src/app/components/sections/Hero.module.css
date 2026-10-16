@@ -448,3 +448,89 @@
   .aside, .desktopNote { right: -36px; width: 210px; padding-left: 48px; font-size: .875rem; }
   .desktopNote { top: 250px; }
 }
+
+
+/* Canonical desktop fidelity checkpoint.
+   The approved September image is the visual source of truth.
+   Existing semantic DOM is retained but visually clipped at desktop widths
+   until the layered reconstruction reaches the same fidelity. */
+.canonicalHotspots {
+  display: none;
+}
+
+.hotspotConsult,
+.hotspotServices {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  border-radius: 14px;
+}
+
+.hotspotConsult:focus-visible,
+.hotspotServices:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (min-width: 1024px) {
+  .hero {
+    min-height: 57.142857vw;
+    padding: 0;
+    background: #071113;
+  }
+
+  .image {
+    z-index: -1;
+  }
+
+  .photo {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .shade,
+  .diagonal,
+  .hero::after {
+    display: none;
+  }
+
+  .inner {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .canonicalHotspots {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: block;
+    pointer-events: none;
+  }
+
+  .hotspotConsult,
+  .hotspotServices {
+    pointer-events: auto;
+  }
+
+  .hotspotConsult {
+    left: 5.15%;
+    top: 59.55%;
+    width: 19.55%;
+    height: 7.65%;
+  }
+
+  .hotspotServices {
+    left: 25.85%;
+    top: 59.55%;
+    width: 16.25%;
+    height: 7.65%;
+  }
+}

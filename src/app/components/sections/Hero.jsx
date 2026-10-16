@@ -21,14 +21,18 @@ export default function Hero() {
     <section id="hero" className={styles.hero} aria-labelledby="hero-heading">
       <div className={styles.image} aria-hidden="true">
         <Image
-          src="/images/hero-night-highway-v2.webp"
+          src="/images/hero-v2/canonical/hero-reference-desktop.jpg"
           alt=""
           fill
           priority
-          quality={85}
+          quality={96}
           sizes="100vw"
           className={styles.photo}
         />
+      </div>
+      <div className={styles.canonicalHotspots} aria-label="Действия первого экрана">
+        <Link href="/contacts" className={styles.hotspotConsult} aria-label="Получить консультацию" />
+        <Link href="/services" className={styles.hotspotServices} aria-label="Наши услуги" />
       </div>
       <div className={styles.shade} aria-hidden="true" />
       <div className={styles.diagonal} aria-hidden="true" />

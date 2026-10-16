@@ -36,6 +36,14 @@ const Header = () => {
     };
   }, [isMenuOpen, isMobileView]);
 
+  const canonicalDesktopNav = [
+    { name: 'Услуги', href: '/services' },
+    { name: 'Опыт', href: '/cases' },
+    { name: 'Документы', href: '/licenses' },
+    { name: 'О компании', href: '/about' },
+    { name: 'Контакты', href: '/contacts' },
+  ];
+
   const navItems = [
     { name: 'Главная', href: '/', aria: 'Перейти на главную страницу' },
     {
@@ -163,6 +171,53 @@ const Header = () => {
       </div>
     );
   };
+
+  if (pathname === '/' && !isMobileView) {
+    return (
+      <header
+        ref={headerRef}
+        className="absolute inset-x-0 top-0 z-50 h-[112px] bg-transparent"
+        role="banner"
+        aria-label="Навигация первого экрана"
+      >
+        <Link
+          href="/"
+          aria-label="Перейти на главную страницу"
+          className="absolute left-[3.2%] top-[2.5%] h-[94%] w-[26%] rounded-sm focus-visible"
+        />
+        <nav aria-label="Основное меню" className="absolute inset-0">
+          {canonicalDesktopNav.map((item, index) => {
+            const positions = [
+              ['36.1%', '7.2%'],
+              ['42.2%', '6.8%'],
+              ['47.9%', '8.5%'],
+              ['55.0%', '10.5%'],
+              ['63.0%', '7.6%'],
+            ];
+            return (
+              <Link
+                key={item.name}
+                href={item.href}
+                aria-label={item.name}
+                className="absolute top-[27%] h-[50%] rounded-sm focus-visible"
+                style={{ left: positions[index][0], width: positions[index][1] }}
+              />
+            );
+          })}
+        </nav>
+        <span
+          aria-hidden="true"
+          className="absolute left-[72.7%] top-[25%] h-[50%] w-[4.7%]"
+        />
+        <button
+          type="button"
+          onClick={navigateToContact}
+          aria-label="Получить консультацию"
+          className="absolute left-[78.0%] top-[16%] h-[63%] w-[17.8%] rounded-xl bg-transparent focus-visible"
+        />
+      </header>
+    );
+  }
 
   return (
     <header
