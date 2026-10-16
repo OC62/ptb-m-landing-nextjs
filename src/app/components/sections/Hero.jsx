@@ -31,8 +31,16 @@ export default function Hero() {
         />
       </div>
       <div className={styles.canonicalHotspots} aria-label="Действия первого экрана">
-        <Link href="/contacts" className={styles.hotspotConsult} aria-label="Получить консультацию" />
-        <Link href="/services" className={styles.hotspotServices} aria-label="Наши услуги" />
+        <Link href="#contact" className={styles.hotspotConsult} aria-label="Получить консультацию" />
+        <Link href="#services" className={styles.hotspotServices} aria-label="Наши услуги" />
+      </div>
+      <div className={styles.canonicalPanelContrast} aria-hidden="true">
+        <p className={styles.canonicalPanelTop}>
+          КОНТРОЛЬ<br />ПРОФИЛАКТИКА<br />ЗАЩИТА<br />НАДЁЖНОСТЬ
+        </p>
+        <p className={styles.canonicalPanelBottom}>
+          ИНФРАСТРУКТУРА<br />В ДВИЖЕНИИ<br />ПОД НАДЁЖНОЙ<br />ЗАЩИТОЙ
+        </p>
       </div>
       <div className={styles.shade} aria-hidden="true" />
       <div className={styles.diagonal} aria-hidden="true" />
