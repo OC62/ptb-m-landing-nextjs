@@ -239,3 +239,212 @@
   .cardDescription { font-size: .8125rem; }
   .diagonal { top: 90px; bottom: auto; height: 280px; }
 }
+
+.desktopCards,
+.desktopNote {
+  display: none;
+}
+
+/* 02A is desktop-only: preserve the existing composition below 1024px. */
+@media (min-width: 1024px) {
+  .hero {
+    min-height: max(810px, 56.28vw);
+    padding: clamp(144px, 9.75vw, 164px) 0 44px;
+  }
+
+  .photo { object-position: center top; }
+
+  .shade {
+    background: linear-gradient(90deg, rgba(3, 12, 14, .88), rgba(3, 12, 14, .7) 34%, rgba(3, 12, 14, .02) 65%), linear-gradient(0deg, rgba(4, 15, 17, .9), transparent 23%);
+  }
+
+  .diagonal {
+    inset: 108px auto 140px -160px;
+    width: 250px;
+    border-color: rgba(0, 213, 123, .45);
+    background: linear-gradient(90deg, rgba(8, 29, 31, .5), rgba(24, 54, 58, .12));
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: 0;
+    top: 96px;
+    bottom: 35px;
+    width: 380px;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    background: linear-gradient(90deg, rgba(3, 16, 18, .15), rgba(3, 16, 18, .8));
+    pointer-events: none;
+  }
+
+  .inner { width: min(100% - 96px, 1576px); }
+
+  .content {
+    max-width: 740px;
+    padding: 0 0 46px clamp(20px, 2.65vw, 44px);
+  }
+
+  .eyebrow {
+    position: relative;
+    width: fit-content;
+    margin-bottom: 18px;
+    font-size: clamp(.875rem, 1.08vw, 1.125rem);
+    line-height: 1.3;
+    color: #00d547;
+  }
+
+  .eyebrow::after {
+    content: "";
+    position: absolute;
+    top: .5em;
+    left: calc(100% + 16px);
+    width: 90px;
+    height: 1px;
+    background: linear-gradient(90deg, #00df74 35%, transparent);
+  }
+
+  .heading {
+    width: fit-content;
+    font-size: clamp(2.4rem, 3.6vw, 3.875rem);
+    line-height: 1.03;
+    letter-spacing: -.025em;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, .25);
+    transform: scaleX(1.14);
+    transform-origin: left center;
+  }
+
+  .accent { color: #00c53d; }
+
+  .description {
+    max-width: 620px;
+    margin-top: clamp(44px, 3.6vw, 60px);
+    font-size: clamp(1rem, 1.2vw, 1.25rem);
+    line-height: 1.4;
+    color: #f0f3f3;
+  }
+
+  .actions { gap: 24px; margin-top: clamp(40px, 3.9vw, 65px); }
+
+  .button {
+    min-height: 74px;
+    padding: 20px 30px;
+    border-radius: 16px;
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+
+  .primary {
+    min-width: 350px;
+    border-color: #13ef86;
+    background: linear-gradient(115deg, #006c2b, #005d2c 70%, #006e32);
+    box-shadow: inset 0 0 18px rgba(0, 255, 116, .65), 0 0 22px rgba(0, 231, 111, .16);
+  }
+
+  .secondary {
+    min-width: 290px;
+    border-color: #b2cbce;
+    background: linear-gradient(125deg, rgba(22, 43, 48, .8), rgba(4, 13, 18, .85));
+    box-shadow: inset 0 1px 4px rgba(223, 249, 250, .25);
+  }
+
+  .aside,
+  .desktopNote {
+    position: absolute;
+    display: block;
+    right: -48px;
+    top: 0;
+    width: 246px;
+    padding: 42px 24px 32px 58px;
+    margin: 0;
+    border: 1px solid rgba(141, 192, 195, .55);
+    border-radius: 22px 0 22px 0;
+    background: linear-gradient(120deg, rgba(24, 57, 61, .8), rgba(12, 27, 35, .55));
+    clip-path: polygon(18% 0, 100% 0, 100% 72%, 82% 100%, 0 100%, 0 28%);
+    box-shadow: inset 14px 8px 25px rgba(0, 216, 126, .1);
+    color: #e1e9eb;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .aside::before,
+  .desktopNote::before {
+    content: "";
+    display: block;
+    width: 26px;
+    height: 2px;
+    margin-bottom: 16px;
+    background: #00e76b;
+    box-shadow: 0 0 10px rgba(0, 255, 132, .6);
+  }
+
+  .desktopNote {
+    top: clamp(300px, calc(35vw - 200px), 385px);
+    padding-top: 34px;
+    padding-bottom: 22px;
+    font-size: .9375rem;
+    background: linear-gradient(120deg, rgba(6, 28, 28, .82), rgba(5, 16, 20, .78));
+  }
+
+  .compactDirections { display: none; }
+
+  .desktopCards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .trustCard {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 154px;
+    padding: 24px;
+    border: 1px solid rgba(153, 186, 188, .55);
+    border-radius: 16px;
+    background: linear-gradient(125deg, rgba(56, 77, 82, .62), rgba(7, 22, 25, .9));
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, .2), inset 0 -10px 22px rgba(0, 204, 115, .045);
+  }
+
+  .trustCard::after {
+    content: "";
+    position: absolute;
+    inset: auto 20% -1px 12%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00c573, transparent);
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 64px;
+    height: 76px;
+    border: 1px solid rgba(147, 207, 188, .5);
+    border-radius: 13px;
+    background: linear-gradient(135deg, rgba(0, 77, 39, .5), rgba(0, 14, 17, .75));
+    box-shadow: inset 3px 2px 12px rgba(0, 234, 116, .16), 0 0 15px rgba(0, 221, 125, .08);
+    color: #eef6f3;
+  }
+
+  .icon svg { width: 36px; height: 36px; }
+  .trustTitle { margin: 0; font-size: 1.125rem; font-weight: 500; line-height: 1.3; }
+  .trustDescription { margin: 10px 0 0; color: #d5e0e1; font-size: .875rem; line-height: 1.5; }
+}
+
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .content { max-width: 650px; }
+  .button { min-height: 66px; min-width: 0; padding: 18px 24px; font-size: 1rem; }
+  .primary { width: 310px; }
+  .secondary { width: 240px; }
+  .trustCard { gap: 12px; padding: 18px 14px; }
+  .icon { flex-basis: 44px; height: 58px; }
+  .icon svg { width: 28px; height: 28px; }
+  .trustTitle { font-size: 1rem; }
+  .trustDescription { font-size: .8125rem; }
+  .aside, .desktopNote { right: -36px; width: 210px; padding-left: 48px; font-size: .875rem; }
+  .desktopNote { top: 250px; }
+}
