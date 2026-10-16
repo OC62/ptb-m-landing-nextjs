@@ -103,7 +103,7 @@ export default function HeroParallaxScene() {
     };
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerout", handlePointerLeave, { passive: true });
+    document.documentElement.addEventListener("pointerleave", handlePointerLeave, { passive: true });
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
     desktopQuery.addEventListener("change", handleModeChange);
@@ -114,7 +114,7 @@ export default function HeroParallaxScene() {
     return () => {
       if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerout", handlePointerLeave);
+      document.documentElement.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
       desktopQuery.removeEventListener("change", handleModeChange);
