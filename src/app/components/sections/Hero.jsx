@@ -10,10 +10,10 @@ const directions = [
 ];
 
 const desktopCards = [
-  ["Профильная специализация", "Транспортная безопасность объектов дорожного хозяйства", "M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z M8 12l3 3 5-6"],
-  ["Комплексный подход", "Услуги по защите от актов незаконного вмешательства", "m12 3 10 5-10 5L2 8l10-5Z M2 12l10 5 10-5 M2 16l10 5 10-5"],
-  ["Документы", "Ознакомьтесь с реквизитами и документами компании", "M14 2H5v20h14V7l-5-5Z M14 2v5h5 M8 12h8 M8 16h8"],
-  ["Открытый диалог", "Обсудите задачу со специалистом", "M21 11a9 9 0 0 1-9 9H4l-3 3V11a10 10 0 0 1 20 0Z M7 11h.01 M12 11h.01 M17 11h.01"],
+  ["С 2017 года", "успешно обеспечиваем транспортную безопасность", "M6 2v3 M18 2v3 M3 9h18 M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z M7 13h2 M11 13h2 M15 13h2 M7 17h2 M11 17h2"],
+  ["Аккредитация", "официальное право на оказание услуг в сфере транспортной безопасности", "M6 2h8l4 4v16H6z M14 2v5h5 M9 12h6 M9 16h4 M15.5 18.5l1.4 1.4 2.8-3.2"],
+  ["Государственные заказчики", "доверяют нам", "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75"],
+  ["Реальные результаты", "в действии", "M3 20h18 M6 16l4-4 3 3 5-7 M18 8h3v3"],
 ];
 
 export default function Hero() {
@@ -21,7 +21,7 @@ export default function Hero() {
     <section id="hero" className={styles.hero} aria-labelledby="hero-heading">
       <div className={styles.image} aria-hidden="true">
         <Image
-          src="/images/hero-v2/canonical/hero-reference-desktop.jpg"
+          src="/images/hero-v2/canonical/hero-leonardo-source.jpg"
           alt=""
           fill
           priority
@@ -31,8 +31,21 @@ export default function Hero() {
         />
       </div>
       <div className={styles.canonicalHotspots} aria-label="Действия первого экрана">
-        <Link href="/contacts" className={styles.hotspotConsult} aria-label="Получить консультацию" />
-        <Link href="/services" className={styles.hotspotServices} aria-label="Наши услуги" />
+        <Link href="#contact" className={styles.hotspotConsult} aria-label="Получить консультацию" />
+        <Link href="#services" className={styles.hotspotServices} aria-label="Наши услуги" />
+      </div>
+      <div className={styles.employeeBrand} aria-hidden="true">
+        <span className={styles.employeeBrandMark}>///</span>
+        <strong>ПТБ-М</strong>
+        <small>ТРАНСПОРТНАЯ<br />БЕЗОПАСНОСТЬ</small>
+      </div>
+      <div className={styles.canonicalPanelContrast} aria-hidden="true">
+        <p className={styles.canonicalPanelTop}>
+          КОНТРОЛЬ<br />ПРОФИЛАКТИКА<br />ЗАЩИТА<br />НАДЁЖНОСТЬ
+        </p>
+        <p className={styles.canonicalPanelBottom}>
+          ИНФРАСТРУКТУРА<br />В ДВИЖЕНИИ<br />ПОД НАДЁЖНОЙ<br />ЗАЩИТОЙ
+        </p>
       </div>
       <div className={styles.shade} aria-hidden="true" />
       <div className={styles.diagonal} aria-hidden="true" />

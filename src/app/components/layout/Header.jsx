@@ -37,11 +37,11 @@ const Header = () => {
   }, [isMenuOpen, isMobileView]);
 
   const canonicalDesktopNav = [
-    { name: 'Услуги', href: '/services' },
-    { name: 'Опыт', href: '/cases' },
-    { name: 'Документы', href: '/licenses' },
-    { name: 'О компании', href: '/about' },
-    { name: 'Контакты', href: '/contacts' },
+    { name: 'Услуги', href: '#services' },
+    { name: 'Опыт', href: '#cases' },
+    { name: 'Документы', href: '#licenses' },
+    { name: 'О компании', href: '#about' },
+    { name: 'Контакты', href: '#contact' },
   ];
 
   const navItems = [
@@ -176,45 +176,59 @@ const Header = () => {
     return (
       <header
         ref={headerRef}
-        className="absolute inset-x-0 top-0 z-50 h-[112px] bg-transparent"
+        className="absolute inset-x-0 top-0 z-50 px-[0.8%] pt-[10px]"
         role="banner"
         aria-label="Навигация первого экрана"
       >
-        <Link
-          href="/"
-          aria-label="Перейти на главную страницу"
-          className="absolute left-[3.2%] top-[2.5%] h-[94%] w-[26%] rounded-sm focus-visible"
-        />
-        <nav aria-label="Основное меню" className="absolute inset-0">
-          {canonicalDesktopNav.map((item, index) => {
-            const positions = [
-              ['36.1%', '7.2%'],
-              ['42.2%', '6.8%'],
-              ['47.9%', '8.5%'],
-              ['55.0%', '10.5%'],
-              ['63.0%', '7.6%'],
-            ];
-            return (
+        <div className="relative mx-auto h-[104px] max-w-[1620px] overflow-hidden rounded-[14px] border border-emerald-200/35 bg-[#07171a]/88 shadow-[0_12px_36px_rgba(0,0,0,.28)] backdrop-blur-md">
+          <Link
+            href="/"
+            aria-label="Перейти на главную страницу"
+            className="absolute inset-y-0 left-0 flex w-[31%] items-center gap-5 border-r border-emerald-200/20 bg-[linear-gradient(115deg,rgba(24,49,53,.9),rgba(7,22,25,.72))] pl-[5%] pr-10 focus-visible"
+            style={{ clipPath: 'polygon(0 0, 100% 0, 88% 100%, 0 100%)' }}
+          >
+            <span className="flex h-12 items-center gap-[5px]" aria-hidden="true">
+              <span className="h-10 w-3 -skew-x-[18deg] bg-emerald-500" />
+              <span className="h-10 w-3 -skew-x-[18deg] bg-emerald-500" />
+              <span className="h-10 w-3 -skew-x-[18deg] bg-emerald-500" />
+            </span>
+            <span className="leading-none text-white">
+              <strong className="block text-[30px] font-extrabold tracking-[.02em]">ПТБ-М</strong>
+              <small className="mt-1 block text-[11px] font-medium leading-[1.15] tracking-[.02em] text-slate-200">
+                ПОДРАЗДЕЛЕНИЕ<br />ТРАНСПОРТНОЙ БЕЗОПАСНОСТИ
+              </small>
+            </span>
+          </Link>
+
+          <nav aria-label="Основное меню" className="absolute left-[35%] top-0 flex h-full items-center gap-[2.45vw]">
+            {canonicalDesktopNav.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
                 aria-label={item.name}
-                className="absolute top-[27%] h-[50%] rounded-sm focus-visible"
-                style={{ left: positions[index][0], width: positions[index][1] }}
-              />
-            );
-          })}
-        </nav>
-        <span
-          aria-hidden="true"
-          className="absolute left-[72.7%] top-[25%] h-[50%] w-[4.7%]"
-        />
-        <button
-          type="button"
-          onClick={navigateToContact}
-          aria-label="Получить консультацию"
-          className="absolute left-[78.0%] top-[16%] h-[63%] w-[17.8%] rounded-xl bg-transparent focus-visible"
-        />
+                className="relative py-4 text-[16px] font-medium text-slate-100 transition-colors hover:text-white focus-visible"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          <span aria-hidden="true" className="absolute right-[20.2%] top-1/2 -translate-y-1/2 text-slate-100">
+            <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-4.2-4.2" />
+            </svg>
+          </span>
+          <span aria-hidden="true" className="absolute right-[18.7%] top-[27%] h-[46%] w-px bg-slate-300/45" />
+
+          <Link
+            href="#contact"
+            aria-label="Получить консультацию"
+            className="absolute right-[1.15%] top-[13%] flex h-[70%] w-[17.2%] items-center justify-center gap-5 rounded-[14px] border border-emerald-300/85 bg-[linear-gradient(110deg,#007a32,#00a846)] px-5 text-[16px] font-semibold text-white shadow-[inset_0_0_18px_rgba(0,255,130,.38),0_0_22px_rgba(0,225,110,.18)] transition-transform hover:-translate-y-[1px] focus-visible"
+          >
+            Получить консультацию <span aria-hidden="true" className="text-2xl font-light">→</span>
+          </Link>
+        </div>
       </header>
     );
   }
