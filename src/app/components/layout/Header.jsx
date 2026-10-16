@@ -37,11 +37,11 @@ const Header = () => {
   }, [isMenuOpen, isMobileView]);
 
   const canonicalDesktopNav = [
-    { name: 'Услуги', href: '/services' },
-    { name: 'Опыт', href: '/cases' },
-    { name: 'Документы', href: '/licenses' },
-    { name: 'О компании', href: '/about' },
-    { name: 'Контакты', href: '/contacts' },
+    { name: 'Услуги', href: '#services' },
+    { name: 'Опыт', href: '#cases' },
+    { name: 'Документы', href: '#licenses' },
+    { name: 'О компании', href: '#about' },
+    { name: 'Контакты', href: '#contact' },
   ];
 
   const navItems = [
