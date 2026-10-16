@@ -16,7 +16,85 @@
 .shade {
   position: absolute;
   inset: 0;
-  z-index: -2;
+}
+
+.image {
+  z-index: -4;
+}
+
+.parallaxScene {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  display: none;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.parallaxLayer {
+  position: absolute;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.farLayer {
+  inset: -4%;
+  transform: translate3d(var(--far-x, 0px), var(--far-y, 0px), 0) scale(1.08);
+}
+
+.farPhoto {
+  object-fit: cover;
+  object-position: center;
+}
+
+.bridgeLayer {
+  inset: -3%;
+  transform: translate3d(var(--bridge-x, 0px), var(--bridge-y, 0px), 0) scale(1.07);
+}
+
+.bridgePhoto {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.roadLayer {
+  right: -4%;
+  bottom: -4%;
+  left: -4%;
+  height: 60%;
+  transform: translate3d(var(--road-x, 0px), var(--road-y, 0px), 0) scale(1.05);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .72) 12%, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .72) 12%, #000 30%);
+}
+
+.roadPhoto {
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.employeeLayer {
+  right: -1.5vw;
+  bottom: -4%;
+  width: clamp(300px, 35vw, 640px);
+  height: 88%;
+  transform: translate3d(var(--employee-x, 0px), var(--employee-y, 0px), 0);
+  filter: drop-shadow(-14px 12px 22px rgba(0, 0, 0, .28));
+}
+
+.employeePhoto {
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+.techLayer {
+  inset: -2%;
+  transform: translate3d(var(--tech-x, 0px), var(--tech-y, 0px), 0);
+  background:
+    linear-gradient(123deg, transparent 0 72%, rgba(0, 222, 112, .12) 72.15% 72.3%, transparent 72.45%),
+    linear-gradient(123deg, transparent 0 82%, rgba(0, 222, 112, .18) 82.1% 82.25%, transparent 82.4%),
+    radial-gradient(circle at 73% 49%, rgba(0, 219, 107, .11), transparent 25%);
+  mix-blend-mode: screen;
+  opacity: .78;
 }
 
 .photo {
@@ -25,7 +103,7 @@
 }
 
 .shade {
-  z-index: -1;
+  z-index: -2;
   background: linear-gradient(90deg, rgba(3, 12, 14, .95), rgba(3, 12, 14, .82) 35%, rgba(3, 12, 14, .12) 66%), linear-gradient(0deg, #071113 0%, transparent 30%);
 }
 
@@ -247,6 +325,8 @@
 
 /* 02A is desktop-only: preserve the existing composition below 1024px. */
 @media (min-width: 1024px) {
+  .parallaxScene { display: block; }
+
   .hero {
     min-height: max(810px, 56.28vw);
     padding: clamp(144px, 9.75vw, 164px) 0 44px;
@@ -447,4 +527,12 @@
   .trustDescription { font-size: .8125rem; }
   .aside, .desktopNote { right: -36px; width: 210px; padding-left: 48px; font-size: .875rem; }
   .desktopNote { top: 250px; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .parallaxLayer {
+    transform: none !important;
+    will-change: auto;
+  }
 }

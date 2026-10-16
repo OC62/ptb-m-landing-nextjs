@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HeroParallaxScene from "./HeroParallaxScene";
 import styles from "./Hero.module.css";
 
 const directions = [
@@ -26,10 +27,11 @@ export default function Hero() {
           fill
           priority
           quality={85}
-          sizes="100vw"
+          sizes="(max-width: 1023px) 100vw, 1px"
           className={styles.photo}
         />
       </div>
+      <HeroParallaxScene />
       <div className={styles.shade} aria-hidden="true" />
       <div className={styles.diagonal} aria-hidden="true" />
       <div className={styles.inner}>
