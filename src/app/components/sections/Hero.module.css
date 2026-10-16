@@ -1,0 +1,142 @@
+.hero {
+  /* Most frequent saturated green pixel in the existing preloader.png logo. */
+  --ptbm-green: #00be01;
+  --ptbm-graphite: #161918;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 760px;
+  min-height: max(760px, 100svh);
+  padding: 144px 0 88px;
+  background: var(--ptbm-graphite);
+  color: #fff;
+}
+
+.image,
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.photo {
+  object-fit: cover;
+  object-position: 65% center;
+}
+
+.shade {
+  background: linear-gradient(90deg, rgba(22, 25, 24, .98) 0%, rgba(22, 25, 24, .93) 42%, rgba(22, 25, 24, .6) 70%, rgba(22, 25, 24, .25) 100%);
+}
+
+.content {
+  width: min(100% - 80px, 1280px);
+  margin-inline: auto;
+}
+
+.rule {
+  width: 64px;
+  height: 3px;
+  margin-bottom: 32px;
+  background: var(--ptbm-green);
+}
+
+.heading {
+  max-width: 880px;
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+}
+
+.accent {
+  display: block;
+  color: var(--ptbm-green);
+}
+
+.description {
+  max-width: 650px;
+  margin: 30px 0 0;
+  color: #e0e4e1;
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 56px;
+  padding: 15px 24px;
+  border: 1px solid var(--ptbm-green);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+}
+
+.primary {
+  background: var(--ptbm-green);
+  color: var(--ptbm-graphite);
+  box-shadow: 0 4px 0 #007701, 0 12px 28px rgba(0, 0, 0, .22);
+}
+
+.secondary {
+  background: rgba(22, 25, 24, .85);
+  color: #fff;
+  box-shadow: 0 4px 0 #0c0e0d;
+}
+
+.primary:hover {
+  background: #fff;
+  border-color: #fff;
+}
+
+.secondary:hover {
+  background: #292f2b;
+}
+
+.button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 6px;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 100svh;
+    padding: 124px 0 64px;
+  }
+
+  .content {
+    width: calc(100% - 40px);
+  }
+
+  .heading {
+    font-size: clamp(1.375rem, 6.2vw, 2rem);
+    letter-spacing: -.025em;
+  }
+
+  .shade {
+    background: linear-gradient(90deg, rgba(22, 25, 24, .96), rgba(22, 25, 24, .76));
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
